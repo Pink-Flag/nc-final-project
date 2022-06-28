@@ -1,50 +1,37 @@
-// import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, LogBox } from "react-native";
-// import { fetchUsers } from "./firebase/functions";
+import { fetchUsers } from "./firebase/functions";
 import { useState, useEffect } from "react";
-import { db, auth } from "./firebase.js";
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  setDoc,
-  addDoc,
-} from "firebase/firestore";
 
 export default function App() {
   const [users, setUsers] = useState([]);
 
-  // const listsRef = db.collection("lists");
+  const userArray = [];
+  useEffect(() => {
+    fetchUsers()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          userArray.push({
+            id: doc.id,
+            name: doc.data().name,
+            avatar_url: doc.data().avatar_url,
+          });
+        });
+        setUsers([...userArray]);
+      })
+      .then(() => {
+        console.log(users);
+      });
+  }, []);
 
-  // useEffect(() => {
-  //   listsRef.get().then((data) => {
-  //     console.log(data);
-  //     console.log("hi");
-  //   });
-  // }, []);
-
-  // console.log(lists);
-  //  const fetchLists = () => {
-  //   return
-  //  } const lists = fireDB.
-  // useEffect(() => {
-  //   fetchUsers()
-  //     .then((data) => {
-  //       setUsers(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  return (
-    <View style={styles.container}>
-      {users.map((user) => {
-        return <Text key={user.name}>{user.name}</Text>;
-      })}
-    </View>
-  );
+  if (users.length !== 0) {
+    return (
+      <View style={styles.container}>
+        {users.map((user) => {
+          return <Text> {user.name}</Text>;
+        })}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
