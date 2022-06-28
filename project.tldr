@@ -687,28 +687,6 @@
               0.5
             ]
           },
-          "c2cc3f38-5dfb-415a-1988-0a2f5cb2fcee": {
-            "id": "c2cc3f38-5dfb-415a-1988-0a2f5cb2fcee",
-            "type": "text",
-            "name": "Text",
-            "parentId": "page",
-            "childIndex": 17,
-            "point": [
-              784.5,
-              -586.67
-            ],
-            "rotation": 0,
-            "text": "View My Lists Page",
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "draw",
-              "scale": 1,
-              "font": "script",
-              "textAlign": "middle"
-            }
-          },
           "b62fe617-7c1b-4291-3828-1cc3d4597fd4": {
             "id": "b62fe617-7c1b-4291-3828-1cc3d4597fd4",
             "type": "rectangle",
@@ -6852,6 +6830,78 @@
             ],
             "rotation": 0,
             "text": "Number of tries is displayed only after an error",
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "058e5b38-b94f-4c95-276c-3b4c19e23947": {
+            "id": "058e5b38-b94f-4c95-276c-3b4c19e23947",
+            "type": "rectangle",
+            "name": "Rectangle",
+            "parentId": "page",
+            "childIndex": 158,
+            "point": [
+              -223.98,
+              -50.51
+            ],
+            "size": [
+              94.38,
+              38.86
+            ],
+            "rotation": 0,
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1
+            },
+            "label": "",
+            "labelPoint": [
+              0.5,
+              0.5
+            ]
+          },
+          "28cc056b-8ce3-4905-14d5-615efa628286": {
+            "id": "28cc056b-8ce3-4905-14d5-615efa628286",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 159,
+            "point": [
+              -196.78,
+              -50.57
+            ],
+            "rotation": 0,
+            "text": "Go!",
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "6062bb28-00a9-4992-09d7-3e7b75df3f91": {
+            "id": "6062bb28-00a9-4992-09d7-3e7b75df3f91",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 160,
+            "point": [
+              762.34,
+              -565.39
+            ],
+            "rotation": 0,
+            "text": "View my decks page",
             "style": {
               "color": "black",
               "size": "small",
