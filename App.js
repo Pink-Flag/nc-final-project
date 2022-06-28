@@ -1,24 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { fetchUsers } from "./firebase/functions";
-import { useState } from "react";
-import { useEffect } from "react";
-import { fireDB } from "./firebase.js";
-import {get} from './firebase';
-import { collection } from "firebase/firestore";
+// import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, LogBox } from "react-native";
+// import { fetchUsers } from "./firebase/functions";
+import { useState, useEffect } from "react";
+import { db, auth } from "./firebase.js";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  setDoc,
+  addDoc,
+} from "firebase/firestore";
 
 export default function App() {
   const [users, setUsers] = useState([]);
 
-  const listsRef = fireDB.collection("lists").doc('0');
+  // const listsRef = db.collection("lists");
 
-  useEffect(() => {
-    listsRef.get().then((data) => {
-   
-      console.log(data);
-      console.log("hi");
-    });
-  }, []);
+  // useEffect(() => {
+  //   listsRef.get().then((data) => {
+  //     console.log(data);
+  //     console.log("hi");
+  //   });
+  // }, []);
+
   // console.log(lists);
   //  const fetchLists = () => {
   //   return

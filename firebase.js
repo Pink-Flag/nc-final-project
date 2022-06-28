@@ -1,14 +1,8 @@
-// import firebase from "firebase/compat/app";
-// import "firebase/compat/firestore";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-// import * as firebase from "firebase";
-// import "firebase/firestore";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
-import getAuth from './firebase/auth'
-
-const app = firebase.initializeApp({
+const firebaseConfig = {
   apiKey: "AIzaSyAEj30pmRy7klqVInm4ZwlOpbQQC2kOplM",
   authDomain: "test-bf064.firebaseapp.com",
   databaseURL:
@@ -18,8 +12,14 @@ const app = firebase.initializeApp({
   messagingSenderId: "709235082120",
   appId: "1:709235082120:web:391c901fb1f410a6daf03d",
   measurementId: "G-8Y961F8KVN",
-});
+};
 
-export const fireDB = app.firestore();
-const auth = getAuth(app)
-export default app;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+// const db = initializeFirestore(app, {
+//   experimentalForceLongPolling: true,
+// });
+
+const db = getFirestore(app);
+
+export { db, auth };
