@@ -31,7 +31,7 @@ const Register = () => {
   };
   return (
     <>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView style={styles.container} behavior="position" >
         <View style={styles.headerView}>
           <Text style={styles.header}>Vocab</Text>
         </View>
@@ -125,9 +125,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "60%",
-    justifyContent: "center",
+    justifyContent : "center",
     alignItems: "center",
     marginTop: 40,
+    marginLeft: 70,
+
   },
   button: {
     backgroundColor: "#5c6784",
