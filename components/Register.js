@@ -76,17 +76,19 @@ const Register = () => {
       
           <View style={styles.inputView}>
             <Text> I want to learn</Text>
+            <View style={styles.editPicker}>
             <Picker
               selectedValue={defaultLanguage}
-              style={styles.input}
+              style={styles.inputPicker}
               onValueChange={(itemValue, itemIndex) =>
                 setdefaultLanguage(itemValue)
               }
             >
               <Picker.Item label="French" value="French" />
-              <Picker.Item label="Spanish" value="Spanish" />
               <Picker.Item label="German" value="German" />
+              <Picker.Item label="Spanish" value="Spanish" />
             </Picker>
+            </View>
           </View>
         </View>
 
@@ -171,6 +173,20 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
+  inputPicker: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    width: "100%",
+    borderRadius: 10,
+    justifyContent: "flex-start",
+  },
+  editPicker: {
+    width: "75%",
+    borderRadius: 10,
+    overflow: "hidden",
+    marginTop: 5,
+    width: "100%",    
+  }
 });
 
 export default Register;
