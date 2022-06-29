@@ -1,3 +1,4 @@
+/*
 
 import {
   doc,
@@ -13,16 +14,55 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db, auth } from "../firebase.js";
+import { useState, useEffect } from "react";
 
 //get all users
- export const fetchUsers = () =>{ 
+export const fetchUsers = () => {
   return getDocs(collection(db, "users")).then((querySnapshot) => {
     // querySnapshot.forEach((doc) => {
     //   console.log(doc.id, "=>", doc.data());
     // });
-    return querySnapshot
+    return querySnapshot;
   });
- }
+};
+
+const [users, setUsers] = useState([]);
+
+const userArray = [];
+useEffect(() => {
+  fetchUsers()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        userArray.push({
+          id: doc.id,
+          name: doc.data().name,
+          avatar_url: doc.data().avatar_url,
+        });
+      });
+      setUsers([...userArray]);
+    })
+    .then(() => {
+      console.log(users);
+    });
+}, []);
+
+//  if (users.length !== 0) {
+//   return (
+//     <View style={styles.container}>
+//       {users.map((user) => {
+//         return <Text> {user.name}</Text>;
+//       })}
+//       {/* <LoginScreen /> */
+//     </View>
+//   );
+// } else {
+//   return (
+//     <View style={styles.container}>
+//       <Text>Loading...</Text>
+//     </View>
+//   );
+// }
+//}
 
 // //get single user
 // useEffect(() => {
@@ -60,7 +100,7 @@ import { db, auth } from "../firebase.js";
 
 // //Delete user with provided id
 // const usersRef = doc(db, "users" , "89fdhs9ihdjkj");
-  
+
 // useEffect(() => {
 //  deleteDoc(usersRef)
 // }, []);

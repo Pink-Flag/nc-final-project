@@ -1,3 +1,4 @@
+
 import {
   StyleSheet,
   Text,
@@ -171,3 +172,4 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
+

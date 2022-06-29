@@ -231,28 +231,6 @@
               "textAlign": "middle"
             }
           },
-          "0be81bbe-9b72-4f88-14ae-ab8d8513eabf": {
-            "id": "0be81bbe-9b72-4f88-14ae-ab8d8513eabf",
-            "type": "text",
-            "name": "Text",
-            "parentId": "page",
-            "childIndex": 10,
-            "point": [
-              -256.83,
-              -563.33
-            ],
-            "rotation": 0,
-            "text": "Landing page",
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "draw",
-              "scale": 1,
-              "font": "script",
-              "textAlign": "middle"
-            }
-          },
           "8c7d5fdf-e144-4256-1705-afe5660f8b56": {
             "id": "8c7d5fdf-e144-4256-1705-afe5660f8b56",
             "type": "rectangle",
@@ -2731,28 +2709,6 @@
               0.5
             ]
           },
-          "f1b22d75-e9a7-43bd-20ca-b45c00fc35da": {
-            "id": "f1b22d75-e9a7-43bd-20ca-b45c00fc35da",
-            "type": "text",
-            "name": "Text",
-            "parentId": "page",
-            "childIndex": 42,
-            "point": [
-              205.24,
-              -567.9
-            ],
-            "rotation": 0,
-            "text": "User registration page",
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "solid",
-              "scale": 1,
-              "font": "script",
-              "textAlign": "middle"
-            }
-          },
           "a08a92d6-7518-4c1d-0730-daa9c7ba297e": {
             "id": "a08a92d6-7518-4c1d-0730-daa9c7ba297e",
             "type": "text",
@@ -2760,33 +2716,11 @@
             "parentId": "page",
             "childIndex": 43,
             "point": [
-              1277.24,
-              -587.9
+              1318.37,
+              -557.39
             ],
             "rotation": 0,
-            "text": "Home screen",
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "solid",
-              "scale": 1,
-              "font": "script",
-              "textAlign": "middle"
-            }
-          },
-          "2c5f2414-72fa-45bf-379d-a116997cba1c": {
-            "id": "2c5f2414-72fa-45bf-379d-a116997cba1c",
-            "type": "text",
-            "name": "Text",
-            "parentId": "page",
-            "childIndex": 44,
-            "point": [
-              1258.74,
-              -547.9
-            ],
-            "rotation": 0,
-            "text": "(logged in user)",
+            "text": "Home",
             "style": {
               "color": "black",
               "size": "small",
@@ -3054,11 +2988,11 @@
             "parentId": "page",
             "childIndex": 53,
             "point": [
-              1762.17,
+              1802.17,
               -564.12
             ],
             "rotation": 0,
-            "text": "My profile page",
+            "text": "Profile",
             "style": {
               "color": "black",
               "size": "small",
@@ -4793,11 +4727,11 @@
             "parentId": "page",
             "childIndex": 95,
             "point": [
-              242.04,
+              274.03999999999996,
               278.63
             ],
             "rotation": 0,
-            "text": "Enter words screen",
+            "text": "EnterWords",
             "style": {
               "color": "black",
               "size": "small",
@@ -5491,11 +5425,11 @@
             "parentId": "page",
             "childIndex": 118,
             "point": [
-              1290.39,
+              1306.39,
               277.25
             ],
             "rotation": 0,
-            "text": "Vanilla testing",
+            "text": "VanillaTest",
             "style": {
               "color": "black",
               "size": "small",
@@ -5773,11 +5707,11 @@
             "parentId": "page",
             "childIndex": 128,
             "point": [
-              1811.1,
+              1818.6,
               289.6
             ],
             "rotation": 0,
-            "text": "Pair 'em up",
+            "text": "PairsTest",
             "style": {
               "color": "black",
               "size": "small",
@@ -6483,11 +6417,11 @@
             "parentId": "page",
             "childIndex": 149,
             "point": [
-              -260.44,
+              -244.44,
               1077.83
             ],
             "rotation": 0,
-            "text": "Strict testing",
+            "text": "StrictTest",
             "style": {
               "color": "black",
               "size": "small",
@@ -6555,34 +6489,6 @@
             "size": [
               280.89,
               83.32
-            ],
-            "rotation": 0,
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "draw",
-              "scale": 1
-            },
-            "label": "",
-            "labelPoint": [
-              0.5,
-              0.5
-            ]
-          },
-          "d6afd876-9183-424b-24b9-f47e3481ccf3": {
-            "id": "d6afd876-9183-424b-24b9-f47e3481ccf3",
-            "type": "rectangle",
-            "name": "Rectangle",
-            "parentId": "page",
-            "childIndex": 152,
-            "point": [
-              192.46,
-              1525.89
-            ],
-            "size": [
-              1,
-              1.06
             ],
             "rotation": 0,
             "style": {
@@ -6868,28 +6774,6 @@
               "textAlign": "middle"
             }
           },
-          "6062bb28-00a9-4992-09d7-3e7b75df3f91": {
-            "id": "6062bb28-00a9-4992-09d7-3e7b75df3f91",
-            "type": "text",
-            "name": "Text",
-            "parentId": "page",
-            "childIndex": 160,
-            "point": [
-              762.34,
-              -565.39
-            ],
-            "rotation": 0,
-            "text": "View my decks page",
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "draw",
-              "scale": 1,
-              "font": "script",
-              "textAlign": "middle"
-            }
-          },
           "1fc34e41-1bea-4891-1f6d-b0b6bcea2ad1": {
             "id": "1fc34e41-1bea-4891-1f6d-b0b6bcea2ad1",
             "type": "text",
@@ -6897,11 +6781,11 @@
             "parentId": "page",
             "childIndex": 161,
             "point": [
-              -293.92,
+              -270.92,
               282.97
             ],
             "rotation": 0,
-            "text": "View individual deck",
+            "text": "IndividualDeck",
             "style": {
               "color": "white",
               "size": "small",
@@ -7352,6 +7236,116 @@
             ],
             "rotation": 0,
             "text": "?",
+            "style": {
+              "color": "white",
+              "size": "small",
+              "isFilled": false,
+              "dash": "solid",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "af20af79-e538-4e2b-07c3-e4d11fb6a2f6": {
+            "id": "af20af79-e538-4e2b-07c3-e4d11fb6a2f6",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 1,
+            "point": [
+              860.77,
+              -147.58000000000004
+            ],
+            "rotation": 0,
+            "text": "c",
+            "style": {
+              "color": "white",
+              "size": "small",
+              "isFilled": false,
+              "dash": "solid",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "8bd2d756-2496-4eb9-2ee1-7b0d59192095": {
+            "id": "8bd2d756-2496-4eb9-2ee1-7b0d59192095",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 1,
+            "point": [
+              769.4233333333332,
+              6.17666666666662
+            ],
+            "rotation": 0,
+            "text": "c",
+            "style": {
+              "color": "white",
+              "size": "small",
+              "isFilled": false,
+              "dash": "solid",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "41efbf16-a983-46a3-253f-268f00e655ad": {
+            "id": "41efbf16-a983-46a3-253f-268f00e655ad",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 178,
+            "point": [
+              -252.23087159015301,
+              -569.4297937458416
+            ],
+            "rotation": 0,
+            "text": "LoginScreen",
+            "style": {
+              "color": "white",
+              "size": "small",
+              "isFilled": false,
+              "dash": "solid",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "8366f92e-3821-49e8-1782-827f203e3ed5": {
+            "id": "8366f92e-3821-49e8-1782-827f203e3ed5",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 180,
+            "point": [
+              815.6205123087159,
+              -554.9787159015302
+            ],
+            "rotation": 0,
+            "text": "ViewDecks",
+            "style": {
+              "color": "white",
+              "size": "small",
+              "isFilled": false,
+              "dash": "solid",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "a2bae6ce-135c-4fab-383a-a586545ae7c9": {
+            "id": "a2bae6ce-135c-4fab-383a-a586545ae7c9",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 181,
+            "point": [
+              318.22711244178316,
+              -566.2184431137725
+            ],
+            "rotation": 0,
+            "text": "Register",
             "style": {
               "color": "white",
               "size": "small",
