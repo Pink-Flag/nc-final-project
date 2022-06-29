@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { React, useEffect, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
+import userContext from './UserContext';
 
 import {
   getAuth,
@@ -17,7 +18,9 @@ import {
 import { auth } from "../firebase";
 
 const LoginScreen = () => {
+  const { user, setUser } = useContext(userContext);
   const [email, setEmail] = useState("");
+  
   const [password, setPassword] = useState("");
   const auth = getAuth();
 
@@ -44,9 +47,10 @@ const LoginScreen = () => {
   // };
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        setUser(userCredential);
+        console.log("setUser");
         console.log("Logged in with ", user.email);
       })
       .catch((error) => {
@@ -54,6 +58,11 @@ const LoginScreen = () => {
       });
   };
 
+if (user) {
+  return (
+    <Text>Hello there {user.name}!</Text>
+  )
+} else {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -95,6 +104,7 @@ const LoginScreen = () => {
     </KeyboardAvoidingView>
   );
 };
+}
 
 export default LoginScreen;
 
