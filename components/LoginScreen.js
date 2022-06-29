@@ -6,9 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+
 import { React, useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+
+
+import { NativeRouter, Link, Route, Routes } from "react-router-native";
 
 import {
   getAuth,
@@ -63,7 +67,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="position">
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -79,7 +83,15 @@ const LoginScreen = () => {
           secureTextEntry
         />
       </View>
-      <Text style={styles.registerText}>Not Registered? Click here</Text>
+
+
+      <Text style={styles.registerText}>Not Registered? 
+
+      <Link to="/register" >
+            <Text style={styles.linkText} >  Click here</Text>
+          </Link>
+         </Text> 
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -90,14 +102,8 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity
-          onPress={() => {
-            handleSignup();
-          }}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>Register</Text>
-        </TouchableOpacity> */}
+     
+
       </View>
     </KeyboardAvoidingView>
   );
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
+    marginLeft: 70,
   },
   button: {
     backgroundColor: "#5c6784",
@@ -156,5 +163,15 @@ const styles = StyleSheet.create({
   registerText: {
     color: "#202124",
     marginTop: 10,
+
+ 
+
+
   },
+  linkText :{
+    textDecorationLine: "underline",
+    marginTop: 10,
+    color: "blue",
+  }
+
 });
