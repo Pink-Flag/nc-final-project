@@ -3,7 +3,7 @@ import { NativeRouter, Link, Route, Routes } from "react-router-native";
 import { fetchUsers } from "./firebase/functions";
 import { createContext, useContext, useState, useEffect } from "react";
 import LoginScreen from "./components/LoginScreen";
-import { UserContext } from './components/UserContext';
+import { UserContext } from "./components/UserContext";
 
 import Home from "./components/Home";
 import IndividualDeck from "./components/IndividualDeck";
@@ -17,7 +17,6 @@ import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 
 export default function App() {
- 
   const [user, setUser] = useState(null);
 
   return (
@@ -76,7 +75,6 @@ export default function App() {
       </NativeRouter>
     </UserContext.Provider>
   );
-
 }
 
 const styles = StyleSheet.create({

@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { React, useContext, useEffect, useState } from "react";
-import userContext from './UserContext';
+import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 import {
   getAuth,
@@ -18,11 +19,13 @@ import {
 import { auth } from "../firebase";
 
 const LoginScreen = () => {
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
-  
+
   const [password, setPassword] = useState("");
   const auth = getAuth();
+
+  const navigate = useNavigate();
 
   // for when we have navigation
   // useEffect(() => {
@@ -50,19 +53,15 @@ const LoginScreen = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential);
-        console.log("setUser");
-        console.log("Logged in with ", user.email);
+      })
+      .then(() => {
+        navigate("/");
       })
       .catch((error) => {
         alert(error.message);
       });
   };
 
-if (user) {
-  return (
-    <Text>Hello there {user.name}!</Text>
-  )
-} else {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -80,7 +79,7 @@ if (user) {
           secureTextEntry
         />
       </View>
-      <Text style={styles.registerText}>Not Registered? Click here</Text> 
+      <Text style={styles.registerText}>Not Registered? Click here</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -90,7 +89,7 @@ if (user) {
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-       
+
         {/* <TouchableOpacity
           onPress={() => {
             handleSignup();
@@ -99,12 +98,10 @@ if (user) {
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
         </TouchableOpacity> */}
-      
       </View>
     </KeyboardAvoidingView>
   );
 };
-}
 
 export default LoginScreen;
 
@@ -117,7 +114,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "80%",
-    
   },
   input: {
     backgroundColor: "white",
@@ -157,9 +153,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-  registerText:{
+  registerText: {
     color: "#202124",
     marginTop: 10,
-
-  }
+  },
 });
