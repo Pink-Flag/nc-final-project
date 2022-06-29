@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, LogBox } from "react-native";
 import { fetchUsers } from "./firebase/functions";
 import { useState, useEffect } from "react";
 import LoginScreen from "./components/LoginScreen";
+import Register from "./components/Register";
 
 export default function App() {
   const [users, setUsers] = useState([]);
@@ -20,26 +21,30 @@ export default function App() {
         setUsers([...userArray]);
       })
       .then(() => {
-        console.log(users);
+       
       });
   }, []);
 
-  if (users.length !== 0) {
-    return (
-      <View style={styles.container}>
-        {users.map((user) => {
-          return <Text> {user.name}</Text>;
-        })}
-        {/* <LoginScreen /> */}
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  // if (users.length !== 0) {
+  //   return (
+  //     <View style={styles.container}>
+  //       {users.map((user) => {
+  //         return <Text> {user.name}</Text>;
+  //       })}
+  //       {/* <LoginScreen /> */}
+  //     </View>
+  //   );
+  // } else {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text>Loading...</Text>
+  //     </View>
+  //   );
+  // }
+  return(
+    // <LoginScreen  />
+    <Register />
+  )
 }
 
 const styles = StyleSheet.create({

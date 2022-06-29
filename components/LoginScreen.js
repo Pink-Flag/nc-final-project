@@ -12,6 +12,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  getRedirectResult,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -31,16 +32,16 @@ const LoginScreen = () => {
   //   }
   // }, [])
 
-  const handleSignup = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Registered with ", user.email);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
+  // const handleSignup = () => {
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       console.log("Registered with ", user.email);
+  //     })
+  //     .catch((error) => {
+  //       alert(error.message);
+  //     });
+  // };
 
   const handleLogin = () => {
     signInWithEmailAndPassword(email, password)
@@ -70,6 +71,7 @@ const LoginScreen = () => {
           secureTextEntry
         />
       </View>
+      <Text style={styles.registerText}>Not Registered? Click here</Text> 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -79,14 +81,16 @@ const LoginScreen = () => {
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+       
+        {/* <TouchableOpacity
           onPress={() => {
             handleSignup();
           }}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+      
       </View>
     </KeyboardAvoidingView>
   );
@@ -99,9 +103,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#A0EADE",
   },
   inputContainer: {
     width: "80%",
+    
   },
   input: {
     backgroundColor: "white",
@@ -141,4 +147,9 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  registerText:{
+    color: "#202124",
+    marginTop: 10,
+
+  }
 });
