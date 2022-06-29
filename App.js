@@ -3,6 +3,7 @@ import { NativeRouter, Link, Route, Routes } from "react-router-native";
 import { fetchUsers } from "./firebase/functions";
 import { useState, useEffect } from "react";
 import LoginScreen from "./components/LoginScreen";
+
 import Home from "./components/Home";
 import IndividualDeck from "./components/IndividualDeck";
 import EnterWords from "./components/EnterWords";
@@ -69,6 +70,7 @@ export default function App() {
       </View>
     </NativeRouter>
   );
+
 }
 
 const styles = StyleSheet.create({
