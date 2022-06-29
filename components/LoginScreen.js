@@ -6,8 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { React, useEffect, useState } from "react";
+
+import { React, useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
+
+
 import { NativeRouter, Link, Route, Routes } from "react-router-native";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,9 +23,13 @@ import {
 import { auth } from "../firebase";
 
 const LoginScreen = () => {
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
   const auth = getAuth();
+
+  const navigate = useNavigate();
 
   // for when we have navigation
   // useEffect(() => {
@@ -44,10 +54,12 @@ const LoginScreen = () => {
   // };
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Logged in with ", user.email);
+        setUser(userCredential);
+      })
+      .then(() => {
+        navigate("/");
       })
       .catch((error) => {
         alert(error.message);
@@ -71,12 +83,15 @@ const LoginScreen = () => {
           secureTextEntry
         />
       </View>
+
+
       <Text style={styles.registerText}>Not Registered? 
 
       <Link to="/register" >
             <Text style={styles.linkText} >  Click here</Text>
           </Link>
          </Text> 
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -86,7 +101,9 @@ const LoginScreen = () => {
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+
      
+
       </View>
     </KeyboardAvoidingView>
   );
@@ -103,7 +120,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "80%",
-    
   },
   input: {
     backgroundColor: "white",
@@ -144,9 +160,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-  registerText:{
+  registerText: {
     color: "#202124",
     marginTop: 10,
+
+ 
+
 
   },
   linkText :{
@@ -154,4 +173,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "blue",
   }
+
 });
