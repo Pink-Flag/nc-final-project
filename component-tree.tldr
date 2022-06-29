@@ -3018,8 +3018,8 @@
             "parentId": "page",
             "childIndex": 95,
             "point": [
-              -236,
-              467
+              -240,
+              471
             ],
             "rotation": 0,
             "text": "langOfDeck (str), setLangOfDec (f)",
@@ -3028,7 +3028,7 @@
               "size": "small",
               "isFilled": false,
               "dash": "draw",
-              "scale": 0.8600823045267493,
+              "scale": 0.806839114246522,
               "font": "script",
               "textAlign": "middle"
             }

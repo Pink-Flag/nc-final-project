@@ -24,6 +24,45 @@ import { db, auth } from "../firebase.js";
   });
  }
 
+ const [users, setUsers] = useState([]);
+
+ const userArray = [];
+ useEffect(() => {
+   fetchUsers()
+     .then((querySnapshot) => {
+       querySnapshot.forEach((doc) => {
+         userArray.push({
+           id: doc.id,
+           name: doc.data().name,
+           avatar_url: doc.data().avatar_url,
+         });
+       });
+       setUsers([...userArray]);
+     })
+     .then(() => {
+       console.log(users);
+     });
+ }, []);
+
+//  if (users.length !== 0) {
+//   return (
+//     <View style={styles.container}>
+//       {users.map((user) => {
+//         return <Text> {user.name}</Text>;
+//       })}
+//       {/* <LoginScreen /> */}
+//     </View>
+//   );
+// } else {
+//   return (
+//     <View style={styles.container}>
+//       <Text>Loading...</Text>
+//     </View>
+//   );
+// }
+//}
+
+
 // //get single user
 // useEffect(() => {
 //   const docRef = doc(db, "users", "a4VG40pWrBH0HZCoue9z");
