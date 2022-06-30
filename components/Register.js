@@ -18,6 +18,8 @@ import { Picker } from "@react-native-picker/picker";
 import { UserContext } from "./UserContext";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigate } from "react-router-dom";
+import { addNewUser } from "../firebase/functions";
+
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Register = () => {
@@ -34,33 +36,33 @@ const Register = () => {
   const defaultAvatar =
     "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg";
 
-  const handleSignup = async () => {
+  const handleSignup = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-
-    try {
-      setLoading(true);
-      const { testUser } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      await updateProfile(auth.currentUser, {
-        displayName: username,
-        photoURL: avatarUrl,
+    setLoading(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        // addNewUser(auth.currentUser.uid);
+        updateProfile(auth.currentUser, {
+          displayName: username,
+          photoURL: avatarUrl,
+        });
+        setUser(auth.currentUser);
+      })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/");
+        }, 500);
+      })
+      .catch((error) => {
+        alert(error.message);
+        setLoading(false);
       });
-      setUser(auth.currentUser);
-      setLoading(false);
-
-      navigate("/");
-    } catch (error) {
-      alert(error.message);
-      setLoading(false);
-    }
   };
+
   return (
     <>
       <ScrollView>
