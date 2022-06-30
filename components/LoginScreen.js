@@ -12,7 +12,7 @@ import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
 
-import { NativeRouter, Link, Route, Routes } from "react-router-native";
+import { Link} from "react-router-native";
 
 import {
   getAuth,
@@ -67,7 +67,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="position">
+    <KeyboardAvoidingView style={styles.container} behavior="height" >
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-    marginLeft: 70,
+    // marginLeft: 70,
   },
   button: {
     backgroundColor: "#5c6784",
