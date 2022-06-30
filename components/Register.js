@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { React, useState, useContext } from "react";
 import {
@@ -17,6 +18,9 @@ import { Picker } from "@react-native-picker/picker";
 import { UserContext } from "./UserContext";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigate } from "react-router-dom";
+import { addNewUser } from "../firebase/functions";
+
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -32,37 +36,36 @@ const Register = () => {
   const defaultAvatar =
     "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg";
 
-  const handleSignup = async () => {
+  const handleSignup = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-
-    try {
-      setLoading(true);
-      const { testUser } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      await updateProfile(auth.currentUser, {
-        displayName: username,
-        photoURL: avatarUrl,
+    setLoading(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        // addNewUser(auth.currentUser.uid);
+        updateProfile(auth.currentUser, {
+          displayName: username,
+          photoURL: avatarUrl,
+        });
+        setUser(auth.currentUser);
+      })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/");
+        }, 500);
+      })
+      .catch((error) => {
+        alert(error.message);
+        setLoading(false);
       });
-      setUser(auth.currentUser);
-      setLoading(false);
-      navigate("/");
-    } catch (error) {
-      alert(error.message);
-      setLoading(false);
-    }
   };
+
   return (
     <>
-
-      <KeyboardAvoidingView style={styles.container} behavior="height" >
-
+      <ScrollView>
         <View style={styles.headerView}>
           <Text style={styles.header}>Vocab</Text>
         </View>
@@ -118,20 +121,19 @@ const Register = () => {
           <View style={styles.inputView}>
             <Text> I want to learn</Text>
             <View style={styles.editPicker}>
-            <Picker
-              selectedValue={defaultLanguage}
-              style={styles.inputPicker}
-              onValueChange={(itemValue, itemIndex) =>
-                setdefaultLanguage(itemValue)
-              }
-            >
-              <Picker.Item label="French" value="French" />
-              <Picker.Item label="German" value="German" />
-              <Picker.Item label="Spanish" value="Spanish" />
-            </Picker>
-            <Text style={styles.required}>* required fields</Text>
-
-          
+              <Picker
+                selectedValue={defaultLanguage}
+                style={styles.inputPicker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setdefaultLanguage(itemValue)
+                }
+              >
+                <Picker.Item label="French" value="French" />
+                <Picker.Item label="German" value="German" />
+                <Picker.Item label="Spanish" value="Spanish" />
+              </Picker>
+              <Text style={styles.required}>* required fields</Text>
+            </View>
           </View>
         </View>
 
@@ -146,7 +148,8 @@ const Register = () => {
             <Text style={styles.buttonOutlineText}>Register & Login</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
+
       <View>
         {loading && (
           <Spinner visible={loading} textStyle={styles.spinnerTextStyle} />
@@ -179,7 +182,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-
   },
   button: {
     backgroundColor: "#5c6784",
@@ -248,9 +250,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     marginTop: 5,
-    width: "100%",    
-  }
-
+    width: "100%",
+  },
 });
 
 export default Register;
