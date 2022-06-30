@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
+  ActivityIndicator, 
+  ScrollView
 } from "react-native";
 import { React, useState, useContext } from "react";
 import {
@@ -17,6 +18,7 @@ import { Picker } from "@react-native-picker/picker";
 import { UserContext } from "./UserContext";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigate } from "react-router-dom";
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -52,6 +54,7 @@ const Register = () => {
       });
       setUser(auth.currentUser);
       setLoading(false);
+      console.log(user);
       navigate("/");
     } catch (error) {
       alert(error.message);
@@ -60,8 +63,8 @@ const Register = () => {
   };
   return (
     <>
-
-      <KeyboardAvoidingView style={styles.container} behavior="height" >
+          
+      <ScrollView>
 
         <View style={styles.headerView}>
           <Text style={styles.header}>Vocab</Text>
@@ -134,6 +137,7 @@ const Register = () => {
           
           </View>
         </View>
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -146,7 +150,8 @@ const Register = () => {
             <Text style={styles.buttonOutlineText}>Register & Login</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+        </ScrollView>
+
       <View>
         {loading && (
           <Spinner visible={loading} textStyle={styles.spinnerTextStyle} />

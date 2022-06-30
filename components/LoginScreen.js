@@ -10,10 +10,7 @@ import {
 import { React, useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
-
-
 import { Link} from "react-router-native";
-
 import {
   getAuth,
   createUserWithEmailAndPassword,

@@ -1,19 +1,41 @@
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { Link } from "react-router-native";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigate } from "react-router-dom";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { UserContext } from "./UserContext";
+import defaultAvatar from "../images/defaultAvatar.jpg"
 
 const Profile = () => {
 
-  const user = {
+  const thisUser = {
     username: "sloth_report",
     password: "parliament",
     avatar_url: "https://media.newyorker.com/photos/5a4bf9bd1b4b766677b8c39f/1:1/w_3629,h_3629,c_limit/Gopnik-Clement-Attlee.jpg",
     email: "clement@atlee.com",
     default_language: "French"
   }
+  const [profilePicture, setProfilePicture] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
 
-  const [defaultLanguage, setdefaultLanguage] = useState(user.default_language);
+  // const [defaultLanguage, setdefaultLanguage] = useState(user.default_language);
+
+
+  // const updatePicture = () => {
+  //   setLoading(true);
+
+  //   if (user.photoURL) {
+  //     setProfilePicture(user.photoURL)
+  //   } else {
+  //     setProfilePicture("https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg")
+  //   }
+  //   setLoading(false);
+  // }
+
+  // // setProfilePicture()
 
   return (
     <>
@@ -32,10 +54,17 @@ const Profile = () => {
       </TouchableOpacity> */}
 
       <View>
-        <Image
-          style={styles.image}
-          source={{ uri: user.avatar_url }} />
-        <Text style={styles.username}>{user.username}</Text>
+      
+        {user.photoURL === undefined ?
+          <Image
+            style={styles.image}
+
+            source={{ uri: "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg" }} />
+          : <Image
+            style={styles.image}
+
+            source={{ uri: user.photoURL}} />}
+        <Text style={styles.username}>{user.displayName}</Text>
       </View>
 
       <ScrollView>
@@ -44,7 +73,7 @@ const Profile = () => {
           <Text> Avatar link</Text>
           <View style={styles.editTitle}>
             <TextInput
-              value={user.avatar_url}
+              value={user.photoURL}
               style={styles.input}
             />
             <TouchableOpacity
@@ -76,7 +105,7 @@ const Profile = () => {
           <Text> Username</Text>
           <View style={styles.editTitle}>
             <TextInput
-              value={user.username}
+              value={user.displayName}
               style={styles.input}
             />
             <TouchableOpacity
@@ -92,7 +121,7 @@ const Profile = () => {
           <Text> Password</Text>
           <View style={styles.editTitle}>
             <TextInput
-              value={user.password}
+              value={user.providerId}
               style={styles.input}
               secureTextEntry
             />
@@ -105,7 +134,7 @@ const Profile = () => {
           </View>
         </View>
 
-        <View style={styles.inputView}>
+        {/* <View style={styles.inputView}>
           <Text> Default Language</Text>
           <View style={styles.editPicker}>
             <Picker
@@ -120,7 +149,7 @@ const Profile = () => {
               <Picker.Item label="Spanish" value="Spanish" />
             </Picker>
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     </>
   );
@@ -200,14 +229,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginLeft: 5,
     marginTop: 5,
-    marginBottom: 10,    
+    marginBottom: 10,
   }
 });
-
-// marginTop: 10,
-// marginBottom: 10,
-// marginLeft: 10,
-// marginRight: 10,
-// width: "90%",
-// alignSelf: "flex-start",
-// justifyContent: "space-evenly"

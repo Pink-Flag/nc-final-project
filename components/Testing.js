@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from "react-native";
 import React from "react";
-
 import { useNavigate } from "react-router-dom";
 
 const Testing = () => {
