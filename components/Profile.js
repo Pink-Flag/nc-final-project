@@ -1,41 +1,42 @@
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
-import { React, useState, useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { React, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigate } from "react-router-dom";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { UserContext } from "./UserContext";
-import defaultAvatar from "../images/defaultAvatar.jpg"
+import defaultAvatar from "../images/defaultAvatar.jpg";
 
 const Profile = () => {
-
   const thisUser = {
     username: "sloth_report",
     password: "parliament",
-    avatar_url: "https://media.newyorker.com/photos/5a4bf9bd1b4b766677b8c39f/1:1/w_3629,h_3629,c_limit/Gopnik-Clement-Attlee.jpg",
+    avatar_url:
+      "https://media.newyorker.com/photos/5a4bf9bd1b4b766677b8c39f/1:1/w_3629,h_3629,c_limit/Gopnik-Clement-Attlee.jpg",
     email: "clement@atlee.com",
-    default_language: "French"
-  }
+    default_language: "French",
+  };
   const [profilePicture, setProfilePicture] = useState("");
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  console.log(user);
 
-  // const [defaultLanguage, setdefaultLanguage] = useState(user.default_language);
-
-
-  // const updatePicture = () => {
-  //   setLoading(true);
-
-  //   if (user.photoURL) {
-  //     setProfilePicture(user.photoURL)
-  //   } else {
-  //     setProfilePicture("https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg")
-  //   }
-  //   setLoading(false);
-  // }
-
-  // // setProfilePicture()
+  useEffect(() => {
+    if (user.photoURL === null) {
+      setProfilePicture(
+        "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg"
+      );
+    } else {
+      setProfilePicture(user.photoURL);
+    }
+  }, [user]);
 
   return (
     <>
@@ -43,43 +44,23 @@ const Profile = () => {
         <Text style={styles.profileHeader}>Your profile</Text>
       </View>
 
-      {/* Button to redirect home
-      
-      <TouchableOpacity
-        style={[styles.button, styles.buttonOutline]}
-      >
-        <Link to="/">
-          <Text style={styles.buttonOutlineText}>Home</Text>
-        </Link>
-      </TouchableOpacity> */}
-
       <View>
-      
-        {user.photoURL === undefined ?
-          <Image
-            style={styles.image}
+        <Image
+          style={styles.image}
+          source={{
+            uri: profilePicture,
+          }}
+        />
 
-            source={{ uri: "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg" }} />
-          : <Image
-            style={styles.image}
-
-            source={{ uri: user.photoURL}} />}
         <Text style={styles.username}>{user.displayName}</Text>
       </View>
 
       <ScrollView>
-
         <View style={styles.inputView}>
           <Text> Avatar link</Text>
           <View style={styles.editTitle}>
-            <TextInput
-              value={user.photoURL}
-              style={styles.input}
-            />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-            >
-
+            <TextInput value={user.photoURL} style={styles.input} />
+            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
               <Text style={styles.buttonOutlineText}>Edit</Text>
             </TouchableOpacity>
           </View>
@@ -88,14 +69,8 @@ const Profile = () => {
         <View style={styles.inputView}>
           <Text> Email address</Text>
           <View style={styles.editTitle}>
-            <TextInput
-              value={user.email}
-              style={styles.input}
-            />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-            >
-
+            <TextInput value={user.email} style={styles.input} />
+            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
               <Text style={styles.buttonOutlineText}>Edit</Text>
             </TouchableOpacity>
           </View>
@@ -104,14 +79,8 @@ const Profile = () => {
         <View style={styles.inputView}>
           <Text> Username</Text>
           <View style={styles.editTitle}>
-            <TextInput
-              value={user.displayName}
-              style={styles.input}
-            />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-            >
-
+            <TextInput value={user.displayName} style={styles.input} />
+            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
               <Text style={styles.buttonOutlineText}>Edit</Text>
             </TouchableOpacity>
           </View>
@@ -125,10 +94,7 @@ const Profile = () => {
               style={styles.input}
               secureTextEntry
             />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-            >
-
+            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
               <Text style={styles.buttonOutlineText}>Edit</Text>
             </TouchableOpacity>
           </View>
@@ -214,7 +180,7 @@ const styles = StyleSheet.create({
   },
   editTitle: {
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   inputPicker: {
     backgroundColor: "white",
@@ -230,5 +196,5 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 5,
     marginBottom: 10,
-  }
+  },
 });

@@ -20,7 +20,7 @@ import { useState, useEffect } from "react";
 export const fetchUsers = () => {
   return getDocs(collection(db, "users")).then((querySnapshot) => {
     // querySnapshot.forEach((doc) => {
-    //   console.log(doc.id, "=>", doc.data());
+
     // });
     return querySnapshot;
   });
@@ -69,7 +69,7 @@ useEffect(() => {
 //   const docRef = doc(db, "users", "a4VG40pWrBH0HZCoue9z");
 //   getDoc(docRef).then((docSnap) => {
 //     if (docSnap.exists()) {
-//       console.log("Document data:", docSnap.data());
+
 //     } else {
 //       console.log("No such document!");
 //     }

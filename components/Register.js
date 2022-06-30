@@ -5,8 +5,8 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator, 
-  ScrollView
+  ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { React, useState, useContext } from "react";
 import {
@@ -54,7 +54,7 @@ const Register = () => {
       });
       setUser(auth.currentUser);
       setLoading(false);
-      console.log(user);
+
       navigate("/");
     } catch (error) {
       alert(error.message);
@@ -63,9 +63,7 @@ const Register = () => {
   };
   return (
     <>
-          
       <ScrollView>
-
         <View style={styles.headerView}>
           <Text style={styles.header}>Vocab</Text>
         </View>
@@ -121,22 +119,20 @@ const Register = () => {
           <View style={styles.inputView}>
             <Text> I want to learn</Text>
             <View style={styles.editPicker}>
-            <Picker
-              selectedValue={defaultLanguage}
-              style={styles.inputPicker}
-              onValueChange={(itemValue, itemIndex) =>
-                setdefaultLanguage(itemValue)
-              }
-            >
-              <Picker.Item label="French" value="French" />
-              <Picker.Item label="German" value="German" />
-              <Picker.Item label="Spanish" value="Spanish" />
-            </Picker>
-            <Text style={styles.required}>* required fields</Text>
-
-          
+              <Picker
+                selectedValue={defaultLanguage}
+                style={styles.inputPicker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setdefaultLanguage(itemValue)
+                }
+              >
+                <Picker.Item label="French" value="French" />
+                <Picker.Item label="German" value="German" />
+                <Picker.Item label="Spanish" value="Spanish" />
+              </Picker>
+              <Text style={styles.required}>* required fields</Text>
+            </View>
           </View>
-        </View>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -150,7 +146,7 @@ const Register = () => {
             <Text style={styles.buttonOutlineText}>Register & Login</Text>
           </TouchableOpacity>
         </View>
-        </ScrollView>
+      </ScrollView>
 
       <View>
         {loading && (
@@ -184,7 +180,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-
   },
   button: {
     backgroundColor: "#5c6784",
@@ -253,9 +248,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     marginTop: 5,
-    width: "100%",    
-  }
-
+    width: "100%",
+  },
 });
 
 export default Register;

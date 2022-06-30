@@ -10,7 +10,7 @@ import {
 import { React, useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
-import { Link} from "react-router-native";
+import { Link } from "react-router-native";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -28,32 +28,10 @@ const LoginScreen = () => {
 
   const navigate = useNavigate();
 
-  // for when we have navigation
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       // navigate here
-  //     } else {
-  //       console.log("user not logged in");
-  //     }
-  //   }
-  // }, [])
-
-  // const handleSignup = () => {
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       const user = userCredential.user;
-  //       console.log("Registered with ", user.email);
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //     });
-  // };
-
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUser(userCredential);
+        setUser(userCredential.user);
       })
       .then(() => {
         navigate("/");
@@ -64,7 +42,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height" >
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -81,13 +59,12 @@ const LoginScreen = () => {
         />
       </View>
 
-
-      <Text style={styles.registerText}>Not Registered? 
-
-      <Link to="/register" >
-            <Text style={styles.linkText} >  Click here</Text>
-          </Link>
-         </Text> 
+      <Text style={styles.registerText}>
+        Not Registered?
+        <Link to="/register">
+          <Text style={styles.linkText}> Click here</Text>
+        </Link>
+      </Text>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -98,9 +75,6 @@ const LoginScreen = () => {
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-
-     
-
       </View>
     </KeyboardAvoidingView>
   );
@@ -160,15 +134,10 @@ const styles = StyleSheet.create({
   registerText: {
     color: "#202124",
     marginTop: 10,
-
- 
-
-
   },
-  linkText :{
+  linkText: {
     textDecorationLine: "underline",
     marginTop: 10,
     color: "blue",
-  }
-
+  },
 });
