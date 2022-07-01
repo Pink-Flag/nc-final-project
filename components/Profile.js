@@ -35,7 +35,7 @@ const Profile = () => {
       setProfilePicture(user.photoURL);
     }
   }, [user]);
-  console.log(user);
+
   const dataRef = doc(db, "users", user.uid);
 
   const updateAvatar = () => {

@@ -31,10 +31,8 @@ export const fetchTranslation = (wordToTranslate = "spoon") => {
     params
   )
     .then((response) => response.json())
-    .then((body) =>
-      console.log(
-        body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
-          .text
-      )
-    );
+    .then((body) => {
+      return body.results[0].lexicalEntries[0].entries[0].senses[0]
+        .translations[0].text;
+    });
 };
