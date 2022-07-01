@@ -1,14 +1,107 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from "react-native";
 import React from "react";
 
 const EnterWords = () => {
+  const imagePath = "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
+
   return (
     <View>
-      <Text>EnterWords</Text>
+      <View style={styles.englishInputContainer}>
+        <View style={styles.shiftedContainer}>
+          <View style={styles.micInputContainer}>
+            <Image style={styles.image} source={{ uri: imagePath }} />
+            <TextInput style={styles.textinput} placeholder="Enter word"></TextInput>
+            <
+          </View>
+          <View style={styles.englishWordContainer}>
+            <Text style={styles.englishWord}>English word</Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.targetOutputContainer}>
+        <View>
+          <Text style={styles.targetWord}>Foreign word here</Text>
+        </View>
+        <View>
+          <Text style={styles.queryText}>Placeholder for where word querying will take place</Text>
+        </View>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}><Text>Next</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}><Text>Return to deck</Text></TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 export default EnterWords;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    marginRight: 10
+  },
+  shiftedContainer: {
+    marginRight: 25
+  },
+  textinput: {
+    marginLeft: 10,
+    fontSize: 20,
+    borderWidth: 2,
+    minWidth: "50%",
+    padding: 5,
+    borderRadius: 10,
+    backgroundColor: "white"
+  },
+  englishInputContainer: {
+    alignItems: "center",
+    padding: 1,
+    borderWidth: 2,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginTop: 10
+  },
+  englishWordContainer: {
+    alignItems: "center"
+  },
+  micInputContainer: {
+    marginTop: 15,
+    marginBottom: 15,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "90%"
+  },
+  targetOutputContainer: {
+    alignItems: "center",
+    padding: 20,
+    borderWidth: 2,
+    borderRadius: 10
+  },
+  button: {
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    minWidth: "65%",
+  },
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#5c6784",
+    borderWidth: 2,
+  },
+
+  queryText: {
+    fontSize: 20,
+    marginTop: 20,
+    marginBottom: 20
+  },
+  targetWord: {
+    fontSize: 20
+  },
+  englishWord: {
+    marginTop: 15,
+    marginBottom: 25,
+    fontSize: 20
+  }
+});
