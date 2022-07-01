@@ -21,7 +21,7 @@ const StrictTest = () => {
         <Text style={styles.attemptsCount}>Number of attempts: 4</Text>
       </View>
       <View style={styles.targetContainer}>
-        <TextInput style={styles.targetWord} value={userGuess} placeholder="Your response here"></TextInput>
+        <TextInput style={styles.targetWord} value={userGuess} onChangeText={(input) => setUserGuess(input)} placeholder="Your response here"></TextInput>
       </View>
       <TouchableOpacity style={[styles.submitButton, styles.button]}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>
       <TouchableOpacity style={[styles.backButton, styles.button]} onPress={() => {
