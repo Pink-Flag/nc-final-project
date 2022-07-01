@@ -1,21 +1,21 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from "react-native";
+import { useNavigate } from 'react-router-dom';
 import React from "react";
 
 const EnterWords = () => {
+  const navigate = useNavigate();
   const imagePath = "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
 
   return (
     <View>
       <View style={styles.englishInputContainer}>
-        <View style={styles.shiftedContainer}>
-          <View style={styles.micInputContainer}>
-            <Image style={styles.image} source={{ uri: imagePath }} />
-            <TextInput style={styles.textinput} placeholder="Enter word"></TextInput>
-            <
-          </View>
-          <View style={styles.englishWordContainer}>
-            <Text style={styles.englishWord}>English word</Text>
-          </View>
+        <View style={styles.micInputContainer}>
+          <Image style={styles.image} source={{ uri: imagePath }} />
+          <TextInput style={styles.textinput} placeholder="Enter word"></TextInput>
+          <TouchableOpacity style={[styles.miniButtonOutline, styles.miniButton]}><Text style={styles.miniButtonText}>Go</Text></TouchableOpacity>
+        </View>
+        <View style={styles.englishWordContainer}>
+          <Text style={styles.englishWord}>English word</Text>
         </View>
       </View>
       <View style={styles.targetOutputContainer}>
@@ -25,8 +25,10 @@ const EnterWords = () => {
         <View>
           <Text style={styles.queryText}>Placeholder for where word querying will take place</Text>
         </View>
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}><Text>Next</Text></TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}><Text>Return to deck</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}><Text >Next</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]} onPress={() => {
+            navigate("/viewdecks");
+          }}><Text>Return to deck</Text></TouchableOpacity>
       </View>
     </View>
   );
@@ -40,9 +42,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 100,
     marginRight: 10
-  },
-  shiftedContainer: {
-    marginRight: 25
   },
   textinput: {
     marginLeft: 10,
@@ -84,13 +83,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     minWidth: "65%",
   },
+  miniButton: {
+    height: "100%",
+    alignItems: "center",
+    marginLeft: 10,
+    borderRadius: 10,
+    width: "15%"
+  },
+  miniButtonText: {
+    fontSize: 20
+  },
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
+    marginBottom: 5,
     borderColor: "#5c6784",
     borderWidth: 2,
   },
-
+  miniButtonOutline: {
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 2,
+  },
   queryText: {
     fontSize: 20,
     marginTop: 20,
