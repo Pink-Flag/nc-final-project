@@ -15,6 +15,7 @@ import Testing from "./components/Testing";
 import VanillaTest from "./components/VanillaTest";
 import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
+import MixedTesting from "./components/MixedTesting";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -57,6 +58,9 @@ export default function App() {
             <Link to="/stricttest">
               <Text>StrictTest</Text>
             </Link>
+            <Link to="/mixedtesting">
+              <Text>mixedtesting</Text>
+            </Link>
           </View>
           <Routes>
             <Route exact path="/" element={<Home />} />
@@ -70,6 +74,7 @@ export default function App() {
             <Route path="/vanillatest" element={<VanillaTest />} />
             <Route path="/pairstest" element={<PairsTest />} />
             <Route path="/stricttest" element={<StrictTest />} />
+            <Route path="/mixedTesting" element={<MixedTesting />} />
           </Routes>
         </View>
       </NativeRouter>

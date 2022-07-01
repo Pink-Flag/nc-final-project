@@ -1,49 +1,49 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import { React, useContext } from "react";
 import { Link } from "react-router-native";
+import { UserContext } from "./UserContext";
 
 const Home = () => {
-
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <>
-    <View>
-      <Text style={styles.welcomeMessage}>Welcome, username!</Text>
-    </View>
+      <View>
+        {user ? (
+          <Text style={styles.welcomeMessage}>
+            Welcome, {user.displayName}!
+          </Text>
+        ) : (
+          <Text></Text>
+        )}
+      </View>
 
-<View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-          >
-            <Link to="/individualdeck">
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+          <Link to="/individualdeck">
             <Text style={styles.buttonOutlineText}>Create new deck</Text>
-            </Link>
-          </TouchableOpacity>
+          </Link>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-          >
-         <Link to="/viewdecks">
-         <Text style={styles.buttonOutlineText}>View existing decks</Text>
-            </Link>
-          </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+          <Link to="/viewdecks">
+            <Text style={styles.buttonOutlineText}>View existing decks</Text>
+          </Link>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-          >
-            <Link to="/profile">
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+          <Link to="/profile">
             <Text style={styles.buttonOutlineText}>View profile</Text>
-            </Link>
-          </TouchableOpacity>
-        </View>
-</>
+          </Link>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  
   buttonContainer: {
     width: "60%",
     justifyContent: "center",
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     color: "#5c6784",
     fontWeight: "700",
     fontSize: 16,
-  }, 
+  },
   button: {
     backgroundColor: "#5c6784",
     width: "100%",
@@ -73,10 +73,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
-    margin: 25
+    margin: 25,
   },
   welcomeMessage: {
     fontSize: 20,
     padding: 15,
-  }
+  },
 });

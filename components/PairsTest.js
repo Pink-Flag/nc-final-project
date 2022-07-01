@@ -23,13 +23,17 @@ const PairsTest = () => {
       
         <TouchableOpacity
             style={[styles.buttonWord, styles.buttonOutline]}
+
             key={word.word}
+
           >
             <Text style={styles.buttonOutlineText}>{word.word}</Text>
           </TouchableOpacity>
         <TouchableOpacity
             style={[styles.buttonWord, styles.buttonOutline]}
+
             key={word.definition}
+
           >
             <Text style={styles.buttonOutlineText}>{word.definition}</Text>
           </TouchableOpacity>

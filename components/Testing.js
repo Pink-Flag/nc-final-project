@@ -1,44 +1,60 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from "react-native";
 import React from "react";
-import { NativeRouter, Link, Route, Routes } from "react-router-native";
+import { useNavigate } from "react-router-dom";
 
 const Testing = () => {
+
+    const navigate = useNavigate();
   return (
     <>
     <View>
       <Text style={styles.testHeader}>Time to test yourself !</Text>
       <Text  style={styles.testHeader}> Select your test type : </Text>
     </View>
+   
     <View style={styles.buttonContainer}>
    
     <TouchableOpacity
       style={[styles.button, styles.buttonOutline]}
+      onPress={() => {
+        navigate('/vanillatest');
+      }}
     >
-       <Link to="/vanillatest" >
+      
       <Text style={styles.buttonOutlineText}>Vanilla</Text>
-      </Link>
+     
     </TouchableOpacity>
   
     <TouchableOpacity
       style={[styles.button, styles.buttonOutline]}
+      onPress={() => {
+        navigate('/pairstest');
+      }}
     >
-       <Link to="/pairstest" >
+       
       <Text style={styles.buttonOutlineText}>Pair matching</Text>
-      </Link>
+      
     </TouchableOpacity>
     <TouchableOpacity
       style={[styles.button, styles.buttonOutline]}
+      onPress={() => {
+        navigate('/stricttest')
+      }}
     >
-       <Link to="/stricttest" >
+       
       <Text style={styles.buttonOutlineText}>Strict spelling</Text>
-      </Link>
+     
     </TouchableOpacity>
     <TouchableOpacity
       style={[styles.button, styles.buttonOutline]}
+      onPress={() => {
+        navigate('/mixedtesting')
+      }}
     >
       <Text style={styles.buttonOutlineText}>Mixed tests</Text>
     </TouchableOpacity>
   </View>
+ 
   </>
   );
 };
@@ -64,6 +80,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -75,7 +92,8 @@ const styles = StyleSheet.create({
     color: "#5c6784",
     fontWeight: "700",
     fontSize: 20,
-    marginTop:"20%"
+    marginTop:"20%",
+    paddingBottom:10,
   },
   buttonContainer: {
     flexDirection: "row",
