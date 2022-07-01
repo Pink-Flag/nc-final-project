@@ -19,6 +19,8 @@ import { UserContext } from "./UserContext";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigate } from "react-router-dom";
 import { addNewUser } from "../firebase/functions";
+import { db, auth } from "../firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -33,8 +35,6 @@ const Register = () => {
   const auth = getAuth();
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const defaultAvatar =
-    "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg";
 
   const handleSignup = () => {
     if (password !== confirmPassword) {
@@ -44,12 +44,23 @@ const Register = () => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        // addNewUser(auth.currentUser.uid);
-        updateProfile(auth.currentUser, {
-          displayName: username,
-          photoURL: avatarUrl,
+        const data = {
+          defaultLanguage: defaultLanguage,
+          email: email,
+        };
+        setDoc(doc(db, "users", auth.currentUser.uid), data).then(() => {
+          updateProfile(auth.currentUser, {
+            displayName: username,
+            photoURL: avatarUrl,
+          });
+          setUser({
+            displayName: username,
+            email: email,
+            photoURL: avatarUrl,
+            defaultLanguage: defaultLanguage,
+            uid: auth.currentUser.uid,
+          });
         });
-        setUser(auth.currentUser);
       })
       .then(() => {
         setTimeout(() => {

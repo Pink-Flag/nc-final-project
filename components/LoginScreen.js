@@ -17,7 +17,8 @@ import {
   signInWithEmailAndPassword,
   getRedirectResult,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { db, auth } from "../firebase";
+import { collection, doc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
   const { user, setUser } = useContext(UserContext);
@@ -31,9 +32,25 @@ const LoginScreen = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUser(userCredential.user);
+        console.log(user, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        const docRef = doc(db, "users", userCredential.user.uid);
+        getDoc(docRef).then((docSnap) => {
+          setUser({
+            displayName:
+              docSnap._document.data.value.mapValue.fields.displayName
+                .stringValue,
+            email: userCredential.user.email,
+            photoURL:
+              docSnap._document.data.value.mapValue.fields.photoURL.stringValue,
+            uid: userCredential.user.uid,
+            defaultLanguage:
+              docSnap._document.data.value.mapValue.fields.defaultLanguage
+                .stringValue,
+          });
+        });
       })
       .then(() => {
+        console.log(user);
         navigate("/");
       })
       .catch((error) => {
