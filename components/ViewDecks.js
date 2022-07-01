@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View, TouchableOpacity, 
 ScrollView } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
 import RadioButtonRN from "radio-buttons-react-native";
 import { useNavigate } from "react-router-dom";
+import {  doc, setDoc, addDoc, collection,   getDocs, updateDoc, deleteField} from "firebase/firestore";
+
+import { db } from "../firebase";
 
 const ViewDecks = () => {
   const [defaultLanguage, setdefaultLanguage] = useState("French");
   const [sortBy, setSortBy] = useState("French");
+  const [allDecks, setAllDecks] = useState([])
   const navigate = useNavigate();
 
   const data = [
@@ -26,6 +30,22 @@ const ViewDecks = () => {
     'Animals',
   ]
 
+    useEffect(() => {
+ getDocs(collection(db, "decks")).then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+      const newDeck = {
+        id: doc.id,
+        data: doc.data()
+      }
+      setAllDecks(current =>[ newDeck,...current])
+  })
+    
+ })
+  // console.log(allDecks)
+},[])
+
+ console.log(allDecks.length)
+if(allDecks !== 0){
   return (
     <>
       <View style={styles.container}>
@@ -64,14 +84,21 @@ const ViewDecks = () => {
           <RadioButtonRN data={data} style={styles.radio}  selectedBtn={(e) => console.log(e)} />
         </View>
         <ScrollView style={styles.scrollContainer}>
-         {decks.map((deck) => {
-          return<View style={styles.deckContainer} key={deck}>
-          <Text style={styles.decks}> {deck}</Text>
+         {allDecks.map((deck) => {
+          // console.log(deck, "IN RETURN <<<<<<<<<<<<<<<")
+          return<View style={styles.deckContainer} key={deck.id}>
+          <Text style={styles.decks}> {deck.data.list_name}</Text>
           <TouchableOpacity style={[styles.buttonTest, styles.buttonOutlineTest]}
            onPress={() => {
               navigate('/testing');
           }}>
           <Text style={styles.buttonOutlineTextTest}>Test</Text>
+        </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonTest, styles.buttonOutlineTest]}
+           onPress={() => {
+              navigate(`/individualdeck/${deck.id}`);
+          }}>
+          <Text style={styles.buttonOutlineTextTest}>View</Text>
         </TouchableOpacity>
           </View>
          })}
@@ -84,6 +111,9 @@ const ViewDecks = () => {
       </View>
     </>
   );
+        }else{
+          <Text>Loading...</Text>
+        }
 };
 
 export default ViewDecks;
