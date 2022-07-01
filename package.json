@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-picker/picker": "^2.4.2",
+    "@react-native-voice/voice": "^3.2.4",
     "@react-navigation/native": "^6.0.10",
     "axios": "^0.27.2",
     "expo": "~45.0.0",

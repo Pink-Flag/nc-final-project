@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, LogBox } from "react-native";
+import { Button, StyleSheet, Text, View, LogBox } from "react-native";
 import { NativeRouter, Link, Route, Routes } from "react-router-native";
 import { fetchUsers } from "./firebase/functions";
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import LoginScreen from "./components/LoginScreen";
 import { UserContext } from "./components/UserContext";
 
@@ -19,6 +19,8 @@ import MixedTesting from "./components/MixedTesting";
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [results, setResults] = useState([]);
+  const [isListening, setIsListening] = useState(false);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

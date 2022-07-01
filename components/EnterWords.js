@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from "reac
 import { useNavigate } from 'react-router-dom';
 import React from "react";
 
+import SpeechToText from "../SpeechToText";
+
 const EnterWords = () => {
   const navigate = useNavigate();
   const imagePath = "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
