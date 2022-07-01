@@ -9,7 +9,7 @@ import {
 
 import { React, useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-native";
 import {
   getAuth,
@@ -32,13 +32,11 @@ const LoginScreen = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(user, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         const docRef = doc(db, "users", userCredential.user.uid);
         getDoc(docRef).then((docSnap) => {
           setUser({
             displayName:
-              docSnap._document.data.value.mapValue.fields.displayName
-                .stringValue,
+              docSnap._document.data.value.mapValue.fields.username.stringValue,
             email: userCredential.user.email,
             photoURL:
               docSnap._document.data.value.mapValue.fields.photoURL.stringValue,
@@ -50,7 +48,6 @@ const LoginScreen = () => {
         });
       })
       .then(() => {
-        console.log(user);
         navigate("/");
       })
       .catch((error) => {
