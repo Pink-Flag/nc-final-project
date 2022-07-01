@@ -1,20 +1,26 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  getDoc,
+  updateDoc,
+  deleteField,
+} from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { fetchDictionaryEntry } from "../dictionary/dictionaryFunctions";
 const IndividualDeck = () => {
   const navigate = useNavigate();
-
-  const deck = {
-    list_name: "Travel",
-    language: "DE_GB",
-    words: [
-      { word: "Wagen", definition: "Car" },
-      { word: "Boot", definition: "Boat" },
-      { word: "Flugzeug", definition: "Plane" },
-      { word: "Bus", definition: "Bus" },
-      { word: "Zug", definition: "Train" },
-    ],
-  };
+  const [deck, setDeck] = useState([]);
+  useEffect(() => {
+    getDoc(doc(db, "decks", "Sxoxw7XSYRNljsOahdD5")).then((querySnapshot) => {
+      setDeck(querySnapshot.data());
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,25 +29,30 @@ const IndividualDeck = () => {
         <Text style={styles.textLang}>German</Text>
       </View>
       <View style={styles.wordContainer}>
-        <View style={styles.firstLangWords} >
+        <View style={styles.firstLangWords}>
           <Text style={styles.lang}>English</Text>
           {deck.words.map((word) => {
-          return  <Text style={styles.word}> {word.definition}</Text>
+            return <Text style={styles.word}> {word.definition}</Text>;
           })}
         </View>
         <View style={styles.foreignLangWords}>
-        <Text style={styles.lang}>German</Text>
-        {deck.words.map((word) => {
-          return <>
-          <View style={styles.singleWordContainer}>
-           <Text  style={styles.word}> {word.word}</Text>
-          <TouchableOpacity
-          style={[styles.buttonX, styles.buttonOutlineX]}
-        >
-          <Text style={styles.buttonOutlineTextX}>x</Text>
-        </TouchableOpacity>
-        </View>
-        </>
+          <Text style={styles.lang}>German</Text>
+          {deck.words.map((word, index) => {
+            return (
+              <>
+                <View style={styles.singleWordContainer}>
+                  <Text style={styles.word}> {word.word}</Text>
+                  <TouchableOpacity
+                    style={[styles.buttonX, styles.buttonOutlineX]}
+                    onPress={() => {
+                      fetchDictionaryEntry();
+                    }}
+                  >
+                    <Text style={styles.buttonOutlineTextX}>x</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            );
           })}
         </View>
       </View>
@@ -68,7 +79,6 @@ const IndividualDeck = () => {
 };
 
 export default IndividualDeck;
-
 const styles = StyleSheet.create({
   deckInfo: {
     flexDirection: "row",
@@ -82,7 +92,7 @@ const styles = StyleSheet.create({
     marginLeft: "25%",
     fontSize: 20,
   },
-  singleWordContainer:{
+  singleWordContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -95,26 +105,24 @@ const styles = StyleSheet.create({
     marginLeft: "15%",
   },
   button: {
-    backgroundColor: "#5c6784",
+    backgroundColor: "#5C6784",
     width: "100%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
   },
-  wordContainer: {
-
-  },
+  wordContainer: {},
   buttonX: {
-    backgroundColor: "#5c6784",
+    backgroundColor: "#5C6784",
     width: "20%",
     padding: 5,
     borderRadius: 10,
     alignItems: "center",
-    marginRight:5,
+    marginRight: 5,
   },
   buttonWord: {
-    backgroundColor: "#5c6784",
+    backgroundColor: "#5C6784",
     width: "35%",
     padding: 12,
     borderRadius: 10,
@@ -130,17 +138,17 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#5c6784",
+    borderColor: "#5C6784",
     borderWidth: 2,
   },
   buttonOutlineX: {
     backgroundColor: "red",
     marginTop: 5,
-    borderColor: "#5c6784",
+    borderColor: "#5C6784",
     borderWidth: 2,
   },
   buttonOutlineText: {
-    color: "#5c6784",
+    color: "#5C6784",
     fontWeight: "700",
     fontSize: 16,
   },
@@ -153,34 +161,30 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     height: "65%",
     marginTop: "10%",
-    borderRadius:10,
+    borderRadius: 10,
     flexDirection: "row",
-    
   },
-  container:{
+  container: {
     width: "90%",
   },
-  firstLangWords:{
-    borderRightWidth :1,
+  firstLangWords: {
+    borderRightWidth: 1,
     width: "50%",
     height: "100%",
- 
   },
-  foreignLangWords:{
+  foreignLangWords: {
     width: "50%",
     height: "100%",
-    
   },
-  lang:{
+  lang: {
     fontSize: 20,
     textAlign: "center",
     padding: 25,
     textDecorationLine: "underline",
   },
-  word:{
-    padding:10,
+  word: {
+    padding: 10,
     marginLeft: 5,
     fontSize: 20,
   },
-
 });
