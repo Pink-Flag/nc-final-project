@@ -14,29 +14,46 @@ import { useNavigate } from "react-router-dom";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { UserContext } from "./UserContext";
 import defaultAvatar from "../images/defaultAvatar.jpg";
+import { updateDoc, doc } from "firebase/firestore";
+import { db, auth } from "../firebase";
+import { AuthErrorCodes, signInAnonymously, currentUser } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 
 const Profile = () => {
-  const thisUser = {
-    username: "sloth_report",
-    password: "parliament",
-    avatar_url:
-      "https://media.newyorker.com/photos/5a4bf9bd1b4b766677b8c39f/1:1/w_3629,h_3629,c_limit/Gopnik-Clement-Attlee.jpg",
-    email: "clement@atlee.com",
-    default_language: "French",
-  };
-  const [profilePicture, setProfilePicture] = useState("");
+  const [profilePicture, setProfilePicture] = useState(
+    "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg"
+  );
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const [avatar, setAvatar] = useState(defaultAvatar);
+  const [updatedEmail, setUpdatedEmail] = useState("");
 
   useEffect(() => {
-    if (user.photoURL === null) {
-      setProfilePicture(
-        "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg"
-      );
-    } else {
+    if (user.photoURL !== null) {
       setProfilePicture(user.photoURL);
     }
   }, [user]);
+
+  const dataRef = doc(db, "users", user.uid);
+
+  const updateAvatar = () => {
+    setLoading(true);
+    updateDoc(dataRef, {
+      photoURL: avatar,
+    }).then(() => {
+      setProfilePicture(avatar);
+      setLoading(false);
+    });
+  };
+
+  const updateEmail = () => {
+    console.log(auth.getInstance().getCurrentUser());
+    // .then((res) => {})
+    // .then(() => {
+    //   setUser({ ...user, email: updatedEmail });
+    // })
+    // .catch((error) => {});
+  };
 
   return (
     <>
@@ -59,9 +76,18 @@ const Profile = () => {
         <View style={styles.inputView}>
           <Text> Avatar link</Text>
           <View style={styles.editTitle}>
-            <TextInput value={user.photoURL} style={styles.input} />
-            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-              <Text style={styles.buttonOutlineText}>Edit</Text>
+            <TextInput
+              defaultValue={user.photoURL}
+              style={styles.input}
+              onChangeText={(text) => setAvatar(text)}
+            />
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => {
+                updateAvatar();
+              }}
+            >
+              <Text style={styles.buttonOutlineText}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -69,8 +95,17 @@ const Profile = () => {
         <View style={styles.inputView}>
           <Text> Email address</Text>
           <View style={styles.editTitle}>
-            <TextInput value={user.email} style={styles.input} />
-            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+            <TextInput
+              defaultValue={user.email}
+              style={styles.input}
+              onChangeText={(text) => setUpdatedEmail(text)}
+            />
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => {
+                updateEmail();
+              }}
+            >
               <Text style={styles.buttonOutlineText}>Edit</Text>
             </TouchableOpacity>
           </View>
