@@ -96,7 +96,7 @@ const EnterWords = () => {
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
           onPress={() => {
-            navigate("/viewdecks");
+            navigate("/individualdeck/:deck_id");
           }}
         >
           <Text>Return to deck</Text>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     minWidth: "65%",
   },
   miniButton: {
-    height: "100%",
+    justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
     borderRadius: 10,
