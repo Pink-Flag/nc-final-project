@@ -18,24 +18,22 @@ const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
   const [deck, setDeck] = useState([]);
-
   const [newData, setNewData] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
       setDeck(querySnapshot.data());
     });
-  }, [loading,newData]);
-
+  }, [loading, newData]);
   const deleteWord = (index) => {
     const wordReff = doc(db, "decks", deck_id);
-
     getDoc(wordReff)
       .then((doc) => {
+
        return doc.data().words;
        
       }).then((arrayData) =>{
+
         setNewData(arrayData.slice(0, index));
         setNewData((current) => [...current, arrayData.slice(index + 1)]);
       })
@@ -53,7 +51,6 @@ const IndividualDeck = () => {
         console.error(error.message);
       });
   };
-
   if (deck.length !== 0) {
     return (
       <View style={styles.container}>
@@ -113,7 +110,6 @@ const IndividualDeck = () => {
     return <Text>Empty</Text>;
   }
 };
-
 export default IndividualDeck;
 const styles = StyleSheet.create({
   deckInfo: {
@@ -223,4 +219,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 20,
   },
+
 });
+
