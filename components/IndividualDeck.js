@@ -1,5 +1,3 @@
-
-
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import {
@@ -38,7 +36,6 @@ const IndividualDeck = () => {
        return doc.data().words;
        
       }).then((arrayData) =>{
-        console.log(arrayData)
         setNewData(arrayData.slice(0, index));
         setNewData((current) => [...current, arrayData.slice(index + 1)]);
       })
@@ -109,46 +106,6 @@ const IndividualDeck = () => {
           >
             <Text style={styles.buttonOutlineText}>Return to decks</Text>
           </TouchableOpacity>
-
-  useEffect(() => {
-    getDoc(doc(db, "decks", "Sxoxw7XSYRNljsOahdD5")).then((querySnapshot) => {
-      setDeck(querySnapshot.data());
-    });
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.deckInfo}>
-        <Text style={styles.textName}>{deck.list_name}</Text>
-        <Text style={styles.textLang}>German</Text>
-      </View>
-      <View style={styles.wordContainer}>
-        <View style={styles.firstLangWords}>
-          <Text style={styles.lang}>English</Text>
-          {deck.words.map((word) => {
-            return <Text style={styles.word}> {word.definition}</Text>;
-          })}
-        </View>
-        <View style={styles.foreignLangWords}>
-          <Text style={styles.lang}>German</Text>
-          {deck.words.map((word, index) => {
-            return (
-              <>
-                <View style={styles.singleWordContainer}>
-                  <Text style={styles.word}> {word.word}</Text>
-                  <TouchableOpacity
-                    style={[styles.buttonX, styles.buttonOutlineX]}
-                    onPress={() => {
-                      fetchDictionaryEntry();
-                    }}
-                  >
-                    <Text style={styles.buttonOutlineTextX}>x</Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            );
-          })}
-
         </View>
       </View>
     );
@@ -267,4 +224,3 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-

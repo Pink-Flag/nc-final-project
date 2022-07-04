@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from "react-native";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,  useParams  } from "react-router-dom";
+
 
 const Testing = () => {
 
     const navigate = useNavigate();
+    const { deck_id } = useParams();
+
+    console.log(deck_id)
   return (
     <>
     <View>
@@ -17,7 +21,7 @@ const Testing = () => {
     <TouchableOpacity
       style={[styles.button, styles.buttonOutline]}
       onPress={() => {
-        navigate('/vanillatest');
+        navigate(`/vanillatest/${deck_id}`);
       }}
     >
       

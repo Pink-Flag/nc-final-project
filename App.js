@@ -46,10 +46,10 @@ export default function App() {
             <Link to="/enterwords">
               <Text>EnterWords</Text>
             </Link>
-            <Link to="/testing">
+            <Link to="/testing/:deck_id">
               <Text>Testing</Text>
             </Link>
-            <Link to="/vanillatest">
+            <Link to="/vanillatest/:deck_id">
               <Text>VanillaTest</Text>
             </Link>
             <Link to="/pairstest">
@@ -70,8 +70,8 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/individualdeck/:deck_id" element={<IndividualDeck />} />
             <Route path="/enterwords" element={<EnterWords />} />
-            <Route path="/testing" element={<Testing />} />
-            <Route path="/vanillatest" element={<VanillaTest />} />
+            <Route path="/testing/:deck_id" element={<Testing />} />
+            <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />
             <Route path="/pairstest" element={<PairsTest />} />
             <Route path="/stricttest" element={<StrictTest />} />
             <Route path="/mixedTesting" element={<MixedTesting />} />
