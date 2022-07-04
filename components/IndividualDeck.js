@@ -29,9 +29,11 @@ const IndividualDeck = () => {
     const wordReff = doc(db, "decks", deck_id);
     getDoc(wordReff)
       .then((doc) => {
-        return doc.data().words;
-      })
-      .then((arrayData) => {
+
+       return doc.data().words;
+       
+      }).then((arrayData) =>{
+
         setNewData(arrayData.slice(0, index));
         setNewData((current) => [...current, arrayData.slice(index + 1)]);
       })
@@ -217,4 +219,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 20,
   },
+
 });
+

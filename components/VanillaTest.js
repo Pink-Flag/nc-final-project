@@ -7,32 +7,48 @@ import {
   Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate,useParams } from "react-router-dom";
+import {  collection,   getDoc, addDoc, doc} from "firebase/firestore";
 import Swiper from "react-native-deck-swiper";
+import { db } from "../firebase";
 
 const VanillaTest = () => {
   const navigate = useNavigate();
+  const { deck_id } = useParams();
   const [displayBack, setDisplayBack] = useState(false);
+  const [deckWords, setDeckWords] = useState([]);
 
+
+  useEffect(() => {
+    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
+      setDeckWords(querySnapshot.data().words);
+    }).then(() => {
+      console.log(deckWords)
+    })
+  }, []);
+
+  console.log(deckWords)
+
+  if(deckWords.length !== 0){
   return (
     <View style={styles.container}>
       <Swiper
-        cards={[
-          { front: "GERMAN WORD FOR RIGHT", back: "ENGLISH WORD FOR RIGHT" },
-          { front: "GERMAN WORD FOR TOMATO", back: "ENGLISH WORD FOR TOMATO" },
-          {
-            front: "GERMAN WORD FOR FLEXBOX",
-            back: "ENGLISH WORD FOR FLEXBOX",
-          },
-          {
-            front: "GERMAN WORD FOR WHAT AM I DOING WITH MY LIFE",
-            back: "ENGLISH WORD FOR WHAT AM I DOING WITH MY LIFE",
-          },
-          { front: "I", back: "ENGLISH WORD FOR I" },
-          { front: "LOVE", back: "ENGLISH WORD FOR LOVE" },
-          { front: "COFFEE", back: "ENGLISH WORD FOR COFFEE" },
-        ]}
+      cards = {deckWords}
+        // cards={[
+        //   { front: "GERMAN WORD FOR RIGHT", back: "ENGLISH WORD FOR RIGHT" },
+        //   { front: "GERMAN WORD FOR TOMATO", back: "ENGLISH WORD FOR TOMATO" },
+        //   {
+        //     front: "GERMAN WORD FOR FLEXBOX",
+        //     back: "ENGLISH WORD FOR FLEXBOX",
+        //   },
+        //   {
+        //     front: "GERMAN WORD FOR WHAT AM I DOING WITH MY LIFE",
+        //     back: "ENGLISH WORD FOR WHAT AM I DOING WITH MY LIFE",
+        //   },
+        //   { front: "I", back: "ENGLISH WORD FOR I" },
+        //   { front: "LOVE", back: "ENGLISH WORD FOR LOVE" },
+        //   { front: "COFFEE", back: "ENGLISH WORD FOR COFFEE" },
+        // ]}
         infinite={true}
         verticalSwipe={false}
         onSwipedLeft={() => {
@@ -51,9 +67,9 @@ const VanillaTest = () => {
           return (
             <View style={styles.card}>
               {displayBack ? (
-                <Text style={styles.text}>{card.back}</Text>
+                <Text style={styles.text}>{card.word}</Text>
               ) : (
-                <Text style={styles.text}>{card.front}</Text>
+                <Text style={styles.text}>{card.definition}</Text>
               )}
             </View>
           );
@@ -68,6 +84,9 @@ const VanillaTest = () => {
       ></Swiper>
     </View>
   );
+      }else{
+       return <Text> Loading...</Text>
+      }
 };
 
 export default VanillaTest;
