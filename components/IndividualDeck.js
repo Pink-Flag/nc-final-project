@@ -8,14 +8,106 @@ import {
   getDoc,
   updateDoc,
   deleteField,
+  arrayRemove,
 } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { useNavigate } from "react-router-dom";
 import { fetchDictionaryEntry } from "../dictionary/dictionaryFunctions";
 const IndividualDeck = () => {
+  const { deck_id } = useParams();
   const navigate = useNavigate();
   const [deck, setDeck] = useState([]);
+
+  const [newData, setNewData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
+      setDeck(querySnapshot.data());
+    });
+  }, [loading,newData]);
+
+  const deleteWord = (index) => {
+    const wordReff = doc(db, "decks", deck_id);
+
+    getDoc(wordReff)
+      .then((doc) => {
+       return doc.data().words;
+       
+      }).then((arrayData) =>{
+        console.log(arrayData)
+        setNewData(arrayData.slice(0, index));
+        setNewData((current) => [...current, arrayData.slice(index + 1)]);
+      })
+      .then(() => {
+        if (newData.length !== 0) {
+          updateDoc(wordReff, {
+            words: newData.flat(),
+          });
+        }
+      })
+      .then(() => {
+        setLoading(!loading);
+      })
+      .catch(function (error) {
+        console.error(error.message);
+      });
+  };
+
+  if (deck.length !== 0) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.deckInfo}>
+          <Text style={styles.textName}>{deck.list_name}</Text>
+          <Text style={styles.textLang}>German</Text>
+        </View>
+        <View style={styles.wordContainer}>
+          <View style={styles.firstLangWords}>
+            <Text style={styles.lang}>English</Text>
+            {deck.words.map((word) => {
+              return <Text style={styles.word}> {word.definition}</Text>;
+            })}
+          </View>
+          <View style={styles.foreignLangWords}>
+            <Text style={styles.lang}>German</Text>
+            {deck.words.map((word, index) => {
+              return (
+                <>
+                  <View style={styles.singleWordContainer}>
+                    <Text style={styles.word}> {word.word}</Text>
+                    <TouchableOpacity
+                      style={[styles.buttonX, styles.buttonOutlineX]}
+                      onPress={() => {
+                        deleteWord(index);
+                      }}
+                    >
+                      <Text style={styles.buttonOutlineTextX}>x</Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              );
+            })}
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonOutline]}
+            onPress={() => {
+              navigate("/enterwords");
+            }}
+          >
+            <Text style={styles.buttonOutlineText}>Add a new word</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonOutline]}
+            onPress={() => {
+              navigate("/viewdecks");
+            }}
+          >
+            <Text style={styles.buttonOutlineText}>Return to decks</Text>
+          </TouchableOpacity>
+
   useEffect(() => {
     getDoc(doc(db, "decks", "Sxoxw7XSYRNljsOahdD5")).then((querySnapshot) => {
       setDeck(querySnapshot.data());
@@ -54,28 +146,13 @@ const IndividualDeck = () => {
               </>
             );
           })}
+
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
-          onPress={() => {
-            navigate("/enterwords");
-          }}
-        >
-          <Text style={styles.buttonOutlineText}>Add a new word</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
-          onPress={() => {
-            navigate("/viewdecks");
-          }}
-        >
-          <Text style={styles.buttonOutlineText}>Return to decks</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
+  } else {
+    return <Text>Empty</Text>;
+  }
 };
 
 export default IndividualDeck;

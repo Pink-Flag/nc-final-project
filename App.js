@@ -40,7 +40,7 @@ export default function App() {
             <Link to="/profile">
               <Text>Profile</Text>
             </Link>
-            <Link to="/individualdeck">
+            <Link to="/individualdeck/:deck_id">
               <Text>IndividualDeck</Text>
             </Link>
             <Link to="/enterwords">
@@ -68,7 +68,7 @@ export default function App() {
             <Route path="/loginscreen" element={<LoginScreen />} />
             <Route path="/viewdecks" element={<ViewDecks />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/individualdeck" element={<IndividualDeck />} />
+            <Route path="/individualdeck/:deck_id" element={<IndividualDeck />} />
             <Route path="/enterwords" element={<EnterWords />} />
             <Route path="/testing" element={<Testing />} />
             <Route path="/vanillatest" element={<VanillaTest />} />
