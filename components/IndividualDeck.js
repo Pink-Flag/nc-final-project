@@ -1,5 +1,3 @@
-
-
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import {
@@ -20,25 +18,20 @@ const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
   const [deck, setDeck] = useState([]);
-
   const [newData, setNewData] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
       setDeck(querySnapshot.data());
     });
-  }, [loading,newData]);
-
+  }, [loading, newData]);
   const deleteWord = (index) => {
     const wordReff = doc(db, "decks", deck_id);
-
     getDoc(wordReff)
       .then((doc) => {
-       return doc.data().words;
-       
-      }).then((arrayData) =>{
-        console.log(arrayData)
+        return doc.data().words;
+      })
+      .then((arrayData) => {
         setNewData(arrayData.slice(0, index));
         setNewData((current) => [...current, arrayData.slice(index + 1)]);
       })
@@ -56,7 +49,6 @@ const IndividualDeck = () => {
         console.error(error.message);
       });
   };
-
   if (deck.length !== 0) {
     return (
       <View style={styles.container}>
@@ -109,46 +101,6 @@ const IndividualDeck = () => {
           >
             <Text style={styles.buttonOutlineText}>Return to decks</Text>
           </TouchableOpacity>
-
-  useEffect(() => {
-    getDoc(doc(db, "decks", "Sxoxw7XSYRNljsOahdD5")).then((querySnapshot) => {
-      setDeck(querySnapshot.data());
-    });
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.deckInfo}>
-        <Text style={styles.textName}>{deck.list_name}</Text>
-        <Text style={styles.textLang}>German</Text>
-      </View>
-      <View style={styles.wordContainer}>
-        <View style={styles.firstLangWords}>
-          <Text style={styles.lang}>English</Text>
-          {deck.words.map((word) => {
-            return <Text style={styles.word}> {word.definition}</Text>;
-          })}
-        </View>
-        <View style={styles.foreignLangWords}>
-          <Text style={styles.lang}>German</Text>
-          {deck.words.map((word, index) => {
-            return (
-              <>
-                <View style={styles.singleWordContainer}>
-                  <Text style={styles.word}> {word.word}</Text>
-                  <TouchableOpacity
-                    style={[styles.buttonX, styles.buttonOutlineX]}
-                    onPress={() => {
-                      fetchDictionaryEntry();
-                    }}
-                  >
-                    <Text style={styles.buttonOutlineTextX}>x</Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            );
-          })}
-
         </View>
       </View>
     );
@@ -156,7 +108,6 @@ const IndividualDeck = () => {
     return <Text>Empty</Text>;
   }
 };
-
 export default IndividualDeck;
 const styles = StyleSheet.create({
   deckInfo: {
@@ -267,4 +218,3 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-
