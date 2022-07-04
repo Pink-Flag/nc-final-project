@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@google-cloud/speech": "^4.10.2",
     "@react-native-picker/picker": "^2.4.2",
     "@react-navigation/native": "^6.0.10",
     "axios": "^0.27.2",

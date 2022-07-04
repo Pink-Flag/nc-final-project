@@ -20,6 +20,8 @@ import { AuthErrorCodes, signInAnonymously, currentUser } from "firebase/auth";
 import { getAuth, updateProfile } from "firebase/auth";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
   const [profilePicture, setProfilePicture] = useState(
     "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg"
   );
@@ -46,8 +48,24 @@ const Profile = () => {
     });
   };
 
+  const signOut = () => {
+    setLoading(true);
+    auth
+      .signOut()
+      .then(() => {
+        setLoading(false);
+      })
+      .then(() => {
+        alert("You have been signed out");
+        navigate("/loginscreen");
+      })
+      .catch((err) => {
+        setLoading(false);
+        alert(err.message);
+      });
+  };
+
   const updateEmail = () => {
-    console.log(auth.getInstance().getCurrentUser());
     // .then((res) => {})
     // .then(() => {
     //   setUser({ ...user, email: updatedEmail });
@@ -133,6 +151,17 @@ const Profile = () => {
               <Text style={styles.buttonOutlineText}>Edit</Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+        <View style={styles.inputView}>
+          <TouchableOpacity
+            style={[styles.signOutButton, styles.signOutButtonOutline]}
+            onPress={() => {
+              signOut();
+            }}
+          >
+            <Text style={styles.signOutButton}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
 
         {/* <View style={styles.inputView}>
@@ -231,5 +260,21 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 5,
     marginBottom: 10,
+  },
+  signOutButton: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+    textAlign: "center",
+    alignItems: "center",
+    padding: 5,
+    borderRadius: 12,
+  },
+  signOutButtonOutline: {
+    backgroundColor: "#5c6784",
+    marginTop: 5,
+    borderRadius: 10,
+    borderColor: "#5c6784",
+    borderWidth: 2,
   },
 });

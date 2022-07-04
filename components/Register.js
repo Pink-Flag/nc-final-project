@@ -47,12 +47,10 @@ const Register = () => {
         const data = {
           defaultLanguage: defaultLanguage,
           email: email,
+          photoURL: avatarUrl,
+          username: username,
         };
         setDoc(doc(db, "users", auth.currentUser.uid), data).then(() => {
-          updateProfile(auth.currentUser, {
-            displayName: username,
-            photoURL: avatarUrl,
-          });
           setUser({
             displayName: username,
             email: email,

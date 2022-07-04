@@ -10,14 +10,15 @@ import {
   deleteField,
   arrayRemove,
 } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { fetchDictionaryEntry } from "../dictionary/dictionaryFunctions";
 const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
   const [deck, setDeck] = useState([]);
+
   const [newData, setNewData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -106,6 +107,46 @@ const IndividualDeck = () => {
           >
             <Text style={styles.buttonOutlineText}>Return to decks</Text>
           </TouchableOpacity>
+
+  useEffect(() => {
+    getDoc(doc(db, "decks", "Sxoxw7XSYRNljsOahdD5")).then((querySnapshot) => {
+      setDeck(querySnapshot.data());
+    });
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.deckInfo}>
+        <Text style={styles.textName}>{deck.list_name}</Text>
+        <Text style={styles.textLang}>German</Text>
+      </View>
+      <View style={styles.wordContainer}>
+        <View style={styles.firstLangWords}>
+          <Text style={styles.lang}>English</Text>
+          {deck.words.map((word) => {
+            return <Text style={styles.word}> {word.definition}</Text>;
+          })}
+        </View>
+        <View style={styles.foreignLangWords}>
+          <Text style={styles.lang}>German</Text>
+          {deck.words.map((word, index) => {
+            return (
+              <>
+                <View style={styles.singleWordContainer}>
+                  <Text style={styles.word}> {word.word}</Text>
+                  <TouchableOpacity
+                    style={[styles.buttonX, styles.buttonOutlineX]}
+                    onPress={() => {
+                      fetchDictionaryEntry();
+                    }}
+                  >
+                    <Text style={styles.buttonOutlineTextX}>x</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            );
+          })}
+
         </View>
       </View>
     );
@@ -115,7 +156,6 @@ const IndividualDeck = () => {
 };
 
 export default IndividualDeck;
-
 const styles = StyleSheet.create({
   deckInfo: {
     flexDirection: "row",
@@ -142,7 +182,7 @@ const styles = StyleSheet.create({
     marginLeft: "15%",
   },
   button: {
-    backgroundColor: "#5c6784",
+    backgroundColor: "#5C6784",
     width: "100%",
     padding: 15,
     borderRadius: 10,
@@ -151,7 +191,7 @@ const styles = StyleSheet.create({
   },
   wordContainer: {},
   buttonX: {
-    backgroundColor: "#5c6784",
+    backgroundColor: "#5C6784",
     width: "20%",
     padding: 5,
     borderRadius: 10,
@@ -159,7 +199,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   buttonWord: {
-    backgroundColor: "#5c6784",
+    backgroundColor: "#5C6784",
     width: "35%",
     padding: 12,
     borderRadius: 10,
@@ -175,17 +215,17 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#5c6784",
+    borderColor: "#5C6784",
     borderWidth: 2,
   },
   buttonOutlineX: {
     backgroundColor: "red",
     marginTop: 5,
-    borderColor: "#5c6784",
+    borderColor: "#5C6784",
     borderWidth: 2,
   },
   buttonOutlineText: {
-    color: "#5c6784",
+    color: "#5C6784",
     fontWeight: "700",
     fontSize: 16,
   },
