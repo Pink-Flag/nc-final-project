@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, View, TouchableOpacity, 
 ScrollView } from "react-native";
 import { React, useState, useEffect } from "react";
@@ -253,3 +254,4 @@ const styles = StyleSheet.create({
 
   },
 });
+
