@@ -35,15 +35,11 @@ const LoginScreen = () => {
         const docRef = doc(db, "users", userCredential.user.uid);
         getDoc(docRef).then((docSnap) => {
           setUser({
-            displayName:
-              docSnap._document.data.value.mapValue.fields.username.stringValue,
-            email: userCredential.user.email,
-            photoURL:
-              docSnap._document.data.value.mapValue.fields.photoURL.stringValue,
+            displayName: docSnap.data().displayName,
+            email: docSnap.data().email,
+            photoURL: docSnap.data().photoURL,
             uid: userCredential.user.uid,
-            defaultLanguage:
-              docSnap._document.data.value.mapValue.fields.defaultLanguage
-                .stringValue,
+            defaultLanguage: docSnap.data().defaultLanguage,
           });
         });
       })

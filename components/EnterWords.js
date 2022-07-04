@@ -40,6 +40,7 @@ const EnterWords = () => {
         setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
         alert("word not found!");
       });
   };
