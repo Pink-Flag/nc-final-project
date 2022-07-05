@@ -57,7 +57,7 @@ export default function App() {
             <Link to="/pairstest">
               <Text>PairsTest</Text>
             </Link>
-            <Link to="/stricttest">
+            <Link to="/stricttest/:deck_id">
               <Text>StrictTest</Text>
             </Link>
             <Link to="/mixedtesting">
@@ -78,7 +78,7 @@ export default function App() {
             <Route path="/testing/:deck_id" element={<Testing />} />
             <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />
             <Route path="/pairstest" element={<PairsTest />} />
-            <Route path="/stricttest" element={<StrictTest />} />
+            <Route path="/stricttest/:deck_id" element={<StrictTest />} />
             <Route path="/mixedTesting" element={<MixedTesting />} />
           </Routes>
         </View>

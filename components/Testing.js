@@ -9,6 +9,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Testing = () => {
+
   const navigate = useNavigate();
   const { deck_id } = useParams();
   return (
@@ -41,6 +42,7 @@ const Testing = () => {
         </View>
       </View>
     </>
+
   );
 };
 
