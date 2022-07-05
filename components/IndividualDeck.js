@@ -11,66 +11,82 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
+import Spinner from "react-native-loading-spinner-overlay";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { fetchDictionaryEntry } from "../dictionary/dictionaryFunctions";
 const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
-  const [deck, setDeck] = useState([]);
-  const [newData, setNewData] = useState([]);
+  const [deck, setDeck] = useState({});
+
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
       setDeck(querySnapshot.data());
     });
-  }, [loading, newData]);
+  }, []);
+
   const deleteWord = (index) => {
     const wordReff = doc(db, "decks", deck_id);
-    getDoc(wordReff)
-      .then((doc) => {
 
-       return doc.data().words;
-       
-      }).then((arrayData) =>{
-
-        setNewData(arrayData.slice(0, index));
-        setNewData((current) => [...current, arrayData.slice(index + 1)]);
-      })
-      .then(() => {
-        if (newData.length !== 0) {
-          updateDoc(wordReff, {
-            words: newData.flat(),
-          });
-        }
-      })
-      .then(() => {
-        setLoading(!loading);
-      })
-      .catch(function (error) {
+    setDeck((current) => {
+      console.log(current);
+      const newWords = current.words.filter((_, i) => i !== index);
+      const newDeck = { ...current, words: newWords };
+      updateDoc(wordReff, newDeck).catch(function (error) {
         console.error(error.message);
       });
+      console.log(deck);
+      return newDeck;
+    });
   };
-  if (deck.length !== 0) {
+
+  // const deleteWord = async (index) => {
+  //   setLoading(true);
+  //   const wordReff = doc(db, "decks", deck_id);
+  //   const docRes = await getDoc(wordReff);
+  //   console.log(index);
+  //   const arrayData = docRes.data().words;
+
+  //   setNewData((current) => [arrayData.slice(index + 1)]);
+  //   if (newData.length !== 0) {
+  //     await updateDoc(wordReff, {
+  //       words: newData.flat(),
+  //     });
+  //   }
+  //   setLoading(false);
+  // };
+
+  if (deck.words) {
     return (
-      <View style={styles.container}>
-        <View style={styles.deckInfo}>
-          <Text style={styles.textName}>{deck.list_name}</Text>
-          <Text style={styles.textLang}>German</Text>
-        </View>
-        <View style={styles.wordContainer}>
-          <View style={styles.firstLangWords}>
-            <Text style={styles.lang}>English</Text>
-            {deck.words.map((word) => {
-              return <Text style={styles.word}> {word.definition}</Text>;
-            })}
+      <>
+        <View style={styles.container}>
+          <View style={styles.deckInfo}>
+            <Text style={styles.textName}>{deck.list_name}</Text>
+            <Text style={styles.textLang}>German</Text>
           </View>
-          <View style={styles.foreignLangWords}>
-            <Text style={styles.lang}>German</Text>
-            {deck.words.map((word, index) => {
-              return (
-                <>
-                  <View style={styles.singleWordContainer}>
+          <View style={styles.wordContainer}>
+            <View style={styles.firstLangWords}>
+              <Text style={styles.lang}>English</Text>
+              {deck.words.map((word) => {
+                return (
+                  <Text style={styles.word} key={word.word + "_eng"}>
+                    {" "}
+                    {word.definition}
+                  </Text>
+                );
+              })}
+            </View>
+            <View style={styles.foreignLangWords}>
+              <Text style={styles.lang}>German</Text>
+              {deck.words.map((word, index) => {
+                return (
+                  <View
+                    key={word.word + "_ger"}
+                    style={styles.singleWordContainer}
+                  >
                     <Text style={styles.word}> {word.word}</Text>
                     <TouchableOpacity
                       style={[styles.buttonX, styles.buttonOutlineX]}
@@ -81,30 +97,35 @@ const IndividualDeck = () => {
                       <Text style={styles.buttonOutlineTextX}>x</Text>
                     </TouchableOpacity>
                   </View>
-                </>
-              );
-            })}
+                );
+              })}
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => {
+                navigate("/enterwords");
+              }}
+            >
+              <Text style={styles.buttonOutlineText}>Add a new word</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => {
+                navigate("/viewdecks");
+              }}
+            >
+              <Text style={styles.buttonOutlineText}>Return to decks</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-            onPress={() => {
-              navigate("/enterwords");
-            }}
-          >
-            <Text style={styles.buttonOutlineText}>Add a new word</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-            onPress={() => {
-              navigate("/viewdecks");
-            }}
-          >
-            <Text style={styles.buttonOutlineText}>Return to decks</Text>
-          </TouchableOpacity>
+        <View>
+          {loading && (
+            <Spinner visible={loading} textStyle={styles.spinnerTextStyle} />
+          )}
         </View>
-      </View>
+      </>
     );
   } else {
     return <Text>Empty</Text>;
@@ -219,6 +240,4 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 20,
   },
-
 });
-

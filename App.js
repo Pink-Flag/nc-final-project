@@ -68,7 +68,10 @@ export default function App() {
             <Route path="/loginscreen" element={<LoginScreen />} />
             <Route path="/viewdecks" element={<ViewDecks />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/individualdeck/:deck_id" element={<IndividualDeck />} />
+            <Route
+              path="/individualdeck/:deck_id"
+              element={<IndividualDeck />}
+            />
             <Route path="/enterwords" element={<EnterWords />} />
             <Route path="/testing/:deck_id" element={<Testing />} />
             <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />

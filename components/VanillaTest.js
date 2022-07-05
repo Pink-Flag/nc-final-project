@@ -5,88 +5,91 @@ import {
   TouchableOpacity,
   Image,
   Button,
+  Animated,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import { useNavigate,useParams } from "react-router-dom";
-import {  collection,   getDoc, addDoc, doc} from "firebase/firestore";
+import React, { useState, useEffect, useReducer, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { collection, getDoc, addDoc, doc } from "firebase/firestore";
 import Swiper from "react-native-deck-swiper";
 import { db } from "../firebase";
 
 const VanillaTest = () => {
   const navigate = useNavigate();
   const { deck_id } = useParams();
-  const [displayBack, setDisplayBack] = useState(false);
+  const [cardIndex, setCardIndex] = useState(0);
   const [deckWords, setDeckWords] = useState([]);
-
+  const [loading, setLoading] = useState(false);
+  const [displayBack, setDisplayBack] = useState(false);
 
   useEffect(() => {
-    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
-      setDeckWords(querySnapshot.data().words);
-    }).then(() => {
-      console.log(deckWords)
-    })
+    setCardIndex((curr) => curr + 1);
+  }, [displayBack]);
+
+  useEffect(() => {
+    getDoc(doc(db, "decks", deck_id))
+      .then((querySnapshot) => {
+        setDeckWords(querySnapshot.data().words);
+      })
+      .then(() => {});
   }, []);
 
-  console.log(deckWords)
+  // const invertKeys = (obj) => {
 
-  if(deckWords.length !== 0){
-  return (
-    <View style={styles.container}>
-      <Swiper
-      cards = {deckWords}
-        // cards={[
-        //   { front: "GERMAN WORD FOR RIGHT", back: "ENGLISH WORD FOR RIGHT" },
-        //   { front: "GERMAN WORD FOR TOMATO", back: "ENGLISH WORD FOR TOMATO" },
-        //   {
-        //     front: "GERMAN WORD FOR FLEXBOX",
-        //     back: "ENGLISH WORD FOR FLEXBOX",
-        //   },
-        //   {
-        //     front: "GERMAN WORD FOR WHAT AM I DOING WITH MY LIFE",
-        //     back: "ENGLISH WORD FOR WHAT AM I DOING WITH MY LIFE",
-        //   },
-        //   { front: "I", back: "ENGLISH WORD FOR I" },
-        //   { front: "LOVE", back: "ENGLISH WORD FOR LOVE" },
-        //   { front: "COFFEE", back: "ENGLISH WORD FOR COFFEE" },
-        // ]}
-        infinite={true}
-        verticalSwipe={false}
-        onSwipedLeft={() => {
-          setDisplayBack(false);
-          console.log(displayBack);
-        }}
-        onSwipedRight={() => {
-          setDisplayBack(false);
-          console.log(displayBack);
-        }}
-        onTapCard={(index) => {
-          setDisplayBack(true);
-          console.log(displayBack);
-        }}
-        renderCard={(card) => {
-          return (
-            <View style={styles.card}>
-              {displayBack ? (
-                <Text style={styles.text}>{card.word}</Text>
-              ) : (
-                <Text style={styles.text}>{card.definition}</Text>
-              )}
-            </View>
-          );
-        }}
-        onSwiped={(cardIndex) => {}}
-        onSwipedAll={() => {
-          console.log("onSwipedAll");
-        }}
-        cardIndex={0}
-        backgroundColor={"transparent"}
-        stackSize={3}
-      ></Swiper>
-    </View>
-  );
-      }else{
-       return <Text> Loading...</Text>
-      }
+  // }
+
+  if (deckWords.length !== 0) {
+    return (
+      <View style={styles.container}>
+        {loading ? (
+          <Text value={loading}>do i</Text>
+        ) : (
+          <Text value={loading}>change?</Text>
+        )}
+        <Swiper
+          cards={deckWords}
+          infinite={true}
+          verticalSwipe={false}
+          onSwipedLeft={() => {
+            setDisplayBack(false);
+          }}
+          onSwipedRight={() => {
+            setDisplayBack(false);
+          }}
+          onSwiping={() => {
+            setDisplayBack(false);
+          }}
+          onTapCard={(index) => {
+            setDisplayBack((current) => {
+              return !current;
+            });
+          }}
+          renderCard={(card) => {
+            return (
+              <View key={card.word} style={styles.card}>
+                {displayBack ? (
+                  <View>
+                    <Text>word:</Text>
+                    <Text style={styles.text}>{card.word}</Text>
+                  </View>
+                ) : (
+                  <View>
+                    <Text>definition:</Text>
+                    <Text style={styles.text}>{card.definition}</Text>
+                  </View>
+                )}
+              </View>
+            );
+          }}
+          onSwipedAll={() => {}}
+          cardIndex={cardIndex}
+          backgroundColor={"transparent"}
+          stackSize={3}
+        ></Swiper>
+      </View>
+    );
+  } else {
+    return <Text> Loading...</Text>;
+  }
 };
 
 export default VanillaTest;
