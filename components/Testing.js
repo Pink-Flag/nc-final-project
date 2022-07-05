@@ -8,12 +8,11 @@ const Testing = () => {
     const navigate = useNavigate();
     const { deck_id } = useParams();
 
-    console.log(deck_id)
   return (
     <>
     <View>
       <Text style={styles.testHeader}>Time to test yourself !</Text>
-      <Text  style={styles.testHeader}> Select your test type : </Text>
+      <Text  style={styles.testHeader}>Please choose a test type :</Text>
     </View>
    
     <View style={styles.buttonContainer}>
@@ -42,7 +41,7 @@ const Testing = () => {
     <TouchableOpacity
       style={[styles.button, styles.buttonOutline]}
       onPress={() => {
-        navigate('/stricttest')
+        navigate(`/stricttest/${deck_id}`);
       }}
     >
        

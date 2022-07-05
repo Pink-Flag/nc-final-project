@@ -188,11 +188,39 @@ const ViewDecks = () => {
             <Text style={styles.buttonOutlineText}>Create a new deck</Text>
           </TouchableOpacity>
         </View>
-      </>
-    );
-  } else {
-    <Text>Loading...</Text>;
-  }
+
+        <ScrollView style={styles.scrollContainer}>
+         {allDecks.map((deck) => {
+          return<View style={styles.deckContainer} key={deck.id}>
+          <Text style={styles.decks}> {deck.data.list_name}</Text>
+          <TouchableOpacity style={[styles.buttonTest, styles.buttonOutlineTest]}
+           onPress={() => {
+              navigate(`/testing/${deck.id}`);
+              console.log(deck.id);
+          }}>
+          <Text style={styles.buttonOutlineTextTest}>Test</Text>
+        </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonTest, styles.buttonOutlineTest]}
+           onPress={() => {
+              navigate(`/individualdeck/${deck.id}`);
+          }}>
+          <Text style={styles.buttonOutlineTextTest}>View</Text>
+        </TouchableOpacity>
+          </View>
+         })}
+        </ScrollView>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+          <Text style={styles.buttonOutlineText}>Create a new deck</Text>
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+        }else{
+          <Text>Loading...</Text>
+        }
+
 };
 
 export default ViewDecks;
