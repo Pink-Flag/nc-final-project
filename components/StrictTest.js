@@ -35,7 +35,7 @@ const StrictTest = () => {
           setAnswerFeedback("You got this!");
         }, 2500);
       } else {
-        setAnswerFeedback(`The correct answer is: ' ${deck[cardIndex].word} '`);
+        setAnswerFeedback(`The correct answer is: "${deck[cardIndex].word}"`);
         setAnswerColour("red");
         setUserGuess("");
         setTimeout(() => {
