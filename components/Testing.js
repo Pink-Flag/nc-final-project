@@ -9,7 +9,6 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Testing = () => {
-
   const navigate = useNavigate();
   const { deck_id } = useParams();
   return (
@@ -17,11 +16,10 @@ const Testing = () => {
       <View style={styles.container}>
         <View>
           <Text style={styles.testHeader}>Time to test yourself !</Text>
-         
         </View>
 
         <View style={styles.buttonContainer}>
-        <Text style={styles.testType}> Select your test type : </Text>
+          <Text style={styles.testType}> Select your test type : </Text>
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => {
@@ -33,16 +31,14 @@ const Testing = () => {
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => {
-              navigate("/stricttest");
+              navigate(`/stricttest/${deck_id}`);
             }}
           >
             <Text style={styles.buttonOutlineText}>Strict spelling</Text>
           </TouchableOpacity>
-          
         </View>
       </View>
     </>
-
   );
 };
 
@@ -55,20 +51,19 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 10,
     alignItems: "center",
-    height:"80%",
-   
+    height: "80%",
   },
   testHeader: {
     fontSize: 26,
     padding: 10,
-    color:"#423250",
-    marginTop:"10%",
+    color: "#423250",
+    marginTop: "10%",
   },
 
-  testType:{
+  testType: {
     fontSize: 22,
     padding: 10,
-    color:"#423250",
+    color: "#423250",
   },
   button: {
     backgroundColor: "#5c6784",
@@ -78,8 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     margin: 5,
-    minWidth:"80%",
- 
+    minWidth: "80%",
   },
   buttonText: {
     color: "white",

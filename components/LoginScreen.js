@@ -53,31 +53,30 @@ const LoginScreen = () => {
       });
   };
 
-  _storeKey = async () => {
-    try {
-      await AsyncStorage.setItem(
-        key: "i am a key"
-      );
-    } catch (error) {
-      alert.error(error);
-    }
-  };
+  // _storeKey = async () => {
+  //   try {
+  //     await AsyncStorage.setItem(
+  //       key: "i am a key"
+  //     );
+  //   } catch (error) {
+  //     alert.error(error);
+  //   }
+  // };
 
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem(
-        key
-      );
-      if (value !== null) {
-        
-        console.log(value);
-      }
-    } catch (error) {
+  // _retrieveData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem(
+  //       key
+  //     );
+  //     if (value !== null) {
 
-      alert.error(error);
-    }
-  };
+  //       console.log(value);
+  //     }
+  //   } catch (error) {
 
+  //     alert.error(error);
+  //   }
+  // };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
@@ -122,17 +121,13 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
- 
     marginTop: "23%",
     backgroundColor: "#ECEAF6",
     width: "95%",
     borderRadius: 10,
     alignItems: "center",
 
-    height:"80%",
-   
-  
-
+    height: "80%",
   },
   inputContainer: {
     width: "80%",
