@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
-import { fetchTranslation } from "../dictionary/dictionaryFunctions";
+import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
 
 const EnterWords = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,8 +21,8 @@ const EnterWords = () => {
       method: "GET",
       headers: {
         Accept: "application/json",
-        app_id: "a6274974",
-        app_key: "06e17db5b5ac409a0ce68f3b330a4f43",
+        app_id: OXFORD_APP_ID,
+        app_key: OXFORD_APP_KEY,
       },
     };
     setLoading(true);
@@ -33,6 +33,15 @@ const EnterWords = () => {
     )
       .then((response) => response.json())
       .then((body) => {
+        // console.log(
+        //   "-------------",
+
+        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
+        //     .text,
+        //   ": ",
+        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
+        //     .notes[0].text
+        // );
         setTranslation(
           body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
             .text

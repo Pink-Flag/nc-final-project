@@ -75,7 +75,7 @@ const Profile = () => {
 
   return (
     <>
-      <View>
+      <View style={styles.header}>
         <Text style={styles.profileHeader}>Your profile</Text>
       </View>
 
@@ -201,6 +201,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     padding: 10,
+  },
+  header:{
+    marginTop: "25%",
   },
   inputView: {
     marginTop: 10,

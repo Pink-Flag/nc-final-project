@@ -16,6 +16,7 @@ import VanillaTest from "./components/VanillaTest";
 import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
+import Menu from "./components/Menu";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -24,7 +25,8 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NativeRouter>
         <View style={styles.container}>
-          <View style={styles.links}>
+          <Menu/>
+          {/* <View style={styles.links}>
             <Link to="/">
               <Text>Home</Text>
             </Link>
@@ -61,14 +63,17 @@ export default function App() {
             <Link to="/mixedtesting">
               <Text>mixedtesting</Text>
             </Link>
-          </View>
+          </View> */}
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/loginscreen" element={<LoginScreen />} />
             <Route path="/viewdecks" element={<ViewDecks />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/individualdeck/:deck_id" element={<IndividualDeck />} />
+            <Route
+              path="/individualdeck/:deck_id"
+              element={<IndividualDeck />}
+            />
             <Route path="/enterwords" element={<EnterWords />} />
             <Route path="/testing/:deck_id" element={<Testing />} />
             <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />
@@ -85,7 +90,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#A0EADE",
+    backgroundColor: "#F7F8FA",
     alignItems: "center",
     justifyContent: "center",
   },
