@@ -59,7 +59,7 @@ const EnterWords = () => {
     "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.englishInputContainer}>
         <View style={styles.micInputContainer}>
           <Image style={styles.image} source={{ uri: imagePath }} />
@@ -79,7 +79,7 @@ const EnterWords = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.englishWordContainer}>
-          <Text style={styles.englishWord}>English word</Text>
+          {/* <Text style={styles.englishWord}>English word</Text> */}
         </View>
       </View>
       <View style={styles.targetOutputContainer}>
@@ -95,12 +95,12 @@ const EnterWords = () => {
           )}
         </View>
         <View>
-          <Text style={styles.queryText}>
+          {/* <Text style={styles.queryText}>
             Placeholder for where word querying will take place
-          </Text>
+          </Text> */}
         </View>
         <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Text>Next</Text>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
@@ -108,7 +108,7 @@ const EnterWords = () => {
             navigate("/individualdeck/:deck_id");
           }}
         >
-          <Text>Return to deck</Text>
+          <Text style={styles.buttonText}>Return to deck</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -118,6 +118,15 @@ const EnterWords = () => {
 export default EnterWords;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
+    alignItems: "center",
+    height:"80%",
+   
+  },
   image: {
     width: 50,
     height: 50,
@@ -127,7 +136,6 @@ const styles = StyleSheet.create({
   textinput: {
     marginLeft: 10,
     fontSize: 20,
-    borderWidth: 2,
     minWidth: "50%",
     padding: 5,
     borderRadius: 10,
@@ -136,10 +144,9 @@ const styles = StyleSheet.create({
   englishInputContainer: {
     alignItems: "center",
     padding: 1,
-    borderWidth: 2,
     borderRadius: 10,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: "15%",
   },
   englishWordContainer: {
     alignItems: "center",
@@ -153,9 +160,10 @@ const styles = StyleSheet.create({
   },
   targetOutputContainer: {
     alignItems: "center",
+    marginTop: "20%",
     padding: 20,
-    borderWidth: 2,
     borderRadius: 10,
+    width:"90%",
   },
   button: {
     width: "100%",
@@ -179,7 +187,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     borderColor: "#5c6784",
-    borderWidth: 2,
+
   },
   miniButtonOutline: {
     backgroundColor: "white",
@@ -192,11 +200,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   targetWord: {
-    fontSize: 20,
+    fontSize: 32,
+    marginBottom:"55%",
+    fontWeight: "700",
   },
   englishWord: {
     marginTop: 15,
     marginBottom: 25,
     fontSize: 20,
+  },
+  buttonText: {
+    color: "#423250",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });

@@ -75,6 +75,7 @@ const Profile = () => {
 
   return (
     <>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.profileHeader}>Your profile</Text>
       </View>
@@ -153,16 +154,6 @@ const Profile = () => {
           </View>
         </View>
 
-        <View style={styles.inputView}>
-          <TouchableOpacity
-            style={[styles.signOutButton, styles.signOutButtonOutline]}
-            onPress={() => {
-              signOut();
-            }}
-          >
-            <Text style={styles.signOutButton}>Sign Out</Text>
-          </TouchableOpacity>
-        </View>
 
         {/* <View style={styles.inputView}>
           <Text> Default Language</Text>
@@ -181,6 +172,17 @@ const Profile = () => {
           </View>
         </View> */}
       </ScrollView>
+      <View style={styles.inputView}>
+          <TouchableOpacity
+            style={[styles.signOutButton, styles.signOutButtonOutline]}
+            onPress={() => {
+              signOut();
+            }}
+          >
+            <Text style={styles.signOutButton}>Sign Out</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 };
@@ -188,6 +190,15 @@ const Profile = () => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
+    alignItems: "center",
+    height:"80%",
+   
+  },
   image: {
     width: 150,
     height: 150,
@@ -202,15 +213,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 10,
   },
-  header:{
-    marginTop: "25%",
-  },
+  // header:{
+  //   marginTop: "25%",
+  // },
   inputView: {
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
-    width: "90%",
+    width: "95%",
     alignSelf: "flex-start",
     justifyContent: "space-evenly",
   },
@@ -269,9 +280,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
     textAlign: "center",
-    alignItems: "center",
     padding: 5,
     borderRadius: 12,
+    width:"80%",
+  marginLeft: "10%",
   },
   signOutButtonOutline: {
     backgroundColor: "#5c6784",
