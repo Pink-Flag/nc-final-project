@@ -68,6 +68,7 @@ const StrictTest = () => {
     setCardIndex(0);
     settriesCorrect(0);
     setIsEndOfDeck(false);
+    setDisableSubmit(false);
   }
 
   if (deck.length) {
