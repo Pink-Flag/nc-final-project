@@ -14,7 +14,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { fetchDictionaryEntry } from "../dictionary/dictionaryFunctions";
 const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
@@ -136,6 +135,7 @@ const styles = StyleSheet.create({
   deckInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
+  
   },
   textName: {
     marginRight: "25%",
@@ -211,14 +211,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   wordContainer: {
-    borderWidth: 2,
-    height: "65%",
+    // borderWidth: 2,
+    height: "80%",
     marginTop: "10%",
     borderRadius: 10,
     flexDirection: "row",
   },
   container: {
     width: "90%",
+    marignTop: "30%",
+    height: "70%",
   },
   firstLangWords: {
     borderRightWidth: 1,

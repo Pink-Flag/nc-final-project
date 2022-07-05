@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#A0EADE",
+  
   },
   inputContainer: {
     width: "80%",
@@ -107,6 +107,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
+    borderColor: "#F7F8FA",
+    borderWidth:1,
     marginTop: 5,
     minWidth: "90%",
   },

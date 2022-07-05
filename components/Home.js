@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#5c6784",
-    borderWidth: 2,
+    borderColor: "#DCDEDF",
+    borderWidth: 1,
   },
   buttonOutlineText: {
-    color: "#5c6784",
+    color: "#484848",
     fontWeight: "700",
     fontSize: 16,
   },

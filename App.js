@@ -16,6 +16,7 @@ import VanillaTest from "./components/VanillaTest";
 import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
+import Menu from "./components/Menu";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -24,7 +25,8 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NativeRouter>
         <View style={styles.container}>
-          <View style={styles.links}>
+          <Menu/>
+          {/* <View style={styles.links}>
             <Link to="/">
               <Text>Home</Text>
             </Link>
@@ -61,7 +63,7 @@ export default function App() {
             <Link to="/mixedtesting">
               <Text>mixedtesting</Text>
             </Link>
-          </View>
+          </View> */}
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
@@ -88,7 +90,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#A0EADE",
+    backgroundColor: "#F7F8FA",
     alignItems: "center",
     justifyContent: "center",
   },
