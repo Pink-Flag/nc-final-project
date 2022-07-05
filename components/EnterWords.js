@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
-import { fetchTranslation } from "../dictionary/dictionaryFunctions";
+// import { fetchTranslation } from "../dictionary/dictionaryFunctions";
 
 const EnterWords = () => {
   const [searchTerm, setSearchTerm] = useState("");

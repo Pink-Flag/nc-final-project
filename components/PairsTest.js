@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  fetchDictionaryEntry,
-  fetchTranslation,
-} from "../dictionary/dictionaryFunctions";
+// import {
+//   fetchDictionaryEntry,
+//   fetchTranslation,
+// } from "../dictionary/dictionaryFunctions";
 
 const PairsTest = () => {
   const navigate = useNavigate();

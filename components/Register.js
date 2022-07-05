@@ -74,9 +74,9 @@ const Register = () => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView style={styles.headerView}>
         <View style={styles.headerView}>
-          <Text style={styles.header}>Vocab</Text>
+          {/* <Text style={styles.header}>Vocab</Text> */}
         </View>
         <View style={styles.inputContainer}>
           <View style={styles.inputView}>
@@ -173,10 +173,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#A0EADE",
+    backgroundColor: "red",
+ 
+    height: "90%",
   },
   inputContainer: {
     width: "80%",
+    backgroundColor:"#FCFCFC",
+    marginLeft:"10%",
+  
   },
   input: {
     backgroundColor: "white",
@@ -191,6 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
+    marginLeft: "20%"
   },
   button: {
     backgroundColor: "#5c6784",
@@ -220,13 +226,11 @@ const styles = StyleSheet.create({
     color: "#202124",
     marginTop: 10,
   },
-  header: {
-    fontSize: 24,
-    marginBottom: 70,
-  },
   headerView: {
     textAlignVertical: "top",
     marginTop: 0,
+   marginTop:"20%",
+     height: "0%",
   },
   inputView: {
     marginTop: 5,
