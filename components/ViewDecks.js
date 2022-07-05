@@ -7,8 +7,6 @@ import {
 } from "react-native";
 import { React, useState, useEffect, useContext } from "react";
 
-
-
 import { Picker } from "@react-native-picker/picker";
 import RadioButtonRN from "radio-buttons-react-native";
 import { useNavigate } from "react-router-dom";
@@ -26,8 +24,6 @@ import { UserContext } from "./UserContext";
 const ViewDecks = () => {
   const [defaultLanguage, setdefaultLanguage] = useState("French");
   const [sortBy, setSortBy] = useState("French");
-
-
 
   const [defaultDecks, setDefaultDecks] = useState([]);
 
@@ -65,14 +61,14 @@ const ViewDecks = () => {
   // addDoc(collection(db, "decks"), dataf).then(() => {
   // //  console.log("saved")
   // });
-  // const data = [
-  //   {
-  //     label: "Default Decks",
-  //   },
-  //   {
-  //     label: "Custom Decks",
-  //   },
-  // ];
+  const data = [
+    {
+      label: "Default Decks",
+    },
+    {
+      label: "Custom Decks",
+    },
+  ];
   useEffect(() => {
     getDocs(collection(db, "decks")).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -81,10 +77,7 @@ const ViewDecks = () => {
           data: doc.data(),
         };
 
-
-
         setDefaultDecks((current) => [newDeck, ...current]);
-
       });
     });
   }, []);
@@ -99,7 +92,6 @@ const ViewDecks = () => {
 
   console.log(customDecks);
   if (defaultDecks.length !== 0 || customDecks.length !== 0) {
-
     return (
       <>
         <View style={styles.container}>
@@ -115,8 +107,6 @@ const ViewDecks = () => {
           <View style={styles.containerRadio}>
             <Text style={styles.viewText}>View: </Text>
             <RadioButtonRN
-
-
               initial={1}
               data={data}
               style={styles.radio}
@@ -184,7 +174,6 @@ const ViewDecks = () => {
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Create a new deck</Text>
           </TouchableOpacity>
-
         </View>
       </>
     );
@@ -205,7 +194,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 10,
     marginBottom: 10,
-
   },
   button: {
     backgroundColor: "#5C6784",
