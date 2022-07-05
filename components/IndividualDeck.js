@@ -61,7 +61,7 @@ const IndividualDeck = () => {
   if (deck.words) {
     return (
       <>
-        <View style={styles.container}>
+        <View style={styles.containera}>
           <View style={styles.deckInfo}>
             <Text style={styles.textName}>{deck.list_name}</Text>
             <Text style={styles.textLang}>German</Text>
@@ -132,10 +132,17 @@ const IndividualDeck = () => {
 };
 export default IndividualDeck;
 const styles = StyleSheet.create({
+  containera: {
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
+    alignItems: "center",
+    height: "80%",
+  },
   deckInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
-  
   },
   textName: {
     marginRight: "25%",
@@ -153,9 +160,8 @@ const styles = StyleSheet.create({
     width: "70%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
     marginBottom: 10,
-    marginLeft: "15%",
+  
   },
   button: {
     backgroundColor: "#5C6784",
@@ -165,7 +171,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     minWidth: "65%",
   },
-  wordContainer: {},
   buttonX: {
     backgroundColor: "#5C6784",
     width: "20%",
@@ -211,25 +216,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   wordContainer: {
-    // borderWidth: 2,
-    height: "80%",
+    height: "70%",
     marginTop: "10%",
     borderRadius: 10,
     flexDirection: "row",
   },
-  container: {
-    width: "90%",
-    marignTop: "30%",
-    height: "70%",
-  },
+
   firstLangWords: {
     borderRightWidth: 1,
     width: "50%",
-    height: "100%",
+    height: "85%",
   },
   foreignLangWords: {
     width: "50%",
-    height: "100%",
+    height: "50%",
   },
   lang: {
     fontSize: 20,

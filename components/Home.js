@@ -7,7 +7,7 @@ const Home = () => {
   const { user, setUser } = useContext(UserContext);
 
   return (
-    <>
+    <><View style={styles.container}>
       <View>
         {user ? (
           <Text style={styles.welcomeMessage}>
@@ -37,6 +37,7 @@ const Home = () => {
           </Link>
         </TouchableOpacity>
       </View>
+      </View>
     </>
   );
 };
@@ -44,11 +45,21 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
+    alignItems: "center",
+    height:"80%",
+   
+  },
   buttonContainer: {
-    width: "60%",
+    width: "75%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: "30%",
+
   },
   buttonText: {
     color: "white",
@@ -62,7 +73,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonOutlineText: {
-    color: "#484848",
+    color: "#423250",
     fontWeight: "700",
     fontSize: 16,
   },
@@ -77,6 +88,10 @@ const styles = StyleSheet.create({
   },
   welcomeMessage: {
     fontSize: 20,
-    padding: 15,
+    padding: 30,
+    color: "#423250",
+    fontWeight :"700",
+    marginTop: "10%",
+    
   },
 });

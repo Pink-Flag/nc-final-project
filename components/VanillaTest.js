@@ -30,21 +30,17 @@ const VanillaTest = () => {
       .then((querySnapshot) => {
         setDeckWords(querySnapshot.data().words);
       })
-      .then(() => {});
   }, []);
 
-  // const invertKeys = (obj) => {
-
-  // }
 
   if (deckWords.length !== 0) {
     return (
       <View style={styles.container}>
-        {loading ? (
-          <Text value={loading}>do i</Text>
+        {/* {loading ? (
+          <Text value={loading}></Text>
         ) : (
-          <Text value={loading}>change?</Text>
-        )}
+          <Text value={loading}></Text>
+        )} */}
         <Swiper
           cards={deckWords}
           infinite={true}
@@ -68,12 +64,22 @@ const VanillaTest = () => {
               <View key={card.word} style={styles.card}>
                 {displayBack ? (
                   <View>
-                    <Text>word:</Text>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri: "https://www.germany-insider-facts.com/images/flag-of-germany-small.jpg",
+                      }}
+                      />
                     <Text style={styles.text}>{card.word}</Text>
                   </View>
                 ) : (
                   <View>
-                    <Text>definition:</Text>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri: "https://image.shutterstock.com/image-vector/official-uk-flag-united-kingdom-260nw-153708980.jpg",
+                      }}
+                    />
                     <Text style={styles.text}>{card.definition}</Text>
                   </View>
                 )}
@@ -85,6 +91,14 @@ const VanillaTest = () => {
           backgroundColor={"transparent"}
           stackSize={3}
         ></Swiper>
+         {/* <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => {
+                navigate("/viewdecks");
+              }}
+            >
+              <Text style={styles.buttonOutlineText}>Return to decks</Text>
+            </TouchableOpacity> */}
       </View>
     );
   } else {
@@ -96,17 +110,29 @@ export default VanillaTest;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 40,
-    backgroundColor: "transparent",
-    minWidth: "100%",
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
+    alignItems: "center",
+    height: "80%",
   },
   card: {
-    flex: 2,
+    width: "94%",
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#E8E8E8",
     justifyContent: "center",
     backgroundColor: "white",
+    height: "80%",
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    position:"absolute",
+    bottom:180,
+    left: 260,
   },
   text: {
     textAlign: "center",
@@ -134,28 +160,28 @@ const styles = StyleSheet.create({
   //   alignItems: "center",
   //   marginTop: 170,
   // },
-  // button: {
-  //   backgroundColor: "#5c6784",
-  //   width: "100%",
-  //   padding: 15,
-  //   borderRadius: 10,
-  //   alignItems: "center",
-  //   minWidth: "65%",
-  // },
-  // buttonText: {
-  //   color: "white",
-  //   fontWeight: "700",
-  //   fontSize: 16,
-  // },
-  // buttonOutline: {
-  //   backgroundColor: "white",
-  //   marginTop: 5,
-  //   borderColor: "#5c6784",
-  //   borderWidth: 2,
-  // },
-  // buttonOutlineText: {
-  //   color: "#5c6784",
-  //   fontWeight: "700",
-  //   fontSize: 16,
-  // },
+  button: {
+    backgroundColor: "#5c6784",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    minWidth: "65%",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#5c6784",
+    borderWidth: 2,
+  },
+  buttonOutlineText: {
+    color: "#5c6784",
+    fontWeight: "700",
+    fontSize: 16,
+  },
 });
