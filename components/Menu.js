@@ -4,33 +4,48 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Image
- 
+  Image,
 } from "react-native";
 import { useNavigate } from "react-router-dom";
-import { useState,  useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
 
 const Menu = () => {
   const navigate = useNavigate();
-  const [active, setActive] =  useState(false)
+  const [active, setActive] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
   return (
     <View style={styles.container}>
-   {user ? (
-   
-       <Text style={styles.username}>Hello,<Text style={styles.name}>{user.displayName}!</Text></Text>)
-        :
-      (<Text style={styles.login} onPress={() => {
-        navigate(`/loginscreen`);
-      }}>Log in </Text>)
+      {user ? (
+        <>
+        <View style={styles.userContainer}>
+        <Image
+         style={styles.image}
+         source={{
+           uri: user.photoURL,
+         }}>
 
-      }
-      
-      <ScrollView horizontal={true} contentContainerStyle={styles.menu}>
+        </Image>
+        <Text style={styles.username}>
+          Hello,<Text style={styles.name}>{user.displayName}!</Text>
+        </Text>
+        </View>
+        </>
+      ) : (
+        <Text
+          style={styles.login}
+          onPress={() => {
+            navigate(`/loginscreen`);
+          }}
+        >
+          Log in{" "}
+        </Text>
+      )}
+
+      <View style={styles.menu}>
         <TouchableOpacity
-            activeOpacity={0.6}
+          activeOpacity={0.6}
           style={[styles.button, styles.buttonOutline]}
           onPress={() => {
             navigate(`/`);
@@ -38,21 +53,14 @@ const Menu = () => {
         >
           <Text style={styles.buttonOutlineText}>Home</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
           onPress={() => {
             navigate(`/viewdecks`);
           }}
         >
-          <Text style={styles.buttonOutlineText}>View Decks</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
-          onPress={() => {
-            navigate(`/enterwords`);
-          }}
-        >
-          <Text style={styles.buttonOutlineText}>Enter words</Text>
+          <Text style={styles.buttonOutlineText}>View decks</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
@@ -62,7 +70,7 @@ const Menu = () => {
         >
           <Text style={styles.buttonOutlineText}>Profile</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -75,28 +83,40 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 40,
     padding: 0,
-   
     minWidth: "100%",
+    marginBottom: "20%",
+   
+  },
+  userContainer: {
+    flexDirection:"row",
+    marginBottom: 5,
+  },
+  image: {
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    marginLeft: "7%",
   },
   menu: {
-
     paddingRight: 0,
     minWidth: "100%",
-    justifyContent: "space-between",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor:" red",
   },
-  login:{
+  login: {
     marginLeft: "80%",
   },
   button: {
-    backgroundColor: "black",
+    backgroundColor: "#423250",
     width: "20%",
     borderRadius: 10,
     alignItems: "center",
-    margin: 10,
-    padding:5,
+    marginBottom: 8,
+    padding: 8,
   },
   buttonOutline: {
-    backgroundColor: "black",
+    backgroundColor: "#423250",
     marginTop: 5,
     borderColor: "#F7F8FA",
     borderWidth: 1,
@@ -105,15 +125,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 12,
-    marginTop:3,
-   
+    marginTop: 3,
   },
-  username:{
-    marginBottom: 5,
-    marginLeft: 10,
+  username: {
+    marginTop: 4,
+    marginLeft: 6,
+    color: "#423250"
   },
   name: {
     fontWeight: "700",
- 
-  }
+    color: "#423250",
+  },
 });

@@ -94,12 +94,21 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+ 
+    marginTop: "23%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
     alignItems: "center",
+
+    height:"80%",
+   
+  
+
   },
   inputContainer: {
     width: "80%",
+    marginTop: " 45%",
   },
   input: {
     backgroundColor: "white",
@@ -116,7 +125,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-    // marginLeft: 70,
   },
   button: {
     backgroundColor: "#5c6784",
