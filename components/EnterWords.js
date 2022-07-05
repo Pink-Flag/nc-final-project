@@ -33,6 +33,15 @@ const EnterWords = () => {
     )
       .then((response) => response.json())
       .then((body) => {
+        // console.log(
+        //   "-------------",
+
+        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
+        //     .text,
+        //   ": ",
+        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
+        //     .notes[0].text
+        // );
         setTranslation(
           body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
             .text
