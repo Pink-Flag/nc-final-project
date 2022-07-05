@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { React, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-native";
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  
   },
   inputContainer: {
     width: "80%",
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     borderColor: "#F7F8FA",
-    borderWidth:1,
+    borderWidth: 1,
     marginTop: 5,
     minWidth: "90%",
   },
