@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  AsyncStorage,
 } from "react-native";
 
 import React, { useContext, useEffect, useState } from "react";
@@ -23,7 +24,7 @@ import { collection, doc, getDoc } from "firebase/firestore";
 const LoginScreen = () => {
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
-
+  const [refreshToken, setRefreshToken] = useState("hi");
   const [password, setPassword] = useState("");
   const auth = getAuth();
 
@@ -32,6 +33,7 @@ const LoginScreen = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        setRefreshToken(userCredential.refreshToken);
         const docRef = doc(db, "users", userCredential.user.uid);
         getDoc(docRef).then((docSnap) => {
           setUser({
@@ -50,6 +52,32 @@ const LoginScreen = () => {
         alert(error.message);
       });
   };
+
+  _storeKey = async () => {
+    try {
+      await AsyncStorage.setItem(
+        key: "i am a key"
+      );
+    } catch (error) {
+      alert.error(error);
+    }
+  };
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(
+        key
+      );
+      if (value !== null) {
+        
+        console.log(value);
+      }
+    } catch (error) {
+
+      alert.error(error);
+    }
+  };
+
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
