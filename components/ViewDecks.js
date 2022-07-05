@@ -109,6 +109,7 @@ if(allDecks !== 0){
           <TouchableOpacity style={[styles.buttonTest, styles.buttonOutlineTest]}
            onPress={() => {
               navigate(`/testing/${deck.id}`);
+              console.log(deck.id);
           }}>
           <Text style={styles.buttonOutlineTextTest}>Test</Text>
         </TouchableOpacity>
