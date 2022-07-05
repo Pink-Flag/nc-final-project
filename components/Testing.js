@@ -29,17 +29,6 @@ const Testing = () => {
           >
             <Text style={styles.buttonOutlineText}>Vanilla</Text>
           </TouchableOpacity>
-
-          {/* <TouchableOpacity
-      style={[styles.button, styles.buttonOutline]}
-      onPress={() => {
-        navigate('/pairstest');
-      }}
-    >
-       
-      <Text style={styles.buttonOutlineText}>Pair matching</Text>
-      
-    </TouchableOpacity> */}
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => {
@@ -48,14 +37,7 @@ const Testing = () => {
           >
             <Text style={styles.buttonOutlineText}>Strict spelling</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity
-      style={[styles.button, styles.buttonOutline]}
-      onPress={() => {
-        navigate('/mixedtesting')
-      }}
-    >
-      <Text style={styles.buttonOutlineText}>Mixed tests</Text>
-    </TouchableOpacity> */}
+          
         </View>
       </View>
     </>
