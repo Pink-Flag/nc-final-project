@@ -57,7 +57,7 @@ const Profile = () => {
       })
       .then(() => {
         alert("You have been signed out");
-        navigate("/loginscreen");
+        navigate("/loginscreen/signedOut");
       })
       .catch((err) => {
         setLoading(false);

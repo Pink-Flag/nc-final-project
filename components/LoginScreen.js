@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { db, auth } from "../firebase";
@@ -22,6 +22,14 @@ const LoginScreen = () => {
   const auth = getAuth();
 
   const navigate = useNavigate();
+
+  const { signedOut } = useParams();
+
+  useEffect(() => {
+    if (signedOut) {
+      setUser(null);
+    }
+  }, []);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -48,6 +56,7 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
+      {signedOut ? <Text>goodbye!</Text> : null}
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
