@@ -17,6 +17,7 @@ import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
 import Menu from "./components/Menu";
+import IndividualCustomDeck from "./components/IndividualCustomDeck";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -26,44 +27,7 @@ export default function App() {
       <NativeRouter>
         <View style={styles.container}>
           <Menu />
-          {/* <View style={styles.links}>
-            <Link to="/">
-              <Text>Home</Text>
-            </Link>
-            <Link to="/register">
-              <Text>Register</Text>
-            </Link>
-            <Link to="/loginscreen">
-              <Text>LoginScreen</Text>
-            </Link>
-            <Link to="/viewdecks">
-              <Text>ViewDecks</Text>
-            </Link>
-            <Link to="/profile">
-              <Text>Profile</Text>
-            </Link>
-            <Link to="/individualdeck/:deck_id">
-              <Text>IndividualDeck</Text>
-            </Link>
-            <Link to="/enterwords">
-              <Text>EnterWords</Text>
-            </Link>
-            <Link to="/testing/:deck_id">
-              <Text>Testing</Text>
-            </Link>
-            <Link to="/vanillatest/:deck_id">
-              <Text>VanillaTest</Text>
-            </Link>
-            <Link to="/pairstest">
-              <Text>PairsTest</Text>
-            </Link>
-            <Link to="/stricttest/:deck_id">
-              <Text>StrictTest</Text>
-            </Link>
-            <Link to="/mixedtesting">
-              <Text>mixedtesting</Text>
-            </Link>
-          </View> */}
+          
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
@@ -81,6 +45,8 @@ export default function App() {
             <Route path="/pairstest" element={<PairsTest />} />
             <Route path="/stricttest/:deck_id" element={<StrictTest />} />
             <Route path="/mixedTesting" element={<MixedTesting />} />
+            <Route path="/individualcustomdeck/:index"
+              element={<IndividualCustomDeck />} />
           </Routes>
         </View>
       </NativeRouter>

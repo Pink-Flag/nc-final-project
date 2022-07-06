@@ -34,10 +34,6 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
   const navigate = useNavigate();
 
   const createDBDeck = async () => {
-    // const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
-    // if (docCheck.data()) {
-    //   console.log("deck already exists");
-    // }
     const deckRef = doc(db, "custom_decks", user.uid);
     const newDeck = {
       list_name: deckName,
@@ -45,8 +41,24 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
       words: [],
       user: user.uid,
     };
-    console.log(newDeck);
-    setDoc(deckRef, newDeck);
+
+    getDoc(deckRef).then((querySnapshot) => {
+      const oldDecks = querySnapshot.data().decks;
+      const newDecks = [...oldDecks, newDeck];
+      updateDoc(deckRef, { decks: newDecks });
+    });
+  };
+
+  const deckCheck = async () => {
+    const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
+    if (docCheck.data()) {
+      console.log("deck already exists");
+      createDBDeck();
+    } else {
+
+      await setDoc(doc(db, "custom_decks", user.uid), {"decks" : []});
+      createDBDeck();
+    }
   };
 
   return (
@@ -64,6 +76,7 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
         </View>
       </View>
       <View style={styles.inputView}>
+        <View style={styles.options}>
         <Text> I want to learn</Text>
         <View style={styles.editPicker}>
           <Picker
@@ -75,13 +88,16 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
             <Picker.Item label="French" value="FR_GB" />
             <Picker.Item label="Spanish" value="ES_GB" />
           </Picker>
+          </View>
+          <View style={styles.btnContainer}>
           <Text style={styles.required}>* required fields</Text>
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
-            onPress={() => createDBDeck()}
+            onPress={() => deckCheck()}
           >
             <Text style={styles.buttonText}>Create Deck</Text>
           </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.targetOutputContainer}>
@@ -105,12 +121,15 @@ export default CreateDeck;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "30%",
+    marginTop: "10%",
     backgroundColor: "#ECEAF6",
-    width: "95%",
+    width: "100%",
     borderRadius: 10,
     alignItems: "center",
     height: "80%",
+  },
+  btnContainer: {
+marginTop: "50%",
   },
   image: {
     width: 50,
@@ -136,6 +155,9 @@ const styles = StyleSheet.create({
   englishWordContainer: {
     alignItems: "center",
   },
+  options: {
+    marginTop: "20%"
+  },
   micInputContainer: {
     marginTop: 15,
     marginBottom: 15,
@@ -156,6 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
+  
   },
   miniButton: {
     justifyContent: "center",

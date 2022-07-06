@@ -21,25 +21,27 @@ import {
 } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-native-loading-spinner-overlay";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import EnterWords from "./EnterWords";
 import { db } from "../firebase";
-const IndividualDeck = () => {
-  const { deck_id } = useParams();
+import { UserContext } from "./UserContext";
+const IndividualCustomDeck = () => {
+  const { index } = useParams();
+  console.log(index);
   const navigate = useNavigate();
   const [deck, setDeck] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
 
   const [loading, setLoading] = useState(false);
-
+  const { user, setUser } = useContext(UserContext);
   useEffect(() => {
-    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
-      setDeck(querySnapshot.data());
+    getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
+      setDeck(querySnapshot.data().decks[index]);
     });
   }, []);
 
   const deleteWord = (index) => {
-    const wordReff = doc(db, "decks", deck_id);
+    const wordReff = doc(db, "custom_decks", user.uid);
 
     setDeck((current) => {
       const newWords = current.words.filter((_, i) => i !== index);
@@ -81,14 +83,14 @@ const IndividualDeck = () => {
                       key={word.word + "_ger"}
                       style={styles.singleWordContainer}
                     >
-                      {/* <TouchableOpacity
+                      <TouchableOpacity
                         style={[styles.buttonX, styles.buttonOutlineX]}
                         onPress={() => {
                           deleteWord(index);
                         }}
                       >
                         <Text style={styles.buttonOutlineTextX}>x</Text>
-                      </TouchableOpacity> */}
+                      </TouchableOpacity>
                       <Text style={styles.word}> {word.word}</Text>
                     </View>
                   );
@@ -96,7 +98,7 @@ const IndividualDeck = () => {
               </View>
             </View>
           </ScrollView>
-          {/* <View style={styles.centeredView}>
+          <View style={styles.centeredView}>
             <Modal
               animationType="slide"
               transparent={true}
@@ -107,23 +109,20 @@ const IndividualDeck = () => {
               }}
             >
               <View style={styles.centeredView}>
-                
                 <View style={styles.modalView}>
-                <Pressable
+                  <Pressable
                     style={[styles.button, styles.buttonClose]}
                     onPress={() => setModalVisible(!modalVisible)}
                   >
                     <Text style={styles.textStyle}>Close</Text>
                   </Pressable>
                   <EnterWords
-                    deck_id={deck_id}
+                    deck_id={index}
                     deck={deck}
                     setDeck={setDeck}
                     setModalVisible={setModalVisible}
                     modalVisible={modalVisible}
                   />
-                  
-                 
                 </View>
               </View>
             </Modal>
@@ -133,7 +132,7 @@ const IndividualDeck = () => {
             >
               <Text style={styles.buttonOutlineText}>Add Word</Text>
             </Pressable>
-          </View> */}
+          </View>
         </View>
 
         <View>
@@ -147,7 +146,7 @@ const IndividualDeck = () => {
     return <Text>Empty</Text>;
   }
 };
-export default IndividualDeck;
+export default IndividualCustomDeck;
 const styles = StyleSheet.create({
   containera: {
     marginTop: "30%",
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "75%",
   },
- 
+
   deckInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -175,6 +174,7 @@ const styles = StyleSheet.create({
   singleWordContainer: {
     flexDirection: "row",
     marginLeft: "2%",
+    // marginTop: "16%",
   },
   buttonContainer: {
     width: "70%",
@@ -217,7 +217,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginTop: 5,
     borderColor: "#5C6784",
-  
   },
   buttonOutlineX: {
     backgroundColor: "#423250",
@@ -246,11 +245,11 @@ const styles = StyleSheet.create({
     // borderRightWidth: 1,
     width: "50%",
     height: "100%",
-    
+  
   },
   foreignLangWords: {
     width: "50%",
-    height: "50%",
+    height: "100%",
   },
   lang: {
     fontSize: 22,
@@ -258,9 +257,16 @@ const styles = StyleSheet.create({
     padding: 25,
     textDecorationLine: "underline",
   },
+  lang2: {
+    fontSize: 22,
+    marginTop: "10%",
+    alignSelf: "center",
+
+    textDecorationLine: "underline",
+  },
   word: {
     padding: 10,
-    marginLeft: "15%",
+    marginLeft: "5%",
     fontSize: 20,
   },
   centeredView: {
@@ -269,11 +275,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
-    
     backgroundColor: "white",
     borderRadius: 20,
     padding: 15,
-    paddingTop:2,
+    paddingTop: 2,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
