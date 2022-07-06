@@ -75,87 +75,86 @@ const Profile = () => {
 
   return (
     <>
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.profileHeader}>Your profile</Text>
-      </View>
-
-      <View>
-        <Image
-          style={styles.image}
-          source={{
-            uri: profilePicture,
-          }}
-        />
-
-        <Text style={styles.username}>{user.displayName}</Text>
-      </View>
-
-      <ScrollView>
-        <View style={styles.inputView}>
-          <Text> Avatar link</Text>
-          <View style={styles.editTitle}>
-            <TextInput
-              defaultValue={user.photoURL}
-              style={styles.input}
-              onChangeText={(text) => setAvatar(text)}
-            />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-              onPress={() => {
-                updateAvatar();
-              }}
-            >
-              <Text style={styles.buttonOutlineText}>Save</Text>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.profileHeader}>Your profile</Text>
         </View>
 
-        <View style={styles.inputView}>
-          <Text> Email address</Text>
-          <View style={styles.editTitle}>
-            <TextInput
-              defaultValue={user.email}
-              style={styles.input}
-              onChangeText={(text) => setUpdatedEmail(text)}
-            />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-              onPress={() => {
-                updateEmail();
-              }}
-            >
-              <Text style={styles.buttonOutlineText}>Edit</Text>
-            </TouchableOpacity>
-          </View>
+        <View>
+          <Image
+            style={styles.image}
+            source={{
+              uri: profilePicture,
+            }}
+          />
+
+          <Text style={styles.username}>{user.displayName}</Text>
         </View>
 
-        <View style={styles.inputView}>
-          <Text> Username</Text>
-          <View style={styles.editTitle}>
-            <TextInput value={user.displayName} style={styles.input} />
-            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-              <Text style={styles.buttonOutlineText}>Edit</Text>
-            </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.inputView}>
+            <Text> Avatar link</Text>
+            <View style={styles.editTitle}>
+              <TextInput
+                defaultValue={user.photoURL}
+                style={styles.input}
+                onChangeText={(text) => setAvatar(text)}
+              />
+              <TouchableOpacity
+                style={[styles.button, styles.buttonOutline]}
+                onPress={() => {
+                  updateAvatar();
+                }}
+              >
+                <Text style={styles.buttonOutlineText}>Save</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        <View style={styles.inputView}>
-          <Text> Password</Text>
-          <View style={styles.editTitle}>
-            <TextInput
-              value={user.providerId}
-              style={styles.input}
-              secureTextEntry
-            />
-            <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-              <Text style={styles.buttonOutlineText}>Edit</Text>
-            </TouchableOpacity>
+          <View style={styles.inputView}>
+            <Text> Email address</Text>
+            <View style={styles.editTitle}>
+              <TextInput
+                defaultValue={user.email}
+                style={styles.input}
+                onChangeText={(text) => setUpdatedEmail(text)}
+              />
+              <TouchableOpacity
+                style={[styles.button, styles.buttonOutline]}
+                onPress={() => {
+                  updateEmail();
+                }}
+              >
+                <Text style={styles.buttonOutlineText}>Edit</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
+          <View style={styles.inputView}>
+            <Text> Username</Text>
+            <View style={styles.editTitle}>
+              <TextInput value={user.displayName} style={styles.input} />
+              <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+                <Text style={styles.buttonOutlineText}>Edit</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
-        {/* <View style={styles.inputView}>
+          <View style={styles.inputView}>
+            <Text> Password</Text>
+            <View style={styles.editTitle}>
+              <TextInput
+                value={user.providerId}
+                style={styles.input}
+                secureTextEntry
+              />
+              <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+                <Text style={styles.buttonOutlineText}>Edit</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* <View style={styles.inputView}>
           <Text> Default Language</Text>
           <View style={styles.editPicker}>
             <Picker
@@ -171,8 +170,8 @@ const Profile = () => {
             </Picker>
           </View>
         </View> */}
-      </ScrollView>
-      <View style={styles.inputView}>
+        </ScrollView>
+        <View style={styles.inputView}>
           <TouchableOpacity
             style={[styles.signOutButton, styles.signOutButtonOutline]}
             onPress={() => {
@@ -196,8 +195,7 @@ const styles = StyleSheet.create({
     width: "95%",
     borderRadius: 10,
     alignItems: "center",
-    height:"80%",
-   
+    height: "80%",
   },
   image: {
     width: 150,
@@ -282,8 +280,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 5,
     borderRadius: 12,
-    width:"80%",
-  marginLeft: "10%",
+    width: "80%",
+    marginLeft: "10%",
   },
   signOutButtonOutline: {
     backgroundColor: "#5c6784",
