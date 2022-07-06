@@ -150,12 +150,12 @@ export default EnterWords;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "30%",
+    marginTop: "10%",
     backgroundColor: "#ECEAF6",
-    width: "95%",
+    width: "100%",
     borderRadius: 10,
     alignItems: "center",
-    height: "80%",
+    height: "85%",
   },
   image: {
     width: 50,

@@ -107,7 +107,14 @@ const IndividualDeck = () => {
               }}
             >
               <View style={styles.centeredView}>
+                
                 <View style={styles.modalView}>
+                <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>Close</Text>
+                  </Pressable>
                   <EnterWords
                     deck_id={deck_id}
                     deck={deck}
@@ -115,20 +122,16 @@ const IndividualDeck = () => {
                     setModalVisible={setModalVisible}
                     modalVisible={modalVisible}
                   />
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>Close</Text>
-                  </Pressable>
+                  
+                 
                 </View>
               </View>
             </Modal>
             <Pressable
-              style={[styles.button, styles.buttonOpen]}
+              style={[styles.button, styles.buttonOutline]}
               onPress={() => setModalVisible(true)}
             >
-              <Text style={styles.textStyle}>Add Word</Text>
+              <Text style={styles.buttonOutlineText}>Add Word</Text>
             </Pressable>
           </View>
         </View>
@@ -154,6 +157,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "75%",
   },
+ 
   deckInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -213,7 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginTop: 5,
     borderColor: "#5C6784",
-    borderWidth: 2,
+  
   },
   buttonOutlineX: {
     backgroundColor: "#423250",
@@ -232,7 +236,7 @@ const styles = StyleSheet.create({
   },
   wordContainer: {
     width: "100%",
-    height: "70%",
+    height: "60%",
     marginTop: "3%",
     borderRadius: 10,
     flexDirection: "row",
@@ -262,13 +266,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 15,
+    paddingTop:2,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -289,6 +293,8 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: "#2196F3",
+    marginTop: "3%",
+    marginLeft: "70%",
   },
   textStyle: {
     color: "white",

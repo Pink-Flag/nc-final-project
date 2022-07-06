@@ -45,8 +45,22 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
       words: [],
       user: user.uid,
     };
-    console.log(newDeck);
-    setDoc(deckRef, newDeck);
+
+    getDoc(deckRef).then((querySnapshot) => {
+      const oldDecks = querySnapshot.data().decks;
+      console.log(oldDecks)
+      const newDecks = [
+        ...oldDecks,
+        newDeck
+      ];
+      console.log(newDecks)
+
+       updateDoc(deckRef, { "decks" : newDecks});
+      // setDeck(newDeck);
+    });
+    
+    // console.log(newDeck);
+    // setDoc(deckRef, newDeck);
   };
 
   return (
