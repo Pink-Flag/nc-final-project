@@ -68,6 +68,7 @@ export default function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/loginscreen" element={<LoginScreen />} />
+            <Route path="loginscreen/:signedOut" element={<LoginScreen />} />
             <Route path="/viewdecks" element={<ViewDecks />} />
             <Route path="/profile" element={<Profile />} />
             <Route
