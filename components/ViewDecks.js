@@ -193,7 +193,6 @@ const ViewDecks = () => {
               </Modal>
             </View>
           </ScrollView>
-
         </View>
 
         <View style={styles.buttonContainer}>
@@ -201,12 +200,9 @@ const ViewDecks = () => {
             style={[styles.button, styles.buttonOutline]}
             onPress={() => setModalVisible(true)}
           >
-
             <Text style={styles.buttonOutlineText}>Create a new deck</Text>
           </TouchableOpacity>
         </View>
-        </View>
-      
       </>
     );
   } else {
