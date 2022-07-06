@@ -33,7 +33,7 @@ const Testing = () => {
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => {
-              navigate("/stricttest");
+              navigate(`/stricttest/${deck_id}`);
             }}
           >
             <Text style={styles.buttonOutlineText}>Strict spelling</Text>
