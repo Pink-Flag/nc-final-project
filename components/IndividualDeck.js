@@ -246,6 +246,7 @@ const styles = StyleSheet.create({
     // borderRightWidth: 1,
     width: "50%",
     height: "100%",
+    
   },
   foreignLangWords: {
     width: "50%",
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
   },
   word: {
     padding: 10,
-    marginLeft: "5%",
+    marginLeft: "15%",
     fontSize: 20,
   },
   centeredView: {

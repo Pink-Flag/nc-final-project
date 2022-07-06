@@ -91,9 +91,6 @@ const ViewDecks = () => {
     });
   }, []);
 
-  // console.log("custom", customDecks[0])
-  // console.log("default", defaultDecks.length)
-  // console.log(customDecks[0].decks[0] , " <<<<<<<<<<<<<<<<<<<<<<<<<");
   if (defaultDecks.length !== 0 && customDecks.length !== 0) {
     return (
       <>
@@ -162,7 +159,7 @@ const ViewDecks = () => {
                         <TouchableOpacity
                           style={[styles.buttonTest, styles.buttonOutlineTest]}
                           onPress={() => {
-                            navigate(`/individualcustomdeck/${deck.id}`);
+                            navigate(`/individualcustomdeck/${index}`);
                           }}
                         >
                           <Text style={styles.buttonOutlineTextTest}>View</Text>

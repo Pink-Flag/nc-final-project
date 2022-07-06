@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigate } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
 import {
   doc,
@@ -21,6 +21,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { UserContext } from "./UserContext";
 
 const EnterWords = ({
   deck_id,
@@ -29,6 +30,7 @@ const EnterWords = ({
   modalVisible,
   setModalVisible,
 }) => {
+  const { user, setUser } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,16 +74,18 @@ const EnterWords = ({
   };
 
   const addWord = async () => {
-    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
-      const oldDeck = querySnapshot.data();
-      const newDeck = {
+    getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
+     // console.log(querySnapshot.data())
+      const oldDeck = querySnapshot.data().decks[deck_id];
+     console.log(oldDeck)
+      const newDeck = [{
         ...oldDeck,
         words: [
           ...oldDeck.words,
           { definition: searchTerm, word: translation },
         ],
-      };
-      updateDoc(doc(db, "decks", deck_id), newDeck);
+    }];
+      updateDoc(doc(db, "custom_decks", user.uid),{ "decks" : newDeck});
       setDeck(newDeck);
     });
 

@@ -76,6 +76,7 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
         </View>
       </View>
       <View style={styles.inputView}>
+        <View style={styles.options}>
         <Text> I want to learn</Text>
         <View style={styles.editPicker}>
           <Picker
@@ -87,6 +88,8 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
             <Picker.Item label="French" value="FR_GB" />
             <Picker.Item label="Spanish" value="ES_GB" />
           </Picker>
+          </View>
+          <View style={styles.btnContainer}>
           <Text style={styles.required}>* required fields</Text>
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
@@ -94,6 +97,7 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
           >
             <Text style={styles.buttonText}>Create Deck</Text>
           </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.targetOutputContainer}>
@@ -124,6 +128,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "80%",
   },
+  btnContainer: {
+marginTop: "50%",
+  },
   image: {
     width: 50,
     height: 50,
@@ -148,6 +155,9 @@ const styles = StyleSheet.create({
   englishWordContainer: {
     alignItems: "center",
   },
+  options: {
+    marginTop: "20%"
+  },
   micInputContainer: {
     marginTop: 15,
     marginBottom: 15,
@@ -168,6 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
+  
   },
   miniButton: {
     justifyContent: "center",

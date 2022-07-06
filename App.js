@@ -44,7 +44,7 @@ export default function App() {
             <Route path="/pairstest" element={<PairsTest />} />
             <Route path="/stricttest/:deck_id" element={<StrictTest />} />
             <Route path="/mixedTesting" element={<MixedTesting />} />
-            <Route path="/individualcustomdeck/:deck_id"
+            <Route path="/individualcustomdeck/:index"
               element={<IndividualCustomDeck />} />
           </Routes>
         </View>
