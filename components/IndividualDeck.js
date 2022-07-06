@@ -1,3 +1,4 @@
+
 import {
   StyleSheet,
   Text,
@@ -5,7 +6,9 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  Scrollview
 } from "react-native";
+
 import React from "react";
 import {
   doc,
@@ -58,6 +61,7 @@ const IndividualDeck = () => {
             <Text style={styles.textName}>{deck.list_name}</Text>
             <Text style={styles.textLang}>German</Text>
           </View>
+          <ScrollView>
           <View style={styles.wordContainer}>
             <View style={styles.firstLangWords}>
               <Text style={styles.lang}>English</Text>
@@ -78,8 +82,7 @@ const IndividualDeck = () => {
                     key={word.word + "_ger"}
                     style={styles.singleWordContainer}
                   >
-                    <Text style={styles.word}> {word.word}</Text>
-                    <TouchableOpacity
+                     <TouchableOpacity
                       style={[styles.buttonX, styles.buttonOutlineX]}
                       onPress={() => {
                         deleteWord(index);
@@ -87,10 +90,13 @@ const IndividualDeck = () => {
                     >
                       <Text style={styles.buttonOutlineTextX}>x</Text>
                     </TouchableOpacity>
+                    <Text style={styles.word}> {word.word}</Text>
+                   
                   </View>
                 );
               })}
             </View>
+
           </View>
           <View style={styles.centeredView}>
             <Modal
@@ -127,17 +133,24 @@ const IndividualDeck = () => {
               <Text style={styles.textStyle}>Add Word</Text>
             </Pressable>
           </View>
+            </View>
+          </ScrollView>
 
           {/* <View style={styles.buttonContainer}>
             <TouchableOpacity
+
+          
+         
               style={[styles.button, styles.buttonOutline]}
               onPress={() => {
                 navigate("/enterwords");
               }}
             >
+
               <Text style={styles.buttonOutlineText}>Add a new word</Text>
             </TouchableOpacity>
           </View> */}
+
         </View>
 
         <View>
@@ -159,7 +172,7 @@ const styles = StyleSheet.create({
     width: "95%",
     borderRadius: 10,
     alignItems: "center",
-    height: "80%",
+    height: "75%",
   },
   deckInfo: {
     flexDirection: "row",
@@ -167,21 +180,26 @@ const styles = StyleSheet.create({
   },
   textName: {
     marginRight: "25%",
-    fontSize: 20,
+    fontSize: 22,
+    padding: 10,
   },
   textLang: {
     marginLeft: "25%",
-    fontSize: 20,
+    fontSize: 22,
+    padding: 10,
   },
   singleWordContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    marginLeft:"2%",
   },
   buttonContainer: {
     width: "70%",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+
+    marginBottom: 20,
+  
+
   },
   button: {
     backgroundColor: "#5C6784",
@@ -193,11 +211,11 @@ const styles = StyleSheet.create({
   },
   buttonX: {
     backgroundColor: "#5C6784",
-    width: "20%",
-    padding: 5,
+    width: "15%",
+    height:"60%",
+ 
     borderRadius: 10,
     alignItems: "center",
-    marginRight: 5,
   },
   buttonWord: {
     backgroundColor: "#5C6784",
@@ -220,10 +238,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   buttonOutlineX: {
-    backgroundColor: "red",
+    backgroundColor: "#423250",
     marginTop: 5,
     borderColor: "#5C6784",
-    borderWidth: 2,
+  
   },
   buttonOutlineText: {
     color: "#5C6784",
@@ -236,30 +254,32 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   wordContainer: {
+    width: "100%",
     height: "70%",
-    marginTop: "10%",
+    marginTop: "3%",
     borderRadius: 10,
     flexDirection: "row",
   },
 
   firstLangWords: {
-    borderRightWidth: 1,
+    // borderRightWidth: 1,
     width: "50%",
-    height: "85%",
+    height: "100%",
+
   },
   foreignLangWords: {
     width: "50%",
     height: "50%",
   },
   lang: {
-    fontSize: 20,
+    fontSize: 22,
     textAlign: "center",
     padding: 25,
     textDecorationLine: "underline",
   },
   word: {
     padding: 10,
-    marginLeft: 5,
+    marginLeft: "5%",
     fontSize: 20,
   },
   centeredView: {

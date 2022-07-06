@@ -198,8 +198,8 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     borderRadius: 100,
   },
   profileHeader: {
