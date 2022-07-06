@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -6,7 +5,7 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
-  Scrollview
+  ScrollView,
 } from "react-native";
 
 import React from "react";
@@ -62,42 +61,41 @@ const IndividualDeck = () => {
             <Text style={styles.textLang}>German</Text>
           </View>
           <ScrollView>
-          <View style={styles.wordContainer}>
-            <View style={styles.firstLangWords}>
-              <Text style={styles.lang}>English</Text>
-              {deck.words.map((word) => {
-                return (
-                  <Text style={styles.word} key={word.word + "_eng"}>
-                    {" "}
-                    {word.definition}
-                  </Text>
-                );
-              })}
-            </View>
-            <View style={styles.foreignLangWords}>
-              <Text style={styles.lang}>German</Text>
-              {deck.words.map((word, index) => {
-                return (
-                  <View
-                    key={word.word + "_ger"}
-                    style={styles.singleWordContainer}
-                  >
-                     <TouchableOpacity
-                      style={[styles.buttonX, styles.buttonOutlineX]}
-                      onPress={() => {
-                        deleteWord(index);
-                      }}
+            <View style={styles.wordContainer}>
+              <View style={styles.firstLangWords}>
+                <Text style={styles.lang}>English</Text>
+                {deck.words.map((word) => {
+                  return (
+                    <Text style={styles.word} key={word.word + "_eng"}>
+                      {" "}
+                      {word.definition}
+                    </Text>
+                  );
+                })}
+              </View>
+              <View style={styles.foreignLangWords}>
+                <Text style={styles.lang}>German</Text>
+                {deck.words.map((word, index) => {
+                  return (
+                    <View
+                      key={word.word + "_ger"}
+                      style={styles.singleWordContainer}
                     >
-                      <Text style={styles.buttonOutlineTextX}>x</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.word}> {word.word}</Text>
-                   
-                  </View>
-                );
-              })}
+                      <TouchableOpacity
+                        style={[styles.buttonX, styles.buttonOutlineX]}
+                        onPress={() => {
+                          deleteWord(index);
+                        }}
+                      >
+                        <Text style={styles.buttonOutlineTextX}>x</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.word}> {word.word}</Text>
+                    </View>
+                  );
+                })}
+              </View>
             </View>
-
-          </View>
+          </ScrollView>
           <View style={styles.centeredView}>
             <Modal
               animationType="slide"
@@ -133,24 +131,6 @@ const IndividualDeck = () => {
               <Text style={styles.textStyle}>Add Word</Text>
             </Pressable>
           </View>
-            </View>
-          </ScrollView>
-
-          {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity
-
-          
-         
-              style={[styles.button, styles.buttonOutline]}
-              onPress={() => {
-                navigate("/enterwords");
-              }}
-            >
-
-              <Text style={styles.buttonOutlineText}>Add a new word</Text>
-            </TouchableOpacity>
-          </View> */}
-
         </View>
 
         <View>
@@ -190,7 +170,7 @@ const styles = StyleSheet.create({
   },
   singleWordContainer: {
     flexDirection: "row",
-    marginLeft:"2%",
+    marginLeft: "2%",
   },
   buttonContainer: {
     width: "70%",
@@ -198,8 +178,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     marginBottom: 20,
-  
-
   },
   button: {
     backgroundColor: "#5C6784",
@@ -212,8 +190,8 @@ const styles = StyleSheet.create({
   buttonX: {
     backgroundColor: "#5C6784",
     width: "15%",
-    height:"60%",
- 
+    height: "60%",
+
     borderRadius: 10,
     alignItems: "center",
   },
@@ -241,7 +219,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#423250",
     marginTop: 5,
     borderColor: "#5C6784",
-  
   },
   buttonOutlineText: {
     color: "#5C6784",
@@ -265,7 +242,6 @@ const styles = StyleSheet.create({
     // borderRightWidth: 1,
     width: "50%",
     height: "100%",
-
   },
   foreignLangWords: {
     width: "50%",
