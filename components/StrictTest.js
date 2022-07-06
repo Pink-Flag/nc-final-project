@@ -74,6 +74,7 @@ const StrictTest = () => {
   if (deck.length) {
     return (
       <>
+      <KeyboardAvoidingView style={styles.container} >
         <View style={styles.englishContainer}>
           <Text style={styles.englishWord}>{deck[cardIndex].definition}</Text>
         </View>
@@ -85,17 +86,20 @@ const StrictTest = () => {
         <View style={styles.targetContainer}>
           <TextInput style={styles.targetWord} value={userGuess} onChangeText={(input) => setUserGuess(input)} placeholder="Type here"></TextInput>
         </View>
+        <View style={styles.buttons}>
         {isEndOfDeck ? (
-          <TouchableOpacity onPress={() => resetDeck()} style={styles.submitButton}><Text style={styles.submitButtonText}>Replay deck</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => resetDeck()} style={styles.button}><Text style={styles.buttonOutlineText}>Replay deck</Text></TouchableOpacity>
         ) :
           (
-            <TouchableOpacity onPress={() => checkWord()} disabled={(userGuess === "") ? true : disableSubmit} style={styles.submitButton}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => checkWord()} disabled={(userGuess === "") ? true : disableSubmit} style={styles.button}><Text style={styles.buttonOutlineText}>Submit</Text></TouchableOpacity>
           )}
         <TouchableOpacity style={[styles.backButton, styles.button]} onPress={() => {
           navigate(`/testing/${deck_id}`);
         }} >
-          <Text style={styles.backButtonText}>Back to tests</Text>
+          <Text style={styles.buttonOutlineText}>Back to tests</Text>
         </TouchableOpacity>
+        </View>
+        </KeyboardAvoidingView>
       </>
     );
   } else {
@@ -106,14 +110,24 @@ const StrictTest = () => {
 export default StrictTest;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "90%",
+    borderRadius: 10,
+    alignItems: "center",
+    height:"80%",
+   
+  },
   englishWord: {
-    fontSize: 24
+    fontSize: 26,
+    fontWeight: "700",
   },
   targetWord: {
     fontSize: 24
   },
   englishContainer: {
-    borderWidth: 2,
+ 
     width: "70%",
     alignItems: "center",
     borderRadius: 10,
@@ -123,14 +137,13 @@ const styles = StyleSheet.create({
     marginBottom: 25
   },
   targetContainer: {
-    borderWidth: 2,
     width: "70%",
     alignItems: "center",
     borderRadius: 10,
     padding: 10,
     backgroundColor: "white",
-    marginTop: 25,
-    marginBottom: 10
+    marginTop: "20%",
+
   },
   progressFeedback: {
     alignItems: "center"
@@ -148,8 +161,8 @@ const styles = StyleSheet.create({
   },
   progressCount: {
     fontSize: 16,
-    marginTop: 5,
-    marginBottom: 5
+    marginTop: 25,
+   
   },
   scoreCount: {
     fontSize: 16,
@@ -159,12 +172,21 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: "white",
-    width: "50%",
-    borderWidth: 2,
-    padding: 10,
+    width: "100%",
+    padding: 20,
     borderRadius: 10,
     alignItems: "center",
-    margin: 10
+    minWidth: "65%",
+   margin:5,
+   
+  },
+  buttonOutlineText: {
+    color: "#423250",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttons:{ 
+    marginTop: "35%",
   },
   submitButton: {
     fontSize: 20,
@@ -174,10 +196,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    margin: 10
+  
   },
   backButton: {
-    marginTop: 60
+    
   },
   submitButtonText: {
     fontSize: 20

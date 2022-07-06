@@ -169,12 +169,13 @@ const ViewDecks = () => {
                   );
                 })}
           </ScrollView>
-        </View>
-        <View style={styles.buttonContainer}>
+          <View style={styles.buttonContainer}>
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Create a new deck</Text>
           </TouchableOpacity>
         </View>
+        </View>
+      
       </>
     );
   } else {
