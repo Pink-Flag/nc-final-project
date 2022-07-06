@@ -1,42 +1,59 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { React, useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  AsyncStorage,
+} from "react-native";
+import { React, useContext, useEffect } from "react";
 import { Link } from "react-router-native";
 import { UserContext } from "./UserContext";
 
 const Home = () => {
   const { user, setUser } = useContext(UserContext);
 
+  useEffect(() => {
+    const storeKey = async () => {
+      try {
+        await AsyncStorage.setItem("key", "i am a key");
+      } catch (error) {
+        alert.error(error);
+      }
+    };
+  }, []);
+
   return (
-    <><View style={styles.container}>
-      <View>
-        {user ? (
-          <Text style={styles.welcomeMessage}>
-            Welcome, {user.displayName}!
-          </Text>
-        ) : (
-          <Text></Text>
-        )}
-      </View>
+    <>
+      <View style={styles.container}>
+        <View>
+          {user ? (
+            <Text style={styles.welcomeMessage}>
+              Welcome, {user.displayName}!
+            </Text>
+          ) : (
+            <Text></Text>
+          )}
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Link to="/individualdeck">
-            <Text style={styles.buttonOutlineText}>Create new deck</Text>
-          </Link>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+            <Link to="/individualdeck">
+              <Text style={styles.buttonOutlineText}>Create new deck</Text>
+            </Link>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Link to="/viewdecks">
-            <Text style={styles.buttonOutlineText}>View existing decks</Text>
-          </Link>
-        </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+            <Link to="/viewdecks">
+              <Text style={styles.buttonOutlineText}>View existing decks</Text>
+            </Link>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Link to="/profile">
-            <Text style={styles.buttonOutlineText}>View profile</Text>
-          </Link>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+            <Link to="/profile">
+              <Text style={styles.buttonOutlineText}>View profile</Text>
+            </Link>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
@@ -51,15 +68,13 @@ const styles = StyleSheet.create({
     width: "95%",
     borderRadius: 10,
     alignItems: "center",
-    height:"80%",
-   
+    height: "80%",
   },
   buttonContainer: {
     width: "75%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: "30%",
-
   },
   buttonText: {
     color: "white",
@@ -90,8 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 30,
     color: "#423250",
-    fontWeight :"700",
+    fontWeight: "700",
     marginTop: "10%",
-    
   },
 });

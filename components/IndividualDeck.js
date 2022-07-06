@@ -1,4 +1,14 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  Scrollview
+} from "react-native";
+
 import React from "react";
 import {
   doc,
@@ -13,11 +23,13 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useState, useEffect } from "react";
+import EnterWords from "./EnterWords";
 import { db } from "../firebase";
 const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
   const [deck, setDeck] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -31,13 +43,12 @@ const IndividualDeck = () => {
     const wordReff = doc(db, "decks", deck_id);
 
     setDeck((current) => {
-      console.log(current);
       const newWords = current.words.filter((_, i) => i !== index);
       const newDeck = { ...current, words: newWords };
       updateDoc(wordReff, newDeck).catch(function (error) {
         console.error(error.message);
       });
-      console.log(deck);
+
       return newDeck;
     });
   };
@@ -85,27 +96,63 @@ const IndividualDeck = () => {
                 );
               })}
             </View>
+
+          </View>
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <EnterWords
+                    deck_id={deck_id}
+                    deck={deck}
+                    setDeck={setDeck}
+                    setModalVisible={setModalVisible}
+                    modalVisible={modalVisible}
+                  />
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>Close</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
+            <Pressable
+              style={[styles.button, styles.buttonOpen]}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.textStyle}>Add Word</Text>
+            </Pressable>
+          </View>
             </View>
           </ScrollView>
-          <View style={styles.buttonContainer}>
+
+          {/* <View style={styles.buttonContainer}>
             <TouchableOpacity
+
+          
+         
               style={[styles.button, styles.buttonOutline]}
               onPress={() => {
                 navigate("/enterwords");
               }}
             >
+
               <Text style={styles.buttonOutlineText}>Add a new word</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-              onPress={() => {
-                navigate("/viewdecks");
-              }}
-            >
-              <Text style={styles.buttonOutlineText}>Return to decks</Text>
-            </TouchableOpacity> */}
-          </View>
+          </View> */}
+
         </View>
+
         <View>
           {loading && (
             <Spinner visible={loading} textStyle={styles.spinnerTextStyle} />
@@ -149,8 +196,10 @@ const styles = StyleSheet.create({
     width: "70%",
     justifyContent: "center",
     alignItems: "center",
+
     marginBottom: 20,
   
+
   },
   button: {
     backgroundColor: "#5C6784",
@@ -232,5 +281,46 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: "5%",
     fontSize: 20,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, LogBox } from "react-native";
 import { NativeRouter, Link, Route, Routes } from "react-router-native";
-import { fetchUsers } from "./firebase/functions";
-import { createContext, useContext, useState, useEffect } from "react";
+
+import { useContext, useState, useEffect } from "react";
 import LoginScreen from "./components/LoginScreen";
 import { UserContext } from "./components/UserContext";
 
@@ -25,7 +25,7 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NativeRouter>
         <View style={styles.container}>
-          <Menu/>
+          <Menu />
           {/* <View style={styles.links}>
             <Link to="/">
               <Text>Home</Text>
