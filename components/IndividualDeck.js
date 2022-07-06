@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
 import {
   doc,
@@ -50,6 +50,7 @@ const IndividualDeck = () => {
             <Text style={styles.textName}>{deck.list_name}</Text>
             <Text style={styles.textLang}>German</Text>
           </View>
+          <ScrollView>
           <View style={styles.wordContainer}>
             <View style={styles.firstLangWords}>
               <Text style={styles.lang}>English</Text>
@@ -84,7 +85,8 @@ const IndividualDeck = () => {
                 );
               })}
             </View>
-          </View>
+            </View>
+          </ScrollView>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.buttonOutline]}
@@ -203,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   wordContainer: {
+    width: "100%",
     height: "70%",
     marginTop: "3%",
     borderRadius: 10,
@@ -210,9 +213,10 @@ const styles = StyleSheet.create({
   },
 
   firstLangWords: {
-    borderRightWidth: 1,
+    // borderRightWidth: 1,
     width: "50%",
-    height: "85%",
+    height: "100%",
+
   },
   foreignLangWords: {
     width: "50%",
@@ -226,7 +230,7 @@ const styles = StyleSheet.create({
   },
   word: {
     padding: 10,
-    marginLeft: 5,
+    marginLeft: "5%",
     fontSize: 20,
   },
 });
