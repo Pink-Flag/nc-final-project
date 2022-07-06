@@ -81,14 +81,14 @@ const IndividualDeck = () => {
                       key={word.word + "_ger"}
                       style={styles.singleWordContainer}
                     >
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         style={[styles.buttonX, styles.buttonOutlineX]}
                         onPress={() => {
                           deleteWord(index);
                         }}
                       >
                         <Text style={styles.buttonOutlineTextX}>x</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                       <Text style={styles.word}> {word.word}</Text>
                     </View>
                   );
@@ -96,7 +96,7 @@ const IndividualDeck = () => {
               </View>
             </View>
           </ScrollView>
-          <View style={styles.centeredView}>
+          {/* <View style={styles.centeredView}>
             <Modal
               animationType="slide"
               transparent={true}
@@ -133,7 +133,7 @@ const IndividualDeck = () => {
             >
               <Text style={styles.buttonOutlineText}>Add Word</Text>
             </Pressable>
-          </View>
+          </View> */}
         </View>
 
         <View>

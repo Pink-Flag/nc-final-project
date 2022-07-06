@@ -17,6 +17,7 @@ import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
 import Menu from "./components/Menu";
+import IndividualCustomDeck from "./components/IndividualCustomDeck";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -43,6 +44,8 @@ export default function App() {
             <Route path="/pairstest" element={<PairsTest />} />
             <Route path="/stricttest/:deck_id" element={<StrictTest />} />
             <Route path="/mixedTesting" element={<MixedTesting />} />
+            <Route path="/individualcustomdeck/:deck_id"
+              element={<IndividualCustomDeck />} />
           </Routes>
         </View>
       </NativeRouter>

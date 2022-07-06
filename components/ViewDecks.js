@@ -91,8 +91,10 @@ const ViewDecks = () => {
     });
   }, []);
 
-  console.log(customDecks);
-  if (defaultDecks.length !== 0 || customDecks.length !== 0) {
+  // console.log("custom", customDecks[0])
+  // console.log("default", defaultDecks.length)
+  // console.log(customDecks[0].decks[0] , " <<<<<<<<<<<<<<<<<<<<<<<<<");
+  if (defaultDecks.length !== 0 && customDecks.length !== 0) {
     return (
       <>
         <View style={styles.container}>
@@ -144,9 +146,9 @@ const ViewDecks = () => {
                     </View>
                   );
                 })
-              : customDecks.map((deck) => {
+              : customDecks[0].decks.map((deck,index) => {
                   return (
-                    <View style={styles.deckContainer} key={deck.id}>
+                    <View style={styles.deckContainer} key={index}>
                       <Text style={styles.decks}> {deck.list_name}</Text>
                       <View style={styles.btnContainer}>
                         <TouchableOpacity
@@ -160,7 +162,7 @@ const ViewDecks = () => {
                         <TouchableOpacity
                           style={[styles.buttonTest, styles.buttonOutlineTest]}
                           onPress={() => {
-                            navigate(`/individualdeck/${deck.id}`);
+                            navigate(`/individualcustomdeck/${deck.id}`);
                           }}
                         >
                           <Text style={styles.buttonOutlineTextTest}>View</Text>
@@ -181,21 +183,20 @@ const ViewDecks = () => {
               >
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <CreateDeck setModalVisible={setModalVisible} />
-                    <Pressable
-                      style={[styles.button, styles.buttonClose]}
+                  <Pressable
+                      style={[ styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}
                     >
                       <Text style={styles.textStyle}>Close</Text>
                     </Pressable>
+                    <CreateDeck setModalVisible={setModalVisible} />
+                   
                   </View>
                 </View>
               </Modal>
             </View>
           </ScrollView>
-        </View>
-
-        <View style={styles.buttonContainer}>
+          <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => setModalVisible(true)}
@@ -203,6 +204,9 @@ const ViewDecks = () => {
             <Text style={styles.buttonOutlineText}>Create a new deck</Text>
           </TouchableOpacity>
         </View>
+        </View>
+
+     
       </>
     );
   } else {
@@ -338,13 +342,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 20,
   },
   modalView: {
-    margin: 20,
+  
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 15,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -355,17 +359,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
   buttonOpen: {
     backgroundColor: "#F194FF",
   },
   buttonClose: {
     backgroundColor: "#2196F3",
+    marginTop: "3%",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginLeft: "70%",
   },
+
+
   textStyle: {
     color: "white",
     fontWeight: "bold",

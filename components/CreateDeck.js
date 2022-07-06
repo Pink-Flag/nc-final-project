@@ -34,10 +34,6 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
   const navigate = useNavigate();
 
   const createDBDeck = async () => {
-    // const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
-    // if (docCheck.data()) {
-    //   console.log("deck already exists");
-    // }
     const deckRef = doc(db, "custom_decks", user.uid);
     const newDeck = {
       list_name: deckName,
@@ -48,19 +44,21 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
 
     getDoc(deckRef).then((querySnapshot) => {
       const oldDecks = querySnapshot.data().decks;
-      console.log(oldDecks)
-      const newDecks = [
-        ...oldDecks,
-        newDeck
-      ];
-      console.log(newDecks)
-
-       updateDoc(deckRef, { "decks" : newDecks});
-      // setDeck(newDeck);
+      const newDecks = [...oldDecks, newDeck];
+      updateDoc(deckRef, { decks: newDecks });
     });
-    
-    // console.log(newDeck);
-    // setDoc(deckRef, newDeck);
+  };
+
+  const deckCheck = async () => {
+    const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
+    if (docCheck.data()) {
+      console.log("deck already exists");
+      createDBDeck();
+    } else {
+
+      await setDoc(doc(db, "custom_decks", user.uid), {"decks" : []});
+      createDBDeck();
+    }
   };
 
   return (
@@ -92,7 +90,7 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
           <Text style={styles.required}>* required fields</Text>
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
-            onPress={() => createDBDeck()}
+            onPress={() => deckCheck()}
           >
             <Text style={styles.buttonText}>Create Deck</Text>
           </TouchableOpacity>
@@ -119,9 +117,9 @@ export default CreateDeck;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "30%",
+    marginTop: "10%",
     backgroundColor: "#ECEAF6",
-    width: "95%",
+    width: "100%",
     borderRadius: 10,
     alignItems: "center",
     height: "80%",
