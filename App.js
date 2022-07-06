@@ -17,6 +17,7 @@ import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
 import Menu from "./components/Menu";
+import CreateDeck from "./components/CreateDeck";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -70,10 +71,8 @@ export default function App() {
             <Route path="/loginscreen" element={<LoginScreen />} />
             <Route path="/viewdecks" element={<ViewDecks />} />
             <Route path="/profile" element={<Profile />} />
-            <Route
-              path="/individualdeck/:deck_id"
-              element={<IndividualDeck />}
-            />
+            <Route path="/individualdeck/:deck_id" element={<IndividualDeck />} />
+            <Route path="/createdeck/:deck_id" element={<CreateDeck />} />
             <Route path="/enterwords" element={<EnterWords />} />
             <Route path="/testing/:deck_id" element={<Testing />} />
             <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />

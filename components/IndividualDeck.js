@@ -22,13 +22,13 @@ const IndividualDeck = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
+    getDoc(doc(db, "custom_decks", deck_id)).then((querySnapshot) => {
       setDeck(querySnapshot.data());
     });
   }, []);
 
   const deleteWord = (index) => {
-    const wordReff = doc(db, "decks", deck_id);
+    const wordReff = doc(db, "custom_decks", deck_id);
 
     setDeck((current) => {
       console.log(current);

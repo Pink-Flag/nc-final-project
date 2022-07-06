@@ -70,7 +70,7 @@ const ViewDecks = () => {
     },
   ];
   useEffect(() => {
-    getDocs(collection(db, "decks")).then((querySnapshot) => {
+    getDocs(collection(db, "custom_decks")).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const newDeck = {
           id: doc.id,
@@ -82,13 +82,13 @@ const ViewDecks = () => {
     });
   }, []);
 
-  const customRef = doc(db, "custom_decks", "OMZM1YJ8L6RDHnDKSCSbzyDYTJG3");
-  useEffect(() => {
-    getDoc(customRef).then((querySnapshot) => {
-      const queryWords = querySnapshot.data();
-      setCustomDecks([...customDecks, queryWords]);
-    });
-  }, []);
+  // const customRef = doc(db, "custom_decks", "OMZM1YJ8L6RDHnDKSCSbzyDYTJG3");
+  // useEffect(() => {
+  //   getDoc(customRef).then((querySnapshot) => {
+  //     const queryWords = querySnapshot.data();
+  //     setCustomDecks([...customDecks, queryWords]);
+  //   });
+  // }, []);
 
   console.log(customDecks);
   if (defaultDecks.length !== 0 || customDecks.length !== 0) {
@@ -172,7 +172,7 @@ const ViewDecks = () => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-            <Text style={styles.buttonOutlineText}>Create a new deck</Text>
+            <Text style={styles.buttonOutlineText} onPress={() => navigate(`/createdeck/${123456}`)}>Create a new deck</Text>
           </TouchableOpacity>
         </View>
       </>
