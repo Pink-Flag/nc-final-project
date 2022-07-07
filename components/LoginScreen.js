@@ -1,3 +1,10 @@
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-native";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { db, auth } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import {
   StyleSheet,
   Text,
@@ -5,21 +12,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
-  AsyncStorage,
 } from "react-native";
-
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "./UserContext";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-native";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  getRedirectResult,
-} from "firebase/auth";
-import { db, auth } from "../firebase";
-import { collection, doc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
   const { user, setUser } = useContext(UserContext);
@@ -29,6 +22,14 @@ const LoginScreen = () => {
   const auth = getAuth();
 
   const navigate = useNavigate();
+
+  const { signedOut } = useParams();
+
+  useEffect(() => {
+    if (signedOut) {
+      setUser(null);
+    }
+  }, []);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -53,33 +54,9 @@ const LoginScreen = () => {
       });
   };
 
-  // _storeKey = async () => {
-  //   try {
-  //     await AsyncStorage.setItem(
-  //       key: "i am a key"
-  //     );
-  //   } catch (error) {
-  //     alert.error(error);
-  //   }
-  // };
-
-  // _retrieveData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem(
-  //       key
-  //     );
-  //     if (value !== null) {
-
-  //       console.log(value);
-  //     }
-  //   } catch (error) {
-
-  //     alert.error(error);
-  //   }
-  // };
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
+      {signedOut ? <Text style={styles.goodbye}>Goodbye!</Text> : null}
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -182,4 +159,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "blue",
   },
+  goodbye: {
+    fontSize: 20,
+    marginTop: "10%",
+    letterSpacing: 1,
+
+  }
 });

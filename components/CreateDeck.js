@@ -9,106 +9,102 @@ import {
 } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { React, useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
+import { Picker } from "@react-native-picker/picker";
 import {
   doc,
   setDoc,
-  addDoc,
-  collection,
   getDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
+  updateDoc, 
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { UserContext } from "./UserContext";
 
-const EnterWords = ({
+const CreateDeck = ({
   deck_id,
   deck,
   setDeck,
   modalVisible,
   setModalVisible,
+  setRadioState,
+  setButtonState,
+  customDecks,
+  setCustomDecks,
 }) => {
-  const { user, setUser } = useContext(UserContext);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [deckName, setDeckName] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const fetchTranslation = () => {
-    const params = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        app_id: OXFORD_APP_ID,
-        app_key: OXFORD_APP_KEY,
-      },
-    };
-    setLoading(true);
-
-    fetch(
-      `https://od-api.oxforddictionaries.com/api/v2/translations/en/de/${searchTerm}?strictMatch=false&fields=translations`,
-      params
-    )
-      .then((response) => response.json())
-      .then((body) => {
-        setTranslation(
-          body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
-            .text
-        );
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        alert("word not found!");
-      });
-  };
-
-  const addWord = async () => {
-    getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
-      const oldDeck = querySnapshot.data().decks[deck_id];
-
-      const testSplice = querySnapshot.data();
-      testSplice.decks[deck_id].words.push({
-        word: translation,
-        definition: searchTerm,
-      });
-      setDoc(doc(db, "custom_decks", user.uid), testSplice);
-      setDeck(testSplice.decks[deck_id]);
-
-      hideModal();
-    });
-  };
-
-  const hideModal = () => {
-    setModalVisible(!modalVisible);
-  };
+  const [language, setLanguage] = useState("DE_GB");
+  const { user, setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const imagePath =
-    "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
+
+  const createDBDeck = async () => {
+    const deckRef = doc(db, "custom_decks", user.uid);
+    const newDeck = {
+      list_name: deckName,
+      language: language,
+      words: [],
+      user: user.uid,
+    };
+
+    getDoc(deckRef).then((querySnapshot) => {
+      const oldDecks = querySnapshot.data().decks;
+      const newDecks = [...oldDecks, newDeck];
+      setCustomDecks([{ decks: newDecks }]);
+      updateDoc(deckRef, { decks: newDecks });
+    });
+    setModalVisible(!modalVisible);
+    setButtonState(2);
+  };
+
+  const deckCheck = async () => {
+    const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
+    if (docCheck.data()) {
+      createDBDeck();
+    } else {
+      await setDoc(doc(db, "custom_decks", user.uid), { decks: [] });
+      createDBDeck();
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.englishInputContainer}>
         <View style={styles.micInputContainer}>
-          <Image style={styles.image} source={{ uri: imagePath }} />
           <TextInput
             style={styles.textinput}
-            placeholder="Enter word"
-            value={searchTerm}
+            placeholder="Name of Deck"
+            value={deckName}
             onChangeText={(text) =>
-              setSearchTerm(text.charAt(0).toUpperCase() + text.slice(1))
+              setDeckName(text.charAt(0).toUpperCase() + text.slice(1))
             }
           ></TextInput>
-          <TouchableOpacity
-            style={[styles.miniButtonOutline, styles.miniButton]}
-            onPress={() => {
-              fetchTranslation();
-            }}
-          >
-            <Text style={styles.miniButtonText}>Go</Text>
-          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.inputView}>
+        <View style={styles.options}>
+          <Text> I want to learn</Text>
+          <View style={styles.editPicker}>
+            <Picker
+              selectedValue={language}
+              style={styles.inputPicker}
+              onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
+            >
+              <Picker.Item label="German" value="DE_GB" />
+              <Picker.Item label="French" value="FR_GB" />
+              <Picker.Item label="Spanish" value="ES_GB" />
+            </Picker>
+          </View>
+          <View style={styles.btnContainer}>
+            <Text style={styles.required}>* required fields</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => deckCheck()}
+            >
+              <Text style={styles.buttonText}>Create Deck</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.targetOutputContainer}>
@@ -120,25 +116,15 @@ const EnterWords = ({
               style={styles.targetWord}
             />
           ) : (
-            <>
-              <Text style={styles.searchWord}>{searchTerm} :</Text>
-              <Text style={styles.targetWord}>{translation}</Text>
-            </>
+            <Text style={styles.targetWord}>{translation}</Text>
           )}
         </View>
-
-        <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
-          onPress={() => addWord()}
-        >
-          <Text style={styles.buttonText}>Add word</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default EnterWords;
+export default CreateDeck;
 
 const styles = StyleSheet.create({
   container: {
@@ -147,9 +133,11 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 10,
     alignItems: "center",
-    height: "85%",
+    height: "80%",
   },
-
+  btnContainer: {
+    marginTop: "35%",
+  },
   image: {
     width: 50,
     height: 50,
@@ -164,9 +152,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
   },
-  searchWord: {
-    fontSize: 18,
-  },
   englishInputContainer: {
     alignItems: "center",
     padding: 1,
@@ -176,6 +161,9 @@ const styles = StyleSheet.create({
   },
   englishWordContainer: {
     alignItems: "center",
+  },
+  options: {
+    marginTop: "20%",
   },
   micInputContainer: {
     marginTop: 15,

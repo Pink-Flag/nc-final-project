@@ -1,42 +1,104 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { React, useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  AsyncStorage,
+  Modal,
+  Pressable,
+} from "react-native";
+import { React, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-native";
 import { UserContext } from "./UserContext";
+import CreateDeck from "./CreateDeck";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = ({
+  radioState,
+  setRadioState,
+  buttonState,
+  setButtonState,
+  customDecks,
+  setCustomDecks,
+}) => {
   const { user, setUser } = useContext(UserContext);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    const storeKey = async () => {
+      try {
+        await AsyncStorage.setItem("key", "i am a key");
+      } catch (error) {
+        alert.error(error);
+      }
+    };
+  }, []);
+
+  const navigate = useNavigate();
+
+  const gotoDecks = () => {
+    setModalVisible(!modalVisible);
+    navigate("/viewdecks");
+  };
 
   return (
-    <><View style={styles.container}>
-      <View>
-        {user ? (
-          <Text style={styles.welcomeMessage}>
-            Welcome, {user.displayName}!
-          </Text>
-        ) : (
-          <Text></Text>
-        )}
+    <>
+      <View style={styles.container}>
+        <View>
+          {user ? (
+            <Text style={styles.welcomeMessage}>
+              Welcome, {user.displayName}!
+            </Text>
+          ) : (
+            <Text></Text>
+          )}
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+           
+              <Text style={styles.buttonOutlineText}   onPress={() => {
+            navigate(`/viewdecks`);
+          }}>View existing decks</Text>
+          
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
+          
+              <Text style={styles.buttonOutlineText}
+                onPress={() => {
+                  navigate(`/profile`);
+                }}>View profile</Text>
+           
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Link to="/individualdeck">
-            <Text style={styles.buttonOutlineText}>Create new deck</Text>
-          </Link>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Link to="/viewdecks">
-            <Text style={styles.buttonOutlineText}>View existing decks</Text>
-          </Link>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          <Link to="/profile">
-            <Text style={styles.buttonOutlineText}>View profile</Text>
-          </Link>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Pressable style={[styles.buttonClose]}>
+                <Text style={styles.textStyle}>Close</Text>
+              </Pressable>
+              <CreateDeck
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+                setRadioState={setRadioState}
+                setButtonState={setButtonState}
+                customDecks={customDecks}
+                setCustomDecks={setCustomDecks}
+              />
+            </View>
+          </View>
+        </Modal>
       </View>
     </>
   );
@@ -51,15 +113,13 @@ const styles = StyleSheet.create({
     width: "95%",
     borderRadius: 10,
     alignItems: "center",
-    height:"80%",
-   
+    height: "80%",
   },
   buttonContainer: {
     width: "75%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "30%",
-
+    marginTop: "45%",
   },
   buttonText: {
     color: "white",
@@ -90,8 +150,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 30,
     color: "#423250",
-    fontWeight :"700",
+    fontWeight: "700",
     marginTop: "10%",
-    
+    letterSpacing: 1,
   },
 });
