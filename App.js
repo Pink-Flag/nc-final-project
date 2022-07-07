@@ -24,6 +24,7 @@ export default function App() {
   const [radioState, setRadioState] = useState("default");
   const [buttonState, setButtonState] = useState(1);
   const [customDecks, setCustomDecks] = useState([]);
+  console.disableYellowBox = true;
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
