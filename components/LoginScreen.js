@@ -56,7 +56,7 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
-      {signedOut ? <Text>goodbye!</Text> : null}
+      {signedOut ? <Text style={styles.goodbye}>Goodbye!</Text> : null}
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -159,4 +159,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "blue",
   },
+  goodbye: {
+    fontSize: 20,
+    marginTop: "10%",
+    letterSpacing: 1,
+
+  }
 });
