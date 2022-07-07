@@ -48,7 +48,7 @@ const Menu = () => {
           activeOpacity={0.6}
           style={[styles.button, styles.buttonOutline]}
           onPress={() => {
-            navigate(`/`);
+            navigate("/");
           }}
         >
           <Text style={styles.buttonOutlineText}>Home</Text>
