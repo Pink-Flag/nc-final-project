@@ -15,12 +15,8 @@ import { Picker } from "@react-native-picker/picker";
 import {
   doc,
   setDoc,
-  addDoc,
-  collection,
   getDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
+  updateDoc, 
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -140,7 +136,7 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   btnContainer: {
-    marginTop: "50%",
+    marginTop: "35%",
   },
   image: {
     width: 50,

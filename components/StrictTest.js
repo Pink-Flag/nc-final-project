@@ -7,7 +7,8 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import { UserContext } from "./UserContext";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -21,9 +22,9 @@ const StrictTest = () => {
   const [answerColour, setAnswerColour] = useState("black");
   const [isEndOfDeck, setIsEndOfDeck] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
-
+  const { user, setUser } = useContext(UserContext);
   const { deck_id, index } = useParams();
-  console.log(index);
+
 
   const navigate = useNavigate();
 
@@ -142,7 +143,7 @@ const StrictTest = () => {
             <TouchableOpacity
               style={[styles.backButton, styles.button]}
               onPress={() => {
-                navigate(`/testing/${deck_id}`);
+                navigate(`/testing/${user.uid}/${index}/`);
               }}
             >
               <Text style={styles.buttonOutlineText}>Back to tests</Text>
@@ -201,13 +202,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   answerFeedback: {
-    fontSize: 25,
+    fontSize: 22,
     marginTop: 5,
     marginBottom: 20,
   },
   answerFeedbackRed: {
     color: "red",
-    fontSize: 25,
+    fontSize: 22,
     marginTop: 5,
     marginBottom: 20,
   },
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttons: {
-    marginTop: "35%",
+    marginTop: "15%",
   },
   submitButton: {
     fontSize: 20,

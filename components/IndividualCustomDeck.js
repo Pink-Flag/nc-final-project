@@ -9,16 +9,7 @@ import {
 } from "react-native";
 
 import React from "react";
-import {
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  getDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useState, useEffect, useContext } from "react";
@@ -191,8 +182,7 @@ const styles = StyleSheet.create({
     minWidth: "65%",
   },
   scroll: {
-
-height: "60%",
+    height: "60%",
   },
   buttonX: {
     backgroundColor: "#5C6784",
@@ -242,14 +232,12 @@ height: "60%",
     marginTop: "3%",
     borderRadius: 10,
     flexDirection: "row",
-
   },
 
   firstLangWords: {
     // borderRightWidth: 1,
     width: "50%",
-    height: "80%",
-  
+    height: "100%",
   },
   foreignLangWords: {
     width: "50%",
@@ -258,14 +246,7 @@ height: "60%",
   lang: {
     fontSize: 22,
     textAlign: "center",
-    padding: 25,
-    textDecorationLine: "underline",
-  },
-  lang2: {
-    fontSize: 22,
-    marginTop: "10%",
-    alignSelf: "center",
-
+    padding: 15,
     textDecorationLine: "underline",
   },
   word: {
