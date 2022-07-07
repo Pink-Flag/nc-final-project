@@ -8,7 +8,7 @@ const StrictTest = () => {
   const [userGuess, setUserGuess] = useState("");
   const [deck, setDeck] = useState([]);
   const [cardIndex, setCardIndex] = useState(0);
-  const [triesCorrect, settriesCorrect] = useState(0);
+  const [triesCorrect, setTriesCorrect] = useState(0);
   const [answerFeedback, setAnswerFeedback] = useState("Let's go!");
   const [answerColour, setAnswerColour] = useState("black");
   const [isEndOfDeck, setIsEndOfDeck] = useState(false);
@@ -26,27 +26,31 @@ const StrictTest = () => {
   }, []);
 
   const checkWord = () => {
+
+
     if (!isEndOfDeck) {
 
       setDisableSubmit(true);
 
       if (userGuess.toLowerCase() === deck[cardIndex].word.toLowerCase()) {
-        setAnswerFeedback("You got it right! :)");
-        settriesCorrect(current => current + 1);
+        setAnswerFeedback("You got it right!");
+        setTriesCorrect(current => current + 1);
+        console.log(triesCorrect);
         setUserGuess("");
-        setTimeout(() => {
-          setAnswerFeedback("You got this!");
-        }, 2000);
+        if (cardIndex < deck.length - 1) setTimeout(() => {
+            setAnswerFeedback("You got this!");
+        }, 2500);
       } else {
-        setAnswerFeedback(`The correct answer is: "${deck[cardIndex].word}"`);
         setAnswerColour("red");
+        setAnswerFeedback(`The correct answer is: "${deck[cardIndex].word}"`);
         setUserGuess("");
-        setTimeout(() => {
-          setAnswerFeedback("Don't give up!");
+        if (cardIndex < deck.length - 1) setTimeout(() => {
           setAnswerColour("black");
-        }, 2000);
+          setAnswerFeedback("Don't give up!");
+        }, 2500);
       }
       if (cardIndex < deck.length - 1) {
+        console.log(triesCorrect);
         setTimeout(() => {
           setCardIndex(current => current + 1),
             setDisableSubmit(false);
@@ -56,10 +60,8 @@ const StrictTest = () => {
         setTimeout(() => {
           setAnswerFeedback(`Deck complete. You scored ${parseInt((triesCorrect / deck.length) * 100)}%`);
           setIsEndOfDeck(true);
-        }, 4000);
+        }, 3000);
       }
-    } else {
-      setAnswerFeedback(`Deck complete. You scored ${parseInt((triesCorrect / deck.length) * 100)}%`);
     }
   }
 
@@ -89,7 +91,7 @@ const StrictTest = () => {
           <TouchableOpacity onPress={() => resetDeck()} style={styles.submitButton}><Text style={styles.submitButtonText}>Replay deck</Text></TouchableOpacity>
         ) :
           (
-            <TouchableOpacity onPress={() => checkWord()} disabled={(userGuess === "") ? true : disableSubmit} style={styles.submitButton}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {checkWord()}} disabled={(userGuess === "") ? true : disableSubmit} style={styles.submitButton}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>
           )}
         <TouchableOpacity style={[styles.backButton, styles.button]} onPress={() => {
           navigate(`/testing/${deck_id}`);
