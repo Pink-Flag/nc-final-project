@@ -21,19 +21,47 @@ import IndividualCustomDeck from "./components/IndividualCustomDeck";
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [radioState, setRadioState] = useState("default");
+  const [buttonState, setButtonState] = useState(1);
+  const [customDecks, setCustomDecks] = useState([]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <NativeRouter>
         <View style={styles.container}>
           <Menu />
-          
+
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route
+              exact
+              path="/"
+              element={
+                <Home
+                  radioState={radioState}
+                  setRadioState={setRadioState}
+                  buttonState={buttonState}
+                  setButtonState={setButtonState}
+                  customDecks={customDecks}
+                  setCustomDecks={setCustomDecks}
+                />
+              }
+            />
             <Route path="/register" element={<Register />} />
             <Route path="/loginscreen" element={<LoginScreen />} />
             <Route path="loginscreen/:signedOut" element={<LoginScreen />} />
-            <Route path="/viewdecks" element={<ViewDecks />} />
+            <Route
+              path="/viewdecks"
+              element={
+                <ViewDecks
+                  radioState={radioState}
+                  setRadioState={setRadioState}
+                  buttonState={buttonState}
+                  setButtonState={setButtonState}
+                  customDecks={customDecks}
+                  setCustomDecks={setCustomDecks}
+                />
+              }
+            />
             <Route path="/profile" element={<Profile />} />
             <Route
               path="/individualdeck/:deck_id"
@@ -41,12 +69,21 @@ export default function App() {
             />
             <Route path="/enterwords" element={<EnterWords />} />
             <Route path="/testing/:deck_id" element={<Testing />} />
-            <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />
+            <Route path="/testing/:deck_id/:index/" element={<Testing />} />
+            <Route
+              path="/vanillatest/:deck_id/:index"
+              element={<VanillaTest />}
+            />
             <Route path="/pairstest" element={<PairsTest />} />
-            <Route path="/stricttest/:deck_id" element={<StrictTest />} />
+            <Route
+              path="/stricttest/:deck_id/:index"
+              element={<StrictTest />}
+            />
             <Route path="/mixedTesting" element={<MixedTesting />} />
-            <Route path="/individualcustomdeck/:index"
-              element={<IndividualCustomDeck />} />
+            <Route
+              path="/individualcustomdeck/:index"
+              element={<IndividualCustomDeck />}
+            />
           </Routes>
         </View>
       </NativeRouter>

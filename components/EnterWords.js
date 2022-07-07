@@ -52,15 +52,6 @@ const EnterWords = ({
     )
       .then((response) => response.json())
       .then((body) => {
-        // console.log(
-        //   "-------------",
-
-        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
-        //     .text,
-        //   ": ",
-        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
-        //     .notes[0].text
-        // );
         setTranslation(
           body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
             .text
@@ -75,24 +66,18 @@ const EnterWords = ({
 
   const addWord = async () => {
     getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
-     // console.log(querySnapshot.data())
       const oldDeck = querySnapshot.data().decks[deck_id];
-     console.log(oldDeck)
-      const newDeck = [{
-        ...oldDeck,
-        words: [
-          ...oldDeck.words,
-          { definition: searchTerm, word: translation },
-        ],
-    }];
-      updateDoc(doc(db, "custom_decks", user.uid),{ "decks" : newDeck});
-      setDeck(newDeck);
-    });
 
-    // await setDoc(doc(db, "decks", deck_id), {
-    //   defition: searchTerm,
-    //   word: translation,
-    // });
+      const testSplice = querySnapshot.data();
+      testSplice.decks[deck_id].words.push({
+        definition: searchTerm,
+        word: translation,
+      });
+      setDoc(doc(db, "custom_decks", user.uid), testSplice);
+      setDeck(testSplice.decks[deck_id]);
+
+      hideModal();
+    });
   };
 
   const hideModal = () => {

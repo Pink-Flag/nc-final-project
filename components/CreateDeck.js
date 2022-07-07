@@ -24,7 +24,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-const CreateDeck = ({ deck_id, deck, setDeck }) => {
+const CreateDeck = ({
+  deck_id,
+  deck,
+  setDeck,
+  modalVisible,
+  setModalVisible,
+  setRadioState,
+  setButtonState,
+  customDecks,
+  setCustomDecks,
+}) => {
   const [deckName, setDeckName] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,18 +55,19 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
     getDoc(deckRef).then((querySnapshot) => {
       const oldDecks = querySnapshot.data().decks;
       const newDecks = [...oldDecks, newDeck];
+      setCustomDecks([{ decks: newDecks }]);
       updateDoc(deckRef, { decks: newDecks });
     });
+    setModalVisible(!modalVisible);
+    setButtonState(2);
   };
 
   const deckCheck = async () => {
     const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
     if (docCheck.data()) {
-      console.log("deck already exists");
       createDBDeck();
     } else {
-
-      await setDoc(doc(db, "custom_decks", user.uid), {"decks" : []});
+      await setDoc(doc(db, "custom_decks", user.uid), { decks: [] });
       createDBDeck();
     }
   };
@@ -77,26 +88,26 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
       </View>
       <View style={styles.inputView}>
         <View style={styles.options}>
-        <Text> I want to learn</Text>
-        <View style={styles.editPicker}>
-          <Picker
-            selectedValue={language}
-            style={styles.inputPicker}
-            onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
-          >
-            <Picker.Item label="German" value="DE_GB" />
-            <Picker.Item label="French" value="FR_GB" />
-            <Picker.Item label="Spanish" value="ES_GB" />
-          </Picker>
+          <Text> I want to learn</Text>
+          <View style={styles.editPicker}>
+            <Picker
+              selectedValue={language}
+              style={styles.inputPicker}
+              onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
+            >
+              <Picker.Item label="German" value="DE_GB" />
+              <Picker.Item label="French" value="FR_GB" />
+              <Picker.Item label="Spanish" value="ES_GB" />
+            </Picker>
           </View>
           <View style={styles.btnContainer}>
-          <Text style={styles.required}>* required fields</Text>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-            onPress={() => deckCheck()}
-          >
-            <Text style={styles.buttonText}>Create Deck</Text>
-          </TouchableOpacity>
+            <Text style={styles.required}>* required fields</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => deckCheck()}
+            >
+              <Text style={styles.buttonText}>Create Deck</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   btnContainer: {
-marginTop: "50%",
+    marginTop: "50%",
   },
   image: {
     width: 50,
@@ -156,7 +167,7 @@ marginTop: "50%",
     alignItems: "center",
   },
   options: {
-    marginTop: "20%"
+    marginTop: "20%",
   },
   micInputContainer: {
     marginTop: 15,
@@ -178,7 +189,6 @@ marginTop: "50%",
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
-  
   },
   miniButton: {
     justifyContent: "center",

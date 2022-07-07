@@ -1,6 +1,14 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -14,25 +22,32 @@ const StrictTest = () => {
   const [isEndOfDeck, setIsEndOfDeck] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
 
-  const { deck_id } = useParams();
+  const { deck_id, index } = useParams();
+  console.log(index);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getDoc(doc(db, "decks", deck_id))
-      .then((querySnapshot) => {
+  if (Number(index) === 99) {
+    useEffect(() => {
+      getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
         setDeck(querySnapshot.data().words);
-      })
-  }, []);
+      });
+    }, []);
+  } else {
+    useEffect(() => {
+      getDoc(doc(db, "custom_decks", deck_id)).then((querySnapshot) => {
+        setDeck(querySnapshot.data().decks[index].words);
+      });
+    }, []);
+  }
 
   const checkWord = () => {
     if (!isEndOfDeck) {
-
       setDisableSubmit(true);
 
       if (userGuess.toLowerCase() === deck[cardIndex].word.toLowerCase()) {
         setAnswerFeedback("You got it right! :)");
-        settriesCorrect(current => current + 1);
+        settriesCorrect((current) => current + 1);
         setUserGuess("");
         setTimeout(() => {
           setAnswerFeedback("You got this!");
@@ -48,20 +63,26 @@ const StrictTest = () => {
       }
       if (cardIndex < deck.length - 1) {
         setTimeout(() => {
-          setCardIndex(current => current + 1),
-            setDisableSubmit(false);
+          setCardIndex((current) => current + 1), setDisableSubmit(false);
         }, 2000);
       } else {
-
         setTimeout(() => {
-          setAnswerFeedback(`Deck complete. You scored ${parseInt((triesCorrect / deck.length) * 100)}%`);
+          setAnswerFeedback(
+            `Deck complete. You scored ${parseInt(
+              (triesCorrect / deck.length) * 100
+            )}%`
+          );
           setIsEndOfDeck(true);
         }, 4000);
       }
     } else {
-      setAnswerFeedback(`Deck complete. You scored ${parseInt((triesCorrect / deck.length) * 100)}%`);
+      setAnswerFeedback(
+        `Deck complete. You scored ${parseInt(
+          (triesCorrect / deck.length) * 100
+        )}%`
+      );
     }
-  }
+  };
 
   const resetDeck = () => {
     setAnswerFeedback("Practise makes perfect!");
@@ -69,41 +90,75 @@ const StrictTest = () => {
     settriesCorrect(0);
     setIsEndOfDeck(false);
     setDisableSubmit(false);
-  }
+  };
 
   if (deck.length) {
     return (
       <>
-      <KeyboardAvoidingView style={styles.container} >
-        <View style={styles.englishContainer}>
-          <Text style={styles.englishWord}>{deck[cardIndex].definition}</Text>
-        </View>
-        <View style={styles.progressFeedback}>
-          <Text style={(answerColour === "red") ? styles.answerFeedbackRed : styles.answerFeedback}>{answerFeedback}</Text>
-          <Text style={styles.progressCount}>Card {cardIndex + 1} of {deck.length}</Text>
-          <Text style={styles.scoreCount}>Cards correct: {triesCorrect}</Text>
-        </View>
-        <View style={styles.targetContainer}>
-          <TextInput style={styles.targetWord} value={userGuess} onChangeText={(input) => setUserGuess(input)} placeholder="Type here"></TextInput>
-        </View>
-        <View style={styles.buttons}>
-        {isEndOfDeck ? (
-          <TouchableOpacity onPress={() => resetDeck()} style={styles.button}><Text style={styles.buttonOutlineText}>Replay deck</Text></TouchableOpacity>
-        ) :
-          (
-            <TouchableOpacity onPress={() => checkWord()} disabled={(userGuess === "") ? true : disableSubmit} style={styles.button}><Text style={styles.buttonOutlineText}>Submit</Text></TouchableOpacity>
-          )}
-        <TouchableOpacity style={[styles.backButton, styles.button]} onPress={() => {
-          navigate(`/testing/${deck_id}`);
-        }} >
-          <Text style={styles.buttonOutlineText}>Back to tests</Text>
-        </TouchableOpacity>
-        </View>
+        <KeyboardAvoidingView style={styles.container}>
+          <View style={styles.englishContainer}>
+            <Text style={styles.englishWord}>{deck[cardIndex].definition}</Text>
+          </View>
+          <View style={styles.progressFeedback}>
+            <Text
+              style={
+                answerColour === "red"
+                  ? styles.answerFeedbackRed
+                  : styles.answerFeedback
+              }
+            >
+              {answerFeedback}
+            </Text>
+            <Text style={styles.progressCount}>
+              Card {cardIndex + 1} of {deck.length}
+            </Text>
+            <Text style={styles.scoreCount}>Cards correct: {triesCorrect}</Text>
+          </View>
+          <View style={styles.targetContainer}>
+            <TextInput
+              style={styles.targetWord}
+              value={userGuess}
+              onChangeText={(input) => setUserGuess(input)}
+              placeholder="Type here"
+            ></TextInput>
+          </View>
+          <View style={styles.buttons}>
+            {isEndOfDeck ? (
+              <TouchableOpacity
+                onPress={() => resetDeck()}
+                style={styles.button}
+              >
+                <Text style={styles.buttonOutlineText}>Replay deck</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => checkWord()}
+                disabled={userGuess === "" ? true : disableSubmit}
+                style={styles.button}
+              >
+                <Text style={styles.buttonOutlineText}>Submit</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={[styles.backButton, styles.button]}
+              onPress={() => {
+                navigate(`/testing/${deck_id}`);
+              }}
+            >
+              <Text style={styles.buttonOutlineText}>Back to tests</Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAvoidingView>
       </>
     );
   } else {
-    return <Text>Empty</Text>
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 
@@ -116,25 +171,23 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 10,
     alignItems: "center",
-    height:"80%",
-   
+    height: "80%",
   },
   englishWord: {
     fontSize: 26,
     fontWeight: "700",
   },
   targetWord: {
-    fontSize: 24
+    fontSize: 24,
   },
   englishContainer: {
- 
     width: "70%",
     alignItems: "center",
     borderRadius: 10,
     padding: 10,
     backgroundColor: "white",
     marginTop: 25,
-    marginBottom: 25
+    marginBottom: 25,
   },
   targetContainer: {
     width: "70%",
@@ -143,31 +196,29 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     marginTop: "20%",
-
   },
   progressFeedback: {
-    alignItems: "center"
+    alignItems: "center",
   },
   answerFeedback: {
     fontSize: 25,
     marginTop: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
   answerFeedbackRed: {
     color: "red",
     fontSize: 25,
     marginTop: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
   progressCount: {
     fontSize: 16,
     marginTop: 25,
-   
   },
   scoreCount: {
     fontSize: 16,
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
 
   button: {
@@ -177,15 +228,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
-   margin:5,
-   
+    margin: 5,
   },
   buttonOutlineText: {
     color: "#423250",
     fontWeight: "700",
     fontSize: 16,
   },
-  buttons:{ 
+  buttons: {
     marginTop: "35%",
   },
   submitButton: {
@@ -196,16 +246,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-  
   },
-  backButton: {
-    
-  },
+  backButton: {},
   submitButtonText: {
-    fontSize: 20
+    fontSize: 20,
   },
   backButtonText: {
-    fontSize: 20
-  }
-
+    fontSize: 20,
+  },
 });

@@ -27,7 +27,7 @@ import { db } from "../firebase";
 import { UserContext } from "./UserContext";
 const IndividualCustomDeck = () => {
   const { index } = useParams();
-  console.log(index);
+
   const navigate = useNavigate();
   const [deck, setDeck] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
     // borderRightWidth: 1,
     width: "50%",
     height: "100%",
-  
   },
   foreignLangWords: {
     width: "50%",
