@@ -31,7 +31,7 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [avatarUrl, setavatarUrl] = useState("");
-  const [defaultLanguage, setdefaultLanguage] = useState("French");
+  const [defaultLanguage, setdefaultLanguage] = useState("German");
   const auth = getAuth();
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -173,14 +173,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  marginTop: "10%",
+    marginTop: "10%",
     height: "90%",
   },
   inputContainer: {
     width: "80%",
-    backgroundColor:"#FCFCFC",
-    marginLeft:"10%",
-  
+    backgroundColor: "#FCFCFC",
+    marginLeft: "10%",
+
   },
   input: {
     backgroundColor: "white",
@@ -228,8 +228,8 @@ const styles = StyleSheet.create({
   headerView: {
     textAlignVertical: "top",
     marginTop: 0,
-   marginTop:"20%",
-     height: "0%",
+    marginTop: "20%",
+    height: "0%",
   },
   inputView: {
     marginTop: 5,

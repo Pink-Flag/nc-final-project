@@ -6,6 +6,7 @@ import {
   Image,
   Button,
   Animated,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect, useReducer, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,23 +16,31 @@ import { db } from "../firebase";
 
 const VanillaTest = () => {
   const navigate = useNavigate();
-  const { deck_id } = useParams();
+  const { deck_id, index } = useParams();
   const [cardIndex, setCardIndex] = useState(0);
   const [deckWords, setDeckWords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [displayBack, setDisplayBack] = useState(false);
 
+  console.log(typeof index);
+
   useEffect(() => {
     setCardIndex((curr) => curr + 1);
   }, [displayBack]);
 
-  useEffect(() => {
-    getDoc(doc(db, "decks", deck_id))
-      .then((querySnapshot) => {
+  if (Number(index) === 99) {
+    useEffect(() => {
+      getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
         setDeckWords(querySnapshot.data().words);
-      })
-  }, []);
-
+      });
+    }, []);
+  } else {
+    useEffect(() => {
+      getDoc(doc(db, "custom_decks", deck_id)).then((querySnapshot) => {
+        setDeckWords(querySnapshot.data().decks[index].words);
+      });
+    }, []);
+  }
 
   if (deckWords.length !== 0) {
     return (
@@ -69,7 +78,7 @@ const VanillaTest = () => {
                       source={{
                         uri: "https://www.germany-insider-facts.com/images/flag-of-germany-small.jpg",
                       }}
-                      />
+                    />
                     <Text style={styles.text}>{card.word}</Text>
                   </View>
                 ) : (
@@ -91,7 +100,7 @@ const VanillaTest = () => {
           backgroundColor={"transparent"}
           stackSize={3}
         ></Swiper>
-         {/* <TouchableOpacity
+        {/* <TouchableOpacity
               style={[styles.button, styles.buttonOutline]}
               onPress={() => {
                 navigate("/viewdecks");
@@ -102,7 +111,13 @@ const VanillaTest = () => {
       </View>
     );
   } else {
-    return <Text> Loading...</Text>;
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 
@@ -130,8 +145,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 100,
-    position:"absolute",
-    bottom:180,
+    position: "absolute",
+    bottom: 180,
     left: 260,
   },
   text: {

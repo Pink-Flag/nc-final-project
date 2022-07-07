@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, LogBox } from "react-native";
 import { NativeRouter, Link, Route, Routes } from "react-router-native";
-import { fetchUsers } from "./firebase/functions";
-import { createContext, useContext, useState, useEffect } from "react";
+
+import { useContext, useState, useEffect } from "react";
 import LoginScreen from "./components/LoginScreen";
 import { UserContext } from "./components/UserContext";
 
@@ -17,39 +17,95 @@ import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
 import Menu from "./components/Menu";
+
 import SplashPage from "./components/SplashPage";
+import IndividualCustomDeck from "./components/IndividualCustomDeck";
+
+
+
+
+
 
 export default function App() {
-  const [user, setUser] = useState(null);
   const [isFirstTime, setIsFirstTime] = useState(true);
+  const [user, setUser] = useState(null);
+  const [radioState, setRadioState] = useState("default");
+  const [buttonState, setButtonState] = useState(1);
+  const [customDecks, setCustomDecks] = useState([]);
+  console.disableYellowBox = true;
+
 
   // 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <NativeRouter>
+
         {isFirstTime ? (<SplashPage setIsFirstTime={setIsFirstTime} />) : (
-          <View style={styles.container}>
-            <Menu />
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/loginscreen" element={<LoginScreen />} />
-              <Route path="/viewdecks" element={<ViewDecks />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/individualdeck/:deck_id" element={<IndividualDeck />} />
-              <Route path="/enterwords" element={<EnterWords />} />
-              <Route path="/testing/:deck_id" element={<Testing />} />
-              <Route path="/vanillatest/:deck_id" element={<VanillaTest />} />
-              <Route path="/pairstest" element={<PairsTest />} />
-              <Route path="/stricttest/:deck_id" element={<StrictTest />} />
-              <Route path="/mixedTesting" element={<MixedTesting />} />
-            </Routes>
-          </View>
-        ) }
-        </NativeRouter>
+
+
+        <View style={styles.container}>
+          <Menu />
+
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <Home
+                  radioState={radioState}
+                  setRadioState={setRadioState}
+                  buttonState={buttonState}
+                  setButtonState={setButtonState}
+                  customDecks={customDecks}
+                  setCustomDecks={setCustomDecks}
+                />
+              }
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/loginscreen" element={<LoginScreen />} />
+            <Route path="loginscreen/:signedOut" element={<LoginScreen />} />
+            <Route
+              path="/viewdecks"
+              element={
+                <ViewDecks
+                  radioState={radioState}
+                  setRadioState={setRadioState}
+                  buttonState={buttonState}
+                  setButtonState={setButtonState}
+                  customDecks={customDecks}
+                  setCustomDecks={setCustomDecks}
+                />
+              }
+            />
+            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/individualdeck/:deck_id"
+              element={<IndividualDeck />}
+            />
+            <Route path="/enterwords" element={<EnterWords />} />
+            <Route path="/testing/:deck_id" element={<Testing />} />
+            <Route path="/testing/:deck_id/:index/" element={<Testing />} />
+            <Route
+              path="/vanillatest/:deck_id/:index"
+              element={<VanillaTest />}
+            />
+            <Route path="/pairstest" element={<PairsTest />} />
+            <Route
+              path="/stricttest/:deck_id/:index"
+              element={<StrictTest />}
+            />
+            <Route path="/mixedTesting" element={<MixedTesting />} />
+            <Route
+              path="/individualcustomdeck/:index"
+              element={<IndividualCustomDeck />}
+            />
+          </Routes>
+        </View>
+      </NativeRouter>
+
     </UserContext.Provider>
   );
-}
+})}
 
 
 const styles = StyleSheet.create({
