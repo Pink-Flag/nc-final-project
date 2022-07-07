@@ -24,7 +24,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-const CreateDeck = ({ deck_id, deck, setDeck }) => {
+const CreateDeck = ({
+  deck_id,
+  deck,
+  setDeck,
+  modalVisible,
+  setModalVisible,
+  setRadioState,
+  setButtonState,
+  customDecks,
+  setCustomDecks,
+}) => {
   const [deckName, setDeckName] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,10 +44,6 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
   const navigate = useNavigate();
 
   const createDBDeck = async () => {
-    // const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
-    // if (docCheck.data()) {
-    //   console.log("deck already exists");
-    // }
     const deckRef = doc(db, "custom_decks", user.uid);
     const newDeck = {
       list_name: deckName,
@@ -45,8 +51,25 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
       words: [],
       user: user.uid,
     };
-    console.log(newDeck);
-    setDoc(deckRef, newDeck);
+
+    getDoc(deckRef).then((querySnapshot) => {
+      const oldDecks = querySnapshot.data().decks;
+      const newDecks = [...oldDecks, newDeck];
+      setCustomDecks([{ decks: newDecks }]);
+      updateDoc(deckRef, { decks: newDecks });
+    });
+    setModalVisible(!modalVisible);
+    setButtonState(2);
+  };
+
+  const deckCheck = async () => {
+    const docCheck = await getDoc(doc(db, "custom_decks", user.uid));
+    if (docCheck.data()) {
+      createDBDeck();
+    } else {
+      await setDoc(doc(db, "custom_decks", user.uid), { decks: [] });
+      createDBDeck();
+    }
   };
 
   return (
@@ -64,24 +87,28 @@ const CreateDeck = ({ deck_id, deck, setDeck }) => {
         </View>
       </View>
       <View style={styles.inputView}>
-        <Text> I want to learn</Text>
-        <View style={styles.editPicker}>
-          <Picker
-            selectedValue={language}
-            style={styles.inputPicker}
-            onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
-          >
-            <Picker.Item label="German" value="DE_GB" />
-            <Picker.Item label="French" value="FR_GB" />
-            <Picker.Item label="Spanish" value="ES_GB" />
-          </Picker>
-          <Text style={styles.required}>* required fields</Text>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-            onPress={() => createDBDeck()}
-          >
-            <Text style={styles.buttonText}>Create Deck</Text>
-          </TouchableOpacity>
+        <View style={styles.options}>
+          <Text> I want to learn</Text>
+          <View style={styles.editPicker}>
+            <Picker
+              selectedValue={language}
+              style={styles.inputPicker}
+              onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
+            >
+              <Picker.Item label="German" value="DE_GB" />
+              <Picker.Item label="French" value="FR_GB" />
+              <Picker.Item label="Spanish" value="ES_GB" />
+            </Picker>
+          </View>
+          <View style={styles.btnContainer}>
+            <Text style={styles.required}>* required fields</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonOutline]}
+              onPress={() => deckCheck()}
+            >
+              <Text style={styles.buttonText}>Create Deck</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.targetOutputContainer}>
@@ -105,12 +132,15 @@ export default CreateDeck;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "30%",
+    marginTop: "10%",
     backgroundColor: "#ECEAF6",
-    width: "95%",
+    width: "100%",
     borderRadius: 10,
     alignItems: "center",
     height: "80%",
+  },
+  btnContainer: {
+    marginTop: "50%",
   },
   image: {
     width: 50,
@@ -135,6 +165,9 @@ const styles = StyleSheet.create({
   },
   englishWordContainer: {
     alignItems: "center",
+  },
+  options: {
+    marginTop: "20%",
   },
   micInputContainer: {
     marginTop: 15,

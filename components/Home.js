@@ -4,13 +4,25 @@ import {
   View,
   TouchableOpacity,
   AsyncStorage,
+  Modal,
+  Pressable,
 } from "react-native";
-import { React, useContext, useEffect } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-native";
 import { UserContext } from "./UserContext";
+import CreateDeck from "./CreateDeck";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = ({
+  radioState,
+  setRadioState,
+  buttonState,
+  setButtonState,
+  customDecks,
+  setCustomDecks,
+}) => {
   const { user, setUser } = useContext(UserContext);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const storeKey = async () => {
@@ -21,6 +33,13 @@ const Home = () => {
       }
     };
   }, []);
+
+  const navigate = useNavigate();
+
+  const gotoDecks = () => {
+    setModalVisible(!modalVisible);
+    navigate("/viewdecks");
+  };
 
   return (
     <>
@@ -36,11 +55,12 @@ const Home = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-            <Link to="/individualdeck">
-              <Text style={styles.buttonOutlineText}>Create new deck</Text>
-            </Link>
-          </TouchableOpacity>
+          {/* <TouchableOpacity
+            style={[styles.button, styles.buttonOutline]}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.buttonOutlineText}>Create new deck</Text>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
             <Link to="/viewdecks">
@@ -54,6 +74,33 @@ const Home = () => {
             </Link>
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Pressable style={[styles.buttonClose]}>
+                <Text style={styles.textStyle}>Close</Text>
+              </Pressable>
+              <CreateDeck
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+                setRadioState={setRadioState}
+                setButtonState={setButtonState}
+                customDecks={customDecks}
+                setCustomDecks={setCustomDecks}
+              />
+            </View>
+          </View>
+        </Modal>
       </View>
     </>
   );

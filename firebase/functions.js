@@ -17,7 +17,7 @@ import { db, auth } from "../firebase.js";
 import { useState, useEffect } from "react";
 
 export const addNewUser = (id) => {
-  console.log("hiya");
+
   return addDoc(collection(db, "users")).doc(id).set({
     defaultLanguage: defaultLanguage,
     displayName: username,
@@ -59,7 +59,7 @@ useEffect(() => {
       setUsers([...userArray]);
     })
     .then(() => {
-      console.log(users);
+
     });
 }, []);
 
@@ -88,7 +88,7 @@ useEffect(() => {
 //     if (docSnap.exists()) {
 
 //     } else {
-//       console.log("No such document!");
+//
 //     }
 //   });
 // }, []);
@@ -96,11 +96,11 @@ useEffect(() => {
 // // Filter user
 // const userRef = collection(db, "users");
 // const nameQuery = query(userRef, where("name", "==", "gordon"));
-// // console.log(nameQuery)
+
 // useEffect(() => {
 //   getDocs(nameQuery).then((querySnapshot) => {
 //     querySnapshot.forEach((doc) => {
-//       console.log(doc.id, "=>", doc.data());
+
 //     });
 //   });
 // }, []);

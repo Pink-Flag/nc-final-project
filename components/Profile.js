@@ -154,22 +154,7 @@ const Profile = () => {
             </View>
           </View>
 
-          {/* <View style={styles.inputView}>
-          <Text> Default Language</Text>
-          <View style={styles.editPicker}>
-            <Picker
-              selectedValue={defaultLanguage}
-              style={styles.inputPicker}
-              onValueChange={(itemValue, itemIndex) =>
-                setdefaultLanguage(itemValue)
-              }
-            >
-              <Picker.Item label="French" value="French" />
-              <Picker.Item label="German" value="German" />
-              <Picker.Item label="Spanish" value="Spanish" />
-            </Picker>
-          </View>
-        </View> */}
+        
         </ScrollView>
         <View style={styles.inputView}>
           <TouchableOpacity

@@ -10,7 +10,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Testing = () => {
   const navigate = useNavigate();
-  const { deck_id } = useParams();
+  const { deck_id, index } = useParams();
+
   return (
     <>
       <View style={styles.container}>
@@ -23,15 +24,15 @@ const Testing = () => {
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => {
-              navigate(`/vanillatest/${deck_id}`);
+              navigate(`/vanillatest/${deck_id}/${index}`);
             }}
           >
-            <Text style={styles.buttonOutlineText}>Vanilla</Text>
+            <Text style={styles.buttonOutlineText}>Flash Cards</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.buttonOutline]}
             onPress={() => {
-              navigate(`/stricttest/${deck_id}`);
+              navigate(`/stricttest/${deck_id}/${index}`);
             }}
           >
             <Text style={styles.buttonOutlineText}>Strict spelling</Text>

@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigate } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
 import {
   doc,
@@ -21,6 +21,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { UserContext } from "./UserContext";
 
 const EnterWords = ({
   deck_id,
@@ -29,6 +30,7 @@ const EnterWords = ({
   modalVisible,
   setModalVisible,
 }) => {
+  const { user, setUser } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,15 +52,6 @@ const EnterWords = ({
     )
       .then((response) => response.json())
       .then((body) => {
-        // console.log(
-        //   "-------------",
-
-        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
-        //     .text,
-        //   ": ",
-        //   body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
-        //     .notes[0].text
-        // );
         setTranslation(
           body.results[0].lexicalEntries[0].entries[0].senses[0].translations[0]
             .text
@@ -72,23 +65,19 @@ const EnterWords = ({
   };
 
   const addWord = async () => {
-    getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
-      const oldDeck = querySnapshot.data();
-      const newDeck = {
-        ...oldDeck,
-        words: [
-          ...oldDeck.words,
-          { definition: searchTerm, word: translation },
-        ],
-      };
-      updateDoc(doc(db, "decks", deck_id), newDeck);
-      setDeck(newDeck);
-    });
+    getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
+      const oldDeck = querySnapshot.data().decks[deck_id];
 
-    // await setDoc(doc(db, "decks", deck_id), {
-    //   defition: searchTerm,
-    //   word: translation,
-    // });
+      const testSplice = querySnapshot.data();
+      testSplice.decks[deck_id].words.push({
+        definition: searchTerm,
+        word: translation,
+      });
+      setDoc(doc(db, "custom_decks", user.uid), testSplice);
+      setDeck(testSplice.decks[deck_id]);
+
+      hideModal();
+    });
   };
 
   const hideModal = () => {
@@ -150,12 +139,12 @@ export default EnterWords;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "30%",
+    marginTop: "10%",
     backgroundColor: "#ECEAF6",
-    width: "95%",
+    width: "100%",
     borderRadius: 10,
     alignItems: "center",
-    height: "80%",
+    height: "85%",
   },
   image: {
     width: 50,
