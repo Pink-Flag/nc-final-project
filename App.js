@@ -17,18 +17,32 @@ import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
 import MixedTesting from "./components/MixedTesting";
 import Menu from "./components/Menu";
+
+import SplashPage from "./components/SplashPage";
 import IndividualCustomDeck from "./components/IndividualCustomDeck";
 
+
+
+
+
+
 export default function App() {
+  const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState(null);
   const [radioState, setRadioState] = useState("default");
   const [buttonState, setButtonState] = useState(1);
   const [customDecks, setCustomDecks] = useState([]);
   console.disableYellowBox = true;
 
+
+  // 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <NativeRouter>
+
+        {isFirstTime ? (<SplashPage setIsFirstTime={setIsFirstTime} />) : (
+
+
         <View style={styles.container}>
           <Menu />
 
@@ -88,9 +102,11 @@ export default function App() {
           </Routes>
         </View>
       </NativeRouter>
+
     </UserContext.Provider>
   );
-}
+})}
+
 
 const styles = StyleSheet.create({
   container: {
