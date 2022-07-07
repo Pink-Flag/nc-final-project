@@ -70,8 +70,8 @@ const EnterWords = ({
 
       const testSplice = querySnapshot.data();
       testSplice.decks[deck_id].words.push({
-        definition: searchTerm,
         word: translation,
+        definition: searchTerm,
       });
       setDoc(doc(db, "custom_decks", user.uid), testSplice);
       setDeck(testSplice.decks[deck_id]);
@@ -120,7 +120,10 @@ const EnterWords = ({
               style={styles.targetWord}
             />
           ) : (
-            <Text style={styles.targetWord}>{translation}</Text>
+            <>
+              <Text style={styles.searchWord}>{searchTerm} :</Text>
+              <Text style={styles.targetWord}>{translation}</Text>
+            </>
           )}
         </View>
 
@@ -146,6 +149,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "85%",
   },
+
   image: {
     width: 50,
     height: 50,
@@ -159,6 +163,9 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10,
     backgroundColor: "white",
+  },
+  searchWord: {
+    fontSize: 18,
   },
   englishInputContainer: {
     alignItems: "center",

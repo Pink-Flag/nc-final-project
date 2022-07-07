@@ -81,14 +81,7 @@ const IndividualDeck = () => {
                       key={word.word + "_ger"}
                       style={styles.singleWordContainer}
                     >
-                      {/* <TouchableOpacity
-                        style={[styles.buttonX, styles.buttonOutlineX]}
-                        onPress={() => {
-                          deleteWord(index);
-                        }}
-                      >
-                        <Text style={styles.buttonOutlineTextX}>x</Text>
-                      </TouchableOpacity> */}
+
                       <Text style={styles.word}> {word.word}</Text>
                     </View>
                   );
@@ -96,44 +89,7 @@ const IndividualDeck = () => {
               </View>
             </View>
           </ScrollView>
-          {/* <View style={styles.centeredView}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <View style={styles.centeredView}>
-                
-                <View style={styles.modalView}>
-                <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>Close</Text>
-                  </Pressable>
-                  <EnterWords
-                    deck_id={deck_id}
-                    deck={deck}
-                    setDeck={setDeck}
-                    setModalVisible={setModalVisible}
-                    modalVisible={modalVisible}
-                  />
-                  
-                 
-                </View>
-              </View>
-            </Modal>
-            <Pressable
-              style={[styles.button, styles.buttonOutline]}
-              onPress={() => setModalVisible(true)}
-            >
-              <Text style={styles.buttonOutlineText}>Add Word</Text>
-            </Pressable>
-          </View> */}
+          
         </View>
 
         <View>
@@ -243,7 +199,6 @@ const styles = StyleSheet.create({
   },
 
   firstLangWords: {
-    // borderRightWidth: 1,
     width: "50%",
     height: "100%",
     
@@ -261,7 +216,7 @@ const styles = StyleSheet.create({
   word: {
     padding: 10,
     marginLeft: "15%",
-    fontSize: 20,
+    fontSize: 18,
   },
   centeredView: {
     flex: 1,

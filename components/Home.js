@@ -55,23 +55,21 @@ const Home = ({
         </View>
 
         <View style={styles.buttonContainer}>
-          {/* <TouchableOpacity
-            style={[styles.button, styles.buttonOutline]}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.buttonOutlineText}>Create new deck</Text>
-          </TouchableOpacity> */}
-
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-            <Link to="/viewdecks">
-              <Text style={styles.buttonOutlineText}>View existing decks</Text>
-            </Link>
+           
+              <Text style={styles.buttonOutlineText}   onPress={() => {
+            navigate(`/viewdecks`);
+          }}>View existing decks</Text>
+          
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-            <Link to="/profile">
-              <Text style={styles.buttonOutlineText}>View profile</Text>
-            </Link>
+          
+              <Text style={styles.buttonOutlineText}
+                onPress={() => {
+                  navigate(`/profile`);
+                }}>View profile</Text>
+           
           </TouchableOpacity>
         </View>
       </View>
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
     width: "75%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "30%",
+    marginTop: "45%",
   },
   buttonText: {
     color: "white",
@@ -154,5 +152,6 @@ const styles = StyleSheet.create({
     color: "#423250",
     fontWeight: "700",
     marginTop: "10%",
+    letterSpacing: 1,
   },
 });

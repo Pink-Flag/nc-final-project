@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     height: "50%",
   },
   decks: {
-    fontSize: 24,
+    fontSize: 20,
     marginTop: 7,
   },
   deckContainer: {

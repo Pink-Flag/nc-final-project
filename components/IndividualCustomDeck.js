@@ -62,7 +62,7 @@ const IndividualCustomDeck = () => {
             <Text style={styles.textName}>{deck.list_name}</Text>
             <Text style={styles.textLang}>German</Text>
           </View>
-          <ScrollView>
+          <ScrollView style={styles.scroll}>
             <View style={styles.wordContainer}>
               <View style={styles.firstLangWords}>
                 <Text style={styles.lang}>English</Text>
@@ -111,7 +111,7 @@ const IndividualCustomDeck = () => {
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                   <Pressable
-                    style={[styles.button, styles.buttonClose]}
+                    style={[styles.buttonClose]}
                     onPress={() => setModalVisible(!modalVisible)}
                   >
                     <Text style={styles.textStyle}>Close</Text>
@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
   singleWordContainer: {
     flexDirection: "row",
     marginLeft: "2%",
-    // marginTop: "16%",
   },
   buttonContainer: {
     width: "70%",
@@ -190,6 +189,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     minWidth: "65%",
+  },
+  scroll: {
+
+height: "60%",
   },
   buttonX: {
     backgroundColor: "#5C6784",
@@ -235,16 +238,18 @@ const styles = StyleSheet.create({
   },
   wordContainer: {
     width: "100%",
-    height: "60%",
+    height: "50%",
     marginTop: "3%",
     borderRadius: 10,
     flexDirection: "row",
+
   },
 
   firstLangWords: {
     // borderRightWidth: 1,
     width: "50%",
-    height: "100%",
+    height: "80%",
+  
   },
   foreignLangWords: {
     width: "50%",
@@ -288,11 +293,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
+
   buttonOpen: {
     backgroundColor: "#F194FF",
   },
@@ -300,6 +301,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
     marginTop: "3%",
     marginLeft: "70%",
+    padding: 12,
+    borderRadius: 30,
+    alignItems: "center",
   },
   textStyle: {
     color: "white",
