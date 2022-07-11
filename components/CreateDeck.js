@@ -1,34 +1,22 @@
+import { useNavigate } from "react-router-dom";
+import { React, useState, useContext } from "react";
+import { UserContext } from "./UserContext";
+import { Picker } from "@react-native-picker/picker";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Image,
   TextInput,
   ActivityIndicator,
 } from "react-native";
-import { useNavigate } from "react-router-dom";
-import { React, useState, useContext } from "react";
-import { UserContext } from "./UserContext";
-import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
-import { Picker } from "@react-native-picker/picker";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc, 
-} from "firebase/firestore";
-import { db } from "../firebase";
 
 const CreateDeck = ({
-  deck_id,
-  deck,
-  setDeck,
   modalVisible,
   setModalVisible,
-  setRadioState,
   setButtonState,
-  customDecks,
   setCustomDecks,
 }) => {
   const [deckName, setDeckName] = useState("");
@@ -38,6 +26,8 @@ const CreateDeck = ({
   const { user, setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  // pulls all custom decks from firestore under a user ID then updates database and state with new deck
 
   const createDBDeck = async () => {
     const deckRef = doc(db, "custom_decks", user.uid);
@@ -57,6 +47,8 @@ const CreateDeck = ({
     setModalVisible(!modalVisible);
     setButtonState(2);
   };
+
+  // checks if user has any custom decks and if not, creates a new entry in the database
 
   const deckCheck = async () => {
     const docCheck = await getDoc(doc(db, "custom_decks", user.uid));

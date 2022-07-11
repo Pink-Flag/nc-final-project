@@ -1,38 +1,24 @@
+import { React, useContext, useState } from "react";
+import { UserContext } from "./UserContext";
+import CreateDeck from "./CreateDeck";
+import { useNavigate } from "react-router-dom";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  AsyncStorage,
   Modal,
   Pressable,
 } from "react-native";
-import { React, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-native";
-import { UserContext } from "./UserContext";
-import CreateDeck from "./CreateDeck";
-import { useNavigate } from "react-router-dom";
 
 const Home = ({
-  radioState,
   setRadioState,
-  buttonState,
   setButtonState,
   customDecks,
   setCustomDecks,
 }) => {
   const { user, setUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    const storeKey = async () => {
-      try {
-        await AsyncStorage.setItem("key", "i am a key");
-      } catch (error) {
-        alert.error(error);
-      }
-    };
-  }, []);
 
   const navigate = useNavigate();
 
@@ -56,20 +42,25 @@ const Home = ({
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-           
-              <Text style={styles.buttonOutlineText}   onPress={() => {
-            navigate(`/viewdecks`);
-          }}>View existing decks</Text>
-          
+            <Text
+              style={styles.buttonOutlineText}
+              onPress={() => {
+                navigate(`/viewdecks`);
+              }}
+            >
+              View existing decks
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-          
-              <Text style={styles.buttonOutlineText}
-                onPress={() => {
-                  navigate(`/profile`);
-                }}>View profile</Text>
-           
+            <Text
+              style={styles.buttonOutlineText}
+              onPress={() => {
+                navigate(`/profile`);
+              }}
+            >
+              View profile
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

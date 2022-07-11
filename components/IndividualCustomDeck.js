@@ -1,3 +1,11 @@
+import React from "react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
+import Spinner from "react-native-loading-spinner-overlay";
+import { useState, useEffect, useContext } from "react";
+import EnterWords from "./EnterWords";
+import { db } from "../firebase";
+import { UserContext } from "./UserContext";
 import {
   StyleSheet,
   Text,
@@ -8,23 +16,14 @@ import {
   ScrollView,
 } from "react-native";
 
-import React from "react";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useNavigate, useParams } from "react-router-dom";
-import Spinner from "react-native-loading-spinner-overlay";
-import { useState, useEffect, useContext } from "react";
-import EnterWords from "./EnterWords";
-import { db } from "../firebase";
-import { UserContext } from "./UserContext";
 const IndividualCustomDeck = () => {
   const { index } = useParams();
-
   const navigate = useNavigate();
   const [deck, setDeck] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
+
   useEffect(() => {
     getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
       setDeck(querySnapshot.data().decks[index]);
@@ -235,7 +234,6 @@ const styles = StyleSheet.create({
   },
 
   firstLangWords: {
-    // borderRightWidth: 1,
     width: "50%",
     height: "100%",
   },

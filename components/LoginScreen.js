@@ -20,9 +20,7 @@ const LoginScreen = () => {
   const [refreshToken, setRefreshToken] = useState("hi");
   const [password, setPassword] = useState("");
   const auth = getAuth();
-
   const navigate = useNavigate();
-
   const { signedOut } = useParams();
 
   useEffect(() => {
@@ -163,6 +161,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "10%",
     letterSpacing: 1,
-
-  }
+  },
 });

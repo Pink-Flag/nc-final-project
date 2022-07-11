@@ -10,30 +10,18 @@ import {
 import { useNavigate } from "react-router-dom";
 import { React, useState, useContext } from "react";
 import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
-import {
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  getDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
-} from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "./UserContext";
+import mic from "../images/mic.svg";
 
-const EnterWords = ({
-  deck_id,
-  deck,
-  setDeck,
-  modalVisible,
-  setModalVisible,
-}) => {
+const EnterWords = ({ deck_id, setDeck, modalVisible, setModalVisible }) => {
   const { user, setUser } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // searches Oxford API for word and sets state with translation
 
   const fetchTranslation = () => {
     const params = {
@@ -64,6 +52,8 @@ const EnterWords = ({
       });
   };
 
+  // adds word to deck in firestore
+
   const addWord = async () => {
     getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
       const oldDeck = querySnapshot.data().decks[deck_id];
@@ -80,11 +70,14 @@ const EnterWords = ({
     });
   };
 
+  // hides add word modal
+
   const hideModal = () => {
     setModalVisible(!modalVisible);
   };
 
   const navigate = useNavigate();
+
   const imagePath =
     "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
 
@@ -92,7 +85,7 @@ const EnterWords = ({
     <View style={styles.container}>
       <View style={styles.englishInputContainer}>
         <View style={styles.micInputContainer}>
-          <Image style={styles.image} source={{ uri: imagePath }} />
+          <Image style={styles.image} source={{ mic }} />
           <TextInput
             style={styles.textinput}
             placeholder="Enter word"
