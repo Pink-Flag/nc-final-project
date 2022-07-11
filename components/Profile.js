@@ -8,36 +8,37 @@ import {
   ScrollView,
 } from "react-native";
 import { React, useState, useContext, useEffect } from "react";
-import { Link } from "react-router-native";
-import { Picker } from "@react-native-picker/picker";
 import { useNavigate } from "react-router-dom";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { UserContext } from "./UserContext";
 import defaultAvatar from "../images/defaultAvatar.jpg";
 import { updateDoc, doc } from "firebase/firestore";
 import { db, auth } from "../firebase";
-import { AuthErrorCodes, signInAnonymously, currentUser } from "firebase/auth";
-import { getAuth, updateProfile } from "firebase/auth";
 
 const Profile = () => {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+
+  //Initialize state variables 
   const [profilePicture, setProfilePicture] = useState(
     "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg"
   );
   const [loading, setLoading] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-  const [avatar, setAvatar] = useState(defaultAvatar);
+   const [avatar, setAvatar] = useState(defaultAvatar);
   const [updatedEmail, setUpdatedEmail] = useState("");
 
+
+  //set up default profile picture  for users that dont upload one
   useEffect(() => {
     if (user.photoURL !== null) {
       setProfilePicture(user.photoURL);
     }
   }, [user]);
 
+  //reference the users table in firestore
   const dataRef = doc(db, "users", user.uid);
 
+  //update user  profile picture
   const updateAvatar = () => {
     setLoading(true);
     updateDoc(dataRef, {
@@ -48,6 +49,7 @@ const Profile = () => {
     });
   };
 
+  //signing out the user
   const signOut = () => {
     setLoading(true);
     auth
@@ -196,9 +198,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 10,
   },
-  // header:{
-  //   marginTop: "25%",
-  // },
   inputView: {
     marginTop: 10,
     marginBottom: 10,
@@ -242,21 +241,6 @@ const styles = StyleSheet.create({
   editTitle: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-  },
-  inputPicker: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    width: "100%",
-    borderRadius: 10,
-    justifyContent: "flex-start",
-  },
-  editPicker: {
-    width: "75%",
-    borderRadius: 10,
-    overflow: "hidden",
-    marginLeft: 5,
-    marginTop: 5,
-    marginBottom: 10,
   },
   signOutButton: {
     color: "white",

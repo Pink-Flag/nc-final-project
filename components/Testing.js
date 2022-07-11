@@ -1,15 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TouchableHighlight,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Testing = () => {
   const navigate = useNavigate();
+
+  //get the deck id from the endpoint
   const { deck_id, index } = useParams();
 
   return (
