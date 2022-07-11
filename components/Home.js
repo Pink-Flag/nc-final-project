@@ -11,6 +11,8 @@ import {
   Pressable,
 } from "react-native";
 
+// component for home page of app
+
 const Home = ({
   setRadioState,
   setButtonState,
@@ -19,13 +21,7 @@ const Home = ({
 }) => {
   const { user, setUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
-
   const navigate = useNavigate();
-
-  const gotoDecks = () => {
-    setModalVisible(!modalVisible);
-    navigate("/viewdecks");
-  };
 
   return (
     <>

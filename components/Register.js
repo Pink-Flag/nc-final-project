@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
     width: "80%",
     backgroundColor: "#FCFCFC",
     marginLeft: "10%",
-
   },
   input: {
     backgroundColor: "white",
@@ -195,7 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-    marginLeft: "20%"
+    marginLeft: "20%",
   },
   button: {
     backgroundColor: "#5c6784",

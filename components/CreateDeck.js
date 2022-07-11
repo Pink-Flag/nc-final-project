@@ -13,6 +13,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 
+// this the component that creates new custom decks by user id
+
 const CreateDeck = ({
   modalVisible,
   setModalVisible,
@@ -27,7 +29,7 @@ const CreateDeck = ({
 
   const navigate = useNavigate();
 
-  // pulls all custom decks from firestore under a user ID then updates database and state with new deck
+  // pulls all custom decks from firestore under a user ID then updates database and state with these plus the new deck
 
   const createDBDeck = async () => {
     const deckRef = doc(db, "custom_decks", user.uid);

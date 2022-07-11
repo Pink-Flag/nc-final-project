@@ -1,10 +1,18 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
+
+// component that displays a default individual deck
 
 const IndividualDeck = () => {
   const { deck_id } = useParams();
@@ -13,25 +21,13 @@ const IndividualDeck = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // gets the deck from the database and sets it to the state
+
   useEffect(() => {
     getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
       setDeck(querySnapshot.data());
     });
   }, []);
-
-  const deleteWord = (index) => {
-    const wordReff = doc(db, "decks", deck_id);
-
-    setDeck((current) => {
-      const newWords = current.words.filter((_, i) => i !== index);
-      const newDeck = { ...current, words: newWords };
-      updateDoc(wordReff, newDeck).catch(function (error) {
-        console.error(error.message);
-      });
-
-      return newDeck;
-    });
-  };
 
   if (deck.words) {
     return (
@@ -79,7 +75,13 @@ const IndividualDeck = () => {
       </>
     );
   } else {
-    return <Text>Empty</Text>;
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 export default IndividualDeck;

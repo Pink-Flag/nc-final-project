@@ -13,13 +13,17 @@ import { OXFORD_APP_KEY, OXFORD_APP_ID } from "@env";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "./UserContext";
-import mic from "../images/mic.svg";
+import Svg, { Circle, Path } from "react-native-svg";
+import MicSvg from "../images/Mic.js";
+
+// component to add words to custom deck
 
 const EnterWords = ({ deck_id, setDeck, modalVisible, setModalVisible }) => {
   const { user, setUser } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [translation, setTranslation] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hideInput, setHideInput] = useState(true);
 
   // searches Oxford API for word and sets state with translation
 
@@ -33,6 +37,8 @@ const EnterWords = ({ deck_id, setDeck, modalVisible, setModalVisible }) => {
       },
     };
     setLoading(true);
+
+    setHideInput(false);
 
     fetch(
       `https://od-api.oxforddictionaries.com/api/v2/translations/en/de/${searchTerm}?strictMatch=false&fields=translations`,
@@ -65,7 +71,7 @@ const EnterWords = ({ deck_id, setDeck, modalVisible, setModalVisible }) => {
       });
       setDoc(doc(db, "custom_decks", user.uid), testSplice);
       setDeck(testSplice.decks[deck_id]);
-
+      setHideInput(true);
       hideModal();
     });
   };
@@ -78,14 +84,24 @@ const EnterWords = ({ deck_id, setDeck, modalVisible, setModalVisible }) => {
 
   const navigate = useNavigate();
 
-  const imagePath =
-    "https://play-lh.googleusercontent.com/6w97U4A8U-adUqQxuYNUagn5UaHE_498hpgKGlAYJRRq0EMbMMPr9ik1ntKYl1PdaatT";
-
   return (
     <View style={styles.container}>
       <View style={styles.englishInputContainer}>
         <View style={styles.micInputContainer}>
-          <Image style={styles.image} source={{ mic }} />
+          <Svg height="35" width="35" viewBox="0 0 18 18">
+            <Path
+              d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"
+              stroke="black"
+              strokeWidth="0"
+              fill="black"
+            />
+            <Path
+              d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"
+              stroke="black"
+              strokeWidth="0"
+              fill="black"
+            />
+          </Svg>
           <TextInput
             style={styles.textinput}
             placeholder="Enter word"
@@ -106,26 +122,33 @@ const EnterWords = ({ deck_id, setDeck, modalVisible, setModalVisible }) => {
       </View>
       <View style={styles.targetOutputContainer}>
         <View>
-          {loading ? (
-            <ActivityIndicator
-              size="small"
-              color="#5c6784"
-              style={styles.targetWord}
-            />
-          ) : (
-            <>
-              <Text style={styles.searchWord}>{searchTerm} :</Text>
-              <Text style={styles.targetWord}>{translation}</Text>
-            </>
-          )}
+          {(() => {
+            if (loading)
+              return (
+                <ActivityIndicator
+                  size="small"
+                  color="#5c6784"
+                  style={styles.targetWord}
+                />
+              );
+            if (!loading && hideInput) return null;
+            else
+              return (
+                <>
+                  <Text style={styles.searchWord}>{searchTerm} :</Text>
+                  <Text style={styles.targetWord}>{translation}</Text>
+                </>
+              );
+          })()}
         </View>
-
-        <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
-          onPress={() => addWord()}
-        >
-          <Text style={styles.buttonText}>Add word</Text>
-        </TouchableOpacity>
+        {hideInput ? null : (
+          <TouchableOpacity
+            style={[styles.button, styles.buttonOutline]}
+            onPress={() => addWord()}
+          >
+            <Text style={styles.buttonText}>Add word</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

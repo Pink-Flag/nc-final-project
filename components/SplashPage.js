@@ -27,7 +27,7 @@ const SplashPage = ({ setIsFirstTime }) => {
       } else {
         navigate(`/loginscreen`);
       }
-    }, 5000);
+    }, 5);
   }, []);
 
   if (isLoading) {
@@ -45,7 +45,13 @@ const SplashPage = ({ setIsFirstTime }) => {
       </>
     );
   } else {
-    return <Text>Loading</Text>;
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 

@@ -14,7 +14,10 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
+
+// component that displays, and allows updates to, the custom deck
 
 const IndividualCustomDeck = () => {
   const { index } = useParams();
@@ -24,11 +27,15 @@ const IndividualCustomDeck = () => {
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
+  // gets the custom deck from the database and sets it to the state
+
   useEffect(() => {
     getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
       setDeck(querySnapshot.data().decks[index]);
     });
   }, []);
+
+  // gets the custom deck from the database, deletes the word at index, and updates the database
 
   const deleteWord = (index) => {
     const wordReff = doc(db, "custom_decks", user.uid);
@@ -133,7 +140,13 @@ const IndividualCustomDeck = () => {
       </>
     );
   } else {
-    return <Text>Empty</Text>;
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 export default IndividualCustomDeck;

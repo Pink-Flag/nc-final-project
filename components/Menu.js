@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
 
+// top menu component
+
 const Menu = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
