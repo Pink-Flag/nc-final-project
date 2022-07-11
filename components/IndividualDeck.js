@@ -2,55 +2,32 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  Modal,
-  Pressable,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-
 import React from "react";
-import {
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  getDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useState, useEffect } from "react";
-import EnterWords from "./EnterWords";
 import { db } from "../firebase";
+
+// component that displays a default individual deck
+
 const IndividualDeck = () => {
   const { deck_id } = useParams();
   const navigate = useNavigate();
   const [deck, setDeck] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-
   const [loading, setLoading] = useState(false);
+
+  // gets the deck from the database and sets it to the state
 
   useEffect(() => {
     getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
       setDeck(querySnapshot.data());
     });
   }, []);
-
-  const deleteWord = (index) => {
-    const wordReff = doc(db, "decks", deck_id);
-
-    setDeck((current) => {
-      const newWords = current.words.filter((_, i) => i !== index);
-      const newDeck = { ...current, words: newWords };
-      updateDoc(wordReff, newDeck).catch(function (error) {
-        console.error(error.message);
-      });
-
-      return newDeck;
-    });
-  };
 
   if (deck.words) {
     return (
@@ -81,7 +58,6 @@ const IndividualDeck = () => {
                       key={word.word + "_ger"}
                       style={styles.singleWordContainer}
                     >
-
                       <Text style={styles.word}> {word.word}</Text>
                     </View>
                   );
@@ -89,7 +65,6 @@ const IndividualDeck = () => {
               </View>
             </View>
           </ScrollView>
-          
         </View>
 
         <View>
@@ -100,7 +75,13 @@ const IndividualDeck = () => {
       </>
     );
   } else {
-    return <Text>Empty</Text>;
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 export default IndividualDeck;
@@ -113,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "75%",
   },
- 
+
   deckInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -151,7 +132,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#5C6784",
     width: "15%",
     height: "60%",
-
     borderRadius: 10,
     alignItems: "center",
   },
@@ -173,7 +153,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginTop: 5,
     borderColor: "#5C6784",
-  
   },
   buttonOutlineX: {
     backgroundColor: "#423250",
@@ -201,7 +180,6 @@ const styles = StyleSheet.create({
   firstLangWords: {
     width: "50%",
     height: "100%",
-    
   },
   foreignLangWords: {
     width: "50%",
@@ -224,11 +202,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
-    
     backgroundColor: "white",
     borderRadius: 20,
     padding: 15,
-    paddingTop:2,
+    paddingTop: 2,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {

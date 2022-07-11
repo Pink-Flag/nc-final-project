@@ -1,10 +1,13 @@
 import { UserContext } from "./UserContext";
+
 import React, { useContext, useState, useEffect } from "react";
 import { StyleSheet, Text, View, ActivityIndicator, Image } from "react-native";
+
 import { useNavigate } from "react-router-dom";
 
 const SplashPage = ({ setIsFirstTime }) => {
   const [isLoading, setIsLoading] = useState(true);
+
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -21,6 +24,7 @@ const SplashPage = ({ setIsFirstTime }) => {
     }, 5000);
   }, []);
 
+
   if (isLoading) {
     return (
       <>
@@ -36,7 +40,15 @@ const SplashPage = ({ setIsFirstTime }) => {
       </>
     );
   } else {
-    return <Text>Loading</Text>;
+
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
+
   }
 };
 
@@ -48,9 +60,11 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#ECEAF6",
     alignItems: "center",
+
     borderWidth: 2,
     justifyContent: "center",
     borderRadius: 10,
+
   },
   spinnerText: {
     fontSize: 18,

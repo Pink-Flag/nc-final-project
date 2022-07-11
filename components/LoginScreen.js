@@ -14,22 +14,26 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+// component for login screen
+
 const LoginScreen = () => {
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [refreshToken, setRefreshToken] = useState("hi");
   const [password, setPassword] = useState("");
   const auth = getAuth();
-
   const navigate = useNavigate();
-
   const { signedOut } = useParams();
+
+  // function that checks if been redirected from signout page then clears user context
 
   useEffect(() => {
     if (signedOut) {
       setUser(null);
     }
   }, []);
+
+  // function that signs in user with email and password then sets user context
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -163,6 +167,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "10%",
     letterSpacing: 1,
-
-  }
+  },
 });

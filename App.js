@@ -15,7 +15,6 @@ import Testing from "./components/Testing";
 import VanillaTest from "./components/VanillaTest";
 import ViewDecks from "./components/ViewDecks";
 import Register from "./components/Register";
-import MixedTesting from "./components/MixedTesting";
 import Menu from "./components/Menu";
 
 import SplashPage from "./components/SplashPage";
@@ -27,7 +26,9 @@ export default function App() {
   const [radioState, setRadioState] = useState("default");
   const [buttonState, setButtonState] = useState(1);
   const [customDecks, setCustomDecks] = useState([]);
+
   LogBox.ignoreAllLogs(true)
+
 
   //
   return (
@@ -87,7 +88,7 @@ export default function App() {
                 path="/stricttest/:deck_id/:index"
                 element={<StrictTest />}
               />
-              <Route path="/mixedTesting" element={<MixedTesting />} />
+
               <Route
                 path="/individualcustomdeck/:index"
                 element={<IndividualCustomDeck />}

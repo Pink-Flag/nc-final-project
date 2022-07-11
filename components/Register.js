@@ -170,8 +170,10 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   inputContainer: {
+
     width: "90%",
     alignSelf: "center",
+
   },
   input: {
     backgroundColor: "white",
@@ -187,7 +189,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
     marginLeft: "20%",
+
     marginBottom: "5%",
+
   },
   button: {
     backgroundColor: "#5c6784",

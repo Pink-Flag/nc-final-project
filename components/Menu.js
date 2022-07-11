@@ -1,14 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
+
+// top menu component
 
 const Menu = () => {
   const navigate = useNavigate();
@@ -19,29 +14,19 @@ const Menu = () => {
     <View style={styles.container}>
       {user ? (
         <>
-        <View style={styles.userContainer}>
-        <Image
-         style={styles.image}
-         source={{
-           uri: user.photoURL,
-         }}>
-
-        </Image>
-        <Text style={styles.username}>
-          Hello,<Text style={styles.name}>{user.displayName}!</Text>
-        </Text>
-        </View>
+          <View style={styles.userContainer}>
+            <Image
+              style={styles.image}
+              source={{
+                uri: user.photoURL,
+              }}
+            ></Image>
+            <Text style={styles.username}>
+              Hello,<Text style={styles.name}>{user.displayName}!</Text>
+            </Text>
+          </View>
         </>
-      ) : (
-        <Text
-          style={styles.login}
-          onPress={() => {
-            navigate(`/loginscreen`);
-          }}
-        >
-          Log in{" "}
-        </Text>
-      )}
+      ) : null}
 
       <View style={styles.menu}>
         <TouchableOpacity
@@ -85,10 +70,9 @@ const styles = StyleSheet.create({
     padding: 0,
     minWidth: "100%",
     marginBottom: "20%",
-   
   },
   userContainer: {
-    flexDirection:"row",
+    flexDirection: "row",
     marginBottom: 5,
   },
   image: {
@@ -102,7 +86,7 @@ const styles = StyleSheet.create({
     minWidth: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor:" red",
+    backgroundColor: " red",
   },
   login: {
     marginLeft: "80%",
@@ -130,7 +114,7 @@ const styles = StyleSheet.create({
   username: {
     marginTop: 4,
     marginLeft: 6,
-    color: "#423250"
+    color: "#423250",
   },
   name: {
     fontWeight: "700",

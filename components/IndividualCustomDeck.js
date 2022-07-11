@@ -1,13 +1,3 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Pressable,
-  ScrollView,
-} from "react-native";
-
 import React from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,20 +6,36 @@ import { useState, useEffect, useContext } from "react";
 import EnterWords from "./EnterWords";
 import { db } from "../firebase";
 import { UserContext } from "./UserContext";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+
+// component that displays, and allows updates to, the custom deck
+
 const IndividualCustomDeck = () => {
   const { index } = useParams();
-
   const navigate = useNavigate();
   const [deck, setDeck] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
+
+  // gets the custom deck from the database and sets it to the state
+
   useEffect(() => {
     getDoc(doc(db, "custom_decks", user.uid)).then((querySnapshot) => {
       setDeck(querySnapshot.data().decks[index]);
     });
   }, []);
+
+  // gets the custom deck from the database, deletes the word at index, and updates the database
 
   const deleteWord = (index) => {
     const wordReff = doc(db, "custom_decks", user.uid);
@@ -134,7 +140,13 @@ const IndividualCustomDeck = () => {
       </>
     );
   } else {
-    return <Text>Empty</Text>;
+    return (
+      <ActivityIndicator
+        size="small"
+        color="#5c6784"
+        style={styles.targetWord}
+      />
+    );
   }
 };
 export default IndividualCustomDeck;
@@ -235,7 +247,6 @@ const styles = StyleSheet.create({
   },
 
   firstLangWords: {
-    // borderRightWidth: 1,
     width: "50%",
     height: "100%",
   },
