@@ -2,32 +2,32 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   Image,
-  Button,
-  Animated,
   ActivityIndicator,
 } from "react-native";
-import React, { useState, useEffect, useReducer, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { collection, getDoc, addDoc, doc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import Swiper from "react-native-deck-swiper";
 import { db } from "../firebase";
 
 const VanillaTest = () => {
-  const navigate = useNavigate();
+
+//get the deck id from the endpoint
   const { deck_id, index } = useParams();
+
+  // initialize state variables
   const [cardIndex, setCardIndex] = useState(0);
   const [deckWords, setDeckWords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [displayBack, setDisplayBack] = useState(false);
 
-  console.log(typeof index);
-
   useEffect(() => {
     setCardIndex((curr) => curr + 1);
   }, [displayBack]);
 
+
+  //get words from deck depending if it is a default deck or custom deck
   if (Number(index) === 99) {
     useEffect(() => {
       getDoc(doc(db, "decks", deck_id)).then((querySnapshot) => {
@@ -45,11 +45,6 @@ const VanillaTest = () => {
   if (deckWords.length !== 0) {
     return (
       <View style={styles.container}>
-        {/* {loading ? (
-          <Text value={loading}></Text>
-        ) : (
-          <Text value={loading}></Text>
-        )} */}
         <Swiper
           cards={deckWords}
           infinite={true}
@@ -100,14 +95,6 @@ const VanillaTest = () => {
           backgroundColor={"transparent"}
           stackSize={3}
         ></Swiper>
-        {/* <TouchableOpacity
-              style={[styles.button, styles.buttonOutline]}
-              onPress={() => {
-                navigate("/viewdecks");
-              }}
-            >
-              <Text style={styles.buttonOutlineText}>Return to decks</Text>
-            </TouchableOpacity> */}
       </View>
     );
   } else {
@@ -155,26 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 50,
     backgroundColor: "transparent",
   },
-  // card: {
-  //   border: 2,
-  //   backgroundColor: "white",
-  //   borderWidth: 3,
-  //   borderRadius: 10,
-  //   padding: 25,
-  //   width: "80%",
-  //   marginTop: 30,
-  // },
-  // text: {
-  //   fontSize: 24,
-  //   textAlign: "center",
-  //   padding: 20,
-  // },
-  // buttonContainer: {
-  //   width: "60%",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   marginTop: 170,
-  // },
   button: {
     backgroundColor: "#5c6784",
     width: "100%",

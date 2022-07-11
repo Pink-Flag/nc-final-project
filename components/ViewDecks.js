@@ -15,15 +15,13 @@ import { useNavigate } from "react-router-dom";
 import {
   collection,
   getDocs,
-  addDoc,
-  doc,
-  query,
+  doc, 
   getDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "./UserContext";
-
 import CreateDeck from "./CreateDeck";
+
 const ViewDecks = ({
   radioState,
   setRadioState,
@@ -32,13 +30,11 @@ const ViewDecks = ({
   customDecks,
   setCustomDecks,
 }) => {
-  const [defaultLanguage, setdefaultLanguage] = useState("French");
-  const [sortBy, setSortBy] = useState("French");
-  const [defaultDecks, setDefaultDecks] = useState([]);
 
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
+  const [defaultDecks, setDefaultDecks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   const data = [
@@ -50,6 +46,7 @@ const ViewDecks = ({
     },
   ];
 
+  //get all default decks from firestore 
   useEffect(() => {
     getDocs(collection(db, "decks")).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -63,7 +60,10 @@ const ViewDecks = ({
     });
   }, []);
 
-  const customRef = doc(db, "custom_decks", "OMZM1YJ8L6RDHnDKSCSbzyDYTJG3");
+  // reference the custom decks for the logged in user 
+  const customRef = doc(db, "custom_decks", user.uid);
+
+  //get all custom decks for the logged in user 
   useEffect(() => {
     getDoc(customRef).then((querySnapshot) => {
       const queryWords = querySnapshot.data();
@@ -204,7 +204,6 @@ export default ViewDecks;
 const styles = StyleSheet.create({
   container: {
     width: "95%",
-
     marginTop: "30%",
     backgroundColor: "#ECEAF6",
     borderRadius: 10,

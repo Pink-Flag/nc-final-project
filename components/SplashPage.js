@@ -1,23 +1,17 @@
 import { UserContext } from "./UserContext";
-import React, { createContext, useContext, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  LogBox,
-  ActivityIndicator,
-  Image,
-} from "react-native";
-import { NativeRouter, Link, Route, Routes } from "react-router-native";
+
+import React, { useContext, useState, useEffect } from "react";
+import { StyleSheet, Text, View, ActivityIndicator, Image } from "react-native";
+
 import { useNavigate } from "react-router-dom";
 
 const SplashPage = ({ setIsFirstTime }) => {
   const [isLoading, setIsLoading] = useState(true);
-  //const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  //navigate to home or login screen depending on if there is a logged in user
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
@@ -27,8 +21,9 @@ const SplashPage = ({ setIsFirstTime }) => {
       } else {
         navigate(`/loginscreen`);
       }
-    }, 5);
+    }, 5000);
   }, []);
+
 
   if (isLoading) {
     return (
@@ -45,6 +40,7 @@ const SplashPage = ({ setIsFirstTime }) => {
       </>
     );
   } else {
+
     return (
       <ActivityIndicator
         size="small"
@@ -52,6 +48,7 @@ const SplashPage = ({ setIsFirstTime }) => {
         style={styles.targetWord}
       />
     );
+
   }
 };
 
@@ -64,7 +61,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECEAF6",
     alignItems: "center",
 
+    borderWidth: 2,
     justifyContent: "center",
+    borderRadius: 10,
+
   },
   spinnerText: {
     fontSize: 18,
