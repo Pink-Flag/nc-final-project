@@ -2,29 +2,21 @@ import {
   StyleSheet,
   Text,
   View,
-  KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
   ScrollView,
 } from "react-native";
 import { React, useState, useContext } from "react";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Picker } from "@react-native-picker/picker";
 import { UserContext } from "./UserContext";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigate } from "react-router-dom";
-import { addNewUser } from "../firebase/functions";
-import { db, auth } from "../firebase";
-import { collection, doc, setDoc } from "firebase/firestore";
-
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
+  //Initialize state variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -32,10 +24,12 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [avatarUrl, setavatarUrl] = useState("");
   const [defaultLanguage, setdefaultLanguage] = useState("German");
+
   const auth = getAuth();
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  //create new user profile
   const handleSignup = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
@@ -74,91 +68,89 @@ const Register = () => {
 
   return (
     <>
-      <ScrollView style={styles.headerView}>
-        <View style={styles.headerView}>
-          {/* <Text style={styles.header}>Vocab</Text> */}
-        </View>
-        <View style={styles.inputContainer}>
-          <View style={styles.inputView}>
-            <Text> Username*</Text>
-            <TextInput
-              placeholder="Username"
-              value={username}
-              onChangeText={(text) => setUsername(text)}
-              style={styles.input}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text> Email*</Text>
-            <TextInput
-              placeholder="Email"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              style={styles.input}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text> Password*</Text>
-            <TextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              style={styles.input}
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text> Confirm Password*</Text>
-            <TextInput
-              placeholder="Password"
-              value={confirmPassword}
-              onChangeText={(text) => setConfirmPassword(text)}
-              style={styles.input}
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text> Avatar link</Text>
-            <TextInput
-              placeholder="Avatar Link"
-              value={avatarUrl}
-              onChangeText={(text) => setavatarUrl(text)}
-              style={styles.input}
-            />
-          </View>
+      <View style={styles.container}>
+        <ScrollView style={styles.headerView}>
+          <View style={styles.inputContainer}>
+            <View style={styles.inputView}>
+              <Text> Username*</Text>
+              <TextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={(text) => setUsername(text)}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text> Email*</Text>
+              <TextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text> Password*</Text>
+              <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                style={styles.input}
+                secureTextEntry
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text> Confirm Password*</Text>
+              <TextInput
+                placeholder="Password"
+                value={confirmPassword}
+                onChangeText={(text) => setConfirmPassword(text)}
+                style={styles.input}
+                secureTextEntry
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text> Avatar link</Text>
+              <TextInput
+                placeholder="Avatar Link"
+                value={avatarUrl}
+                onChangeText={(text) => setavatarUrl(text)}
+                style={styles.input}
+              />
+            </View>
 
-          <View style={styles.inputView}>
-            <Text> I want to learn</Text>
-            <View style={styles.editPicker}>
-              <Picker
-                selectedValue={defaultLanguage}
-                style={styles.inputPicker}
-                onValueChange={(itemValue, itemIndex) =>
-                  setdefaultLanguage(itemValue)
-                }
-              >
-                <Picker.Item label="French" value="French" />
-                <Picker.Item label="German" value="German" />
-                <Picker.Item label="Spanish" value="Spanish" />
-              </Picker>
-              <Text style={styles.required}>* required fields</Text>
+            <View style={styles.inputView}>
+              <Text> I want to learn</Text>
+              <View style={styles.editPicker}>
+                <Picker
+                  selectedValue={defaultLanguage}
+                  style={styles.inputPicker}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setdefaultLanguage(itemValue)
+                  }
+                >
+                  <Picker.Item label="French" value="French" />
+                  <Picker.Item label="German" value="German" />
+                  <Picker.Item label="Spanish" value="Spanish" />
+                </Picker>
+                <Text style={styles.required}>* required fields</Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            disabled={loading}
-            onPress={() => {
-              handleSignup();
-            }}
-            style={[styles.button, styles.buttonOutline]}
-          >
-            <Text style={styles.buttonOutlineText}>Register & Login</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              disabled={loading}
+              onPress={() => {
+                handleSignup();
+              }}
+              style={[styles.button, styles.buttonOutline]}
+            >
+              <Text style={styles.buttonOutlineText}>Register & Login</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
       <View>
         {loading && (
           <Spinner visible={loading} textStyle={styles.spinnerTextStyle} />
@@ -170,17 +162,16 @@ const Register = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    marginTop: "30%",
+    backgroundColor: "#ECEAF6",
+    width: "95%",
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: "10%",
-    height: "90%",
+    height: "80%",
   },
   inputContainer: {
-    width: "80%",
-    backgroundColor: "#FCFCFC",
-    marginLeft: "10%",
-
+    width: "90%",
+    alignSelf: "center",
   },
   input: {
     backgroundColor: "white",
@@ -195,7 +186,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
-    marginLeft: "20%"
+    marginLeft: "20%",
+    marginBottom: "5%",
   },
   button: {
     backgroundColor: "#5c6784",
