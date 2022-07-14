@@ -57,7 +57,7 @@ const IndividualCustomDeck = () => {
         <View style={styles.containera}>
           <View style={styles.deckInfo}>
             <Text style={styles.textName}>{deck.list_name}</Text>
-            <Text style={styles.textLang}>German</Text>
+            <Text style={styles.textLang}>🇩🇪</Text>
           </View>
           <ScrollView style={styles.scroll}>
             <View style={styles.wordContainer}>
