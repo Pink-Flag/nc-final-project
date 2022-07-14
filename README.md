@@ -3,16 +3,17 @@
 # Summary
 
 This app was created as the final project of the Northcoders bootcamp and was a collaborative effort between:
--	https://github.com/Pink-Flag
--	https://github.com/Kristinna97
--	https://github.com/mgrindrod92
--	https://github.com/nmb882003
+
+- https://github.com/Pink-Flag
+- https://github.com/Kristinna97
+- https://github.com/mgrindrod92
+- https://github.com/nmb882003
 
 Wordsmith allows users to view pre-made decks of vocabulary, as well as create their own lists, making use of an in-built dictionary lookup function from the Oxford Dictionaries API, eliminating the need for users to translate words themselves. Users are able to revise their flashcards at any time, and can test their knowledge and spelling of new words.
 
 # Video demonstration
 
-This project was designed for education and development purposes and so it cannot be guaranteed to maintained or hosted indefinitely. A demonstration of the app can be viewed at the following link: *****
+This project was designed for education and development purposes and so it cannot be guaranteed to maintained or hosted indefinitely. A demonstration of the app can be viewed at the following link: **\***
 
 # Tech stack
 
@@ -26,18 +27,33 @@ To run this app locally, you must have a node version of 16.0.0 or higher.
 
 # Setup instructions
 
-To run a version of this app yourself, you will need to register with Oxford Dictionaries and obtain an API key (https://developer.oxforddictionaries.com/). You will also need to obtain an API key from Firebase (https://firebase.google.com/). Finally, to view the app, you will either need to download and install Android Studio or Expo. 
+To run a version of this app yourself, you will need to register with Oxford Dictionaries and obtain an API key (https://developer.oxforddictionaries.com/). You will also need to obtain an API key from Firebase (https://firebase.google.com/). Finally, to view the app, you will either need to download and install Android Studio or Expo.
 
 After cloning the repo, create a .env file with the following information, ensuring that any ‘.env’ files are added to your ‘.gitignore’:
+
+`OXFORD API`
+
 OXFORD_APP_ID=”<Your-ID-Here>”
 OXFORD_APP_KEY=”<Your-Key-Here>”
 
-Import the key and ID into any required file by using
-Import { OXFORD_APP_ID, OXFORD_APP_KEY } from “@env”;
+`FIREBASE/FIRESTORE`
 
-Finally: 
-1.	Run npm i in the terminal
-2.	Run expo start and use the expo app on your phone to view Wordsmith
+APIKEY="<Your-API-Key>"
+AUTHDOMAIN="<Your-AuthDomain>"
+DATABASEURL="<Your-Database-URL>"
+PROJECTID="<Your-Project-ID>"
+STORAGEBUCKET="<Your-Storage-Bucket>"
+MESSAGINGSENDERID="<Your-Messaging-Sender-ID>"
+APPID="<Your-App-ID>"
+MEASUREMENTID="<Your-Measurement-ID>"
+
+Import the key and ID into any required file by using
+Import { OXFORD_APP_ID, OXFORD_APP_KEY, APIKEY ... } from “@env”;
+
+Finally:
+
+1. Run npm i in the terminal
+2. Run expo start and use the expo app on your phone to view Wordsmith
 
 # Additional notes
 
