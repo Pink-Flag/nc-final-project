@@ -24,7 +24,6 @@ const SplashPage = ({ setIsFirstTime }) => {
     }, 5000);
   }, []);
 
-
   if (isLoading) {
     return (
       <>
@@ -40,7 +39,6 @@ const SplashPage = ({ setIsFirstTime }) => {
       </>
     );
   } else {
-
     return (
       <ActivityIndicator
         size="small"
@@ -48,7 +46,6 @@ const SplashPage = ({ setIsFirstTime }) => {
         style={styles.targetWord}
       />
     );
-
   }
 };
 
@@ -61,10 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECEAF6",
     alignItems: "center",
 
-    borderWidth: 2,
     justifyContent: "center",
-    borderRadius: 10,
-
   },
   spinnerText: {
     fontSize: 18,

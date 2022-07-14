@@ -16,7 +16,7 @@ import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
-  //Initialize state variables
+  //Initialise state variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -170,10 +170,8 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   inputContainer: {
-
     width: "90%",
     alignSelf: "center",
-
   },
   input: {
     backgroundColor: "white",
@@ -191,7 +189,6 @@ const styles = StyleSheet.create({
     marginLeft: "20%",
 
     marginBottom: "5%",
-
   },
   button: {
     backgroundColor: "#5c6784",
