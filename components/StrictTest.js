@@ -16,7 +16,7 @@ const StrictTest = () => {
   const { deck_id, index } = useParams();
 
   const navigate = useNavigate();
-  // initialize state variables
+  // initialise state variables
   const [userGuess, setUserGuess] = useState("");
   const [deck, setDeck] = useState([]);
   const [cardIndex, setCardIndex] = useState(0);

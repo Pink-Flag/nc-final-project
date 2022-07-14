@@ -1,22 +1,15 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import React, { useState, useEffect} from "react";
+import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
 import Swiper from "react-native-deck-swiper";
 import { db } from "../firebase";
 
 const VanillaTest = () => {
-
-//get the deck id from the endpoint
+  //get the deck id from the endpoint
   const { deck_id, index } = useParams();
 
-  // initialize state variables
+  // initialise state variables
   const [cardIndex, setCardIndex] = useState(0);
   const [deckWords, setDeckWords] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,7 +18,6 @@ const VanillaTest = () => {
   useEffect(() => {
     setCardIndex((curr) => curr + 1);
   }, [displayBack]);
-
 
   //get words from deck depending if it is a default deck or custom deck
   if (Number(index) === 99) {

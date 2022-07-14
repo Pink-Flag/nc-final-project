@@ -15,18 +15,16 @@ import { updateDoc, doc } from "firebase/firestore";
 import { db, auth } from "../firebase";
 
 const Profile = () => {
-
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
-  //Initialize state variables 
+  //Initialise state variables
   const [profilePicture, setProfilePicture] = useState(
     "https://www.lewesac.co.uk/wp-content/uploads/2017/12/default-avatar.jpg"
   );
   const [loading, setLoading] = useState(false);
-   const [avatar, setAvatar] = useState(defaultAvatar);
+  const [avatar, setAvatar] = useState(defaultAvatar);
   const [updatedEmail, setUpdatedEmail] = useState("");
-
 
   //set up default profile picture  for users that dont upload one
   useEffect(() => {
@@ -155,8 +153,6 @@ const Profile = () => {
               </TouchableOpacity>
             </View>
           </View>
-
-        
         </ScrollView>
         <View style={styles.inputView}>
           <TouchableOpacity
